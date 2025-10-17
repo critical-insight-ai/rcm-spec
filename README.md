@@ -3,8 +3,8 @@
 > **A pattern for governed, versioned context in intelligent systems**
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Spec Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://github.com/critical-insight/rcm-spec/releases/tag/v1.0)
-[![Status](https://img.shields.io/badge/status-Community%20Draft-orange.svg)](https://github.com/critical-insight/rcm-spec/blob/main/STATUS.md)
+[![Spec Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://github.com/critical-insight-ai/rcm-spec/releases/tag/v1.0)
+[![Status](https://img.shields.io/badge/status-Community%20Draft-orange.svg)](https://github.com/critical-insight-ai/rcm-spec/blob/main/STATUS.md)
 
 ---
 
@@ -152,7 +152,7 @@ rcm-spec/
 - Chapter 4: Normative Semantics (frame envelope, time semantics, delivery contracts)
 - Annex A: Conformance and Testing (test vectors, telemetry requirements)
 
-**Reference implementation** (coming Q1 2025): [CognOS](https://github.com/critical-insight/cognos)
+**Reference implementation** (coming Q1/Q2 2026): [CognOS](https://cognos.is)
 
 ### For Standards Bodies
 
@@ -162,7 +162,7 @@ All chapters + Annexes A-C provide formal apparatus for evaluation.
 
 ## Status: Community Specification
 
-**Version**: 1.0 (January 2025)  
+**Version**: 1.0 (October 2025)  
 **Maturity**: Community Draft  
 **Conformance**: Test suite defined; reference implementations in progress
 
@@ -179,8 +179,7 @@ All chapters + Annexes A-C provide formal apparatus for evaluation.
 
 | Implementation | Status | Platform | Conformance Report |
 |----------------|--------|----------|-------------------|
-| CognOS | In development | Multi-platform | Expected Q1 2025 |
-| Kafka/Flink Reference | Planned | JVM | Q2 2025 |
+| CognOS | In development | Multi-platform | Expected Q1/Q2 2026 |
 | _Your implementation?_ | - | - | [Join us!](#contributing) |
 
 ---
@@ -210,7 +209,7 @@ We welcome contributions! This is an open, community-driven specification.
 
 ### Ways to Participate
 
-🎯 **Submit feedback**: [Open an issue](https://github.com/critical-insight/rcm-spec/issues) for clarifications, gaps, or suggestions
+🎯 **Submit feedback**: [Open an issue](https://github.com/critical-insight-ai/rcm-spec/issues) for clarifications, gaps, or suggestions
 
 📝 **Propose changes**: Fork → edit → pull request (spec text, examples, test vectors)
 
@@ -218,7 +217,7 @@ We welcome contributions! This is an open, community-driven specification.
 
 🧪 **Contribute test vectors**: Add edge cases to `conformance/test-vectors/`
 
-💬 **Join discussions**: [GitHub Discussions](https://github.com/critical-insight/rcm-spec/discussions)
+💬 **Join discussions**: [GitHub Discussions](https://github.com/critical-insight-ai/rcm-spec/discussions)
 
 📢 **Spread the word**: Blog posts, talks, case studies
 
@@ -260,25 +259,23 @@ See [examples/](examples/) for detailed scenarios.
 
 ## Roadmap
 
-### Q1 2025
+### Q3 2025
 - ✅ Publish v1.0 specification
 - 🚧 Release CognOS reference implementation
 - 🚧 Launch conformance test harness
 - 📅 Host community kickoff call
 
-### Q2 2025
+### Q2 2026
 - 📅 3+ independent implementations
 - 📅 Public conformance reports
 - 📅 Crosswalks to LangChain, Semantic Kernel, LlamaIndex
 - 📅 Submit paper to SIGMOD/VLDB
 
-### H2 2025
+### H2 2026
 - 📅 Standards body engagement (OASIS/CNCF)
 - 📅 Cloud provider integrations (AWS, Azure, GCP)
 - 📅 MCP/A2A protocol alignment
 - 📅 V1.1 based on implementation feedback
-
-See [ROADMAP.md](ROADMAP.md) for details.
 
 ---
 
@@ -293,10 +290,10 @@ You are free to implement, extend, and distribute implementations under any lice
 
 ## Contact
 
-**Questions?** [Open a discussion](https://github.com/critical-insight/rcm-spec/discussions)  
-**Found a bug?** [File an issue](https://github.com/critical-insight/rcm-spec/issues)  
-**Want to chat?** Email: rcm-spec@criticalinsight.com  
-**Latest updates**: Watch this repo or follow [@CriticalInsightInc](https://twitter.com/CriticalInsightInc)
+**Questions?** [Open a discussion](https://github.com/critical-insight-ai/rcm-spec/discussions)  
+**Found a bug?** [File an issue](https://github.com/critical-insight-ai/rcm-spec/issues)  
+**Want to chat?** Email: dan@criticalinsight.ai
+**Latest updates**: Watch this repo or follow [@CriticalInsightInc] Bluesky/TBD
 
 ---
 
@@ -316,7 +313,9 @@ Thank you to early reviewers and the open-source community for ongoing collabora
 
 ## Quick Links
 
-📖 [Full Specification](specification/rcm-spec-v1.0.md)  
+📖 [Full Specification](Reactive-Composite-Memory.md) -- this works
+
+TBD:
 📄 [Executive Summary](specification/executive-summary.md)  
 🚀 [Getting Started Guide](guides/getting-started.md)  
 ⚖️ [Comparison Guide](guides/comparison-guide.md)  
@@ -332,5 +331,5 @@ Thank you to early reviewers and the open-source community for ongoing collabora
 </p>
 
 <p align="center">
-  <a href="https://github.com/critical-insight/rcm-spec/stargazers">⭐ Star this repo</a> if RCM solves a problem you face!
+  <a href="https://github.com/critical-insight-ai/rcm-spec/stargazers">⭐ Star this repo</a> if RCM solves a problem you face!
 </p>
