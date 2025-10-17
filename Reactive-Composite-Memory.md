@@ -152,7 +152,7 @@ v1.0 Initial Community Specification Release
 * **For Users/Consumers:** Read Chapters 1-3; skim Chapter 5 for context  
 * **For Standards Bodies:** All chapters; Annexes A-C provide formal apparatus
 
-**Total Estimated Length:** 164 pages
+**Total Estimated Length:** 177 pages
 
 **Target Formats:**
 
