@@ -164,7 +164,7 @@ All chapters + Annexes A-C provide formal apparatus for evaluation.
 
 **Version**: 1.0 (October 2025)  
 **Maturity**: Community Draft  
-**Conformance**: Test suite defined; reference implementations in progress
+**Conformance**: Core semantics (reactive composition, versioning, time, ordering, delivery) are testable and portable. Extension points (governance) are optional and implementation-defined.
 
 ### Current State
 
@@ -196,6 +196,7 @@ All chapters + Annexes A-C provide formal apparatus for evaluation.
 | **Redux/Elm/MVU** | Same unidirectional flow; RCM extends to durable, multi-consumer memory |
 | **MCP** | RCM provides internal substrate; MCP exposes at edges |
 | **Knowledge Graphs** | RCM delivers fresh graph slices reactively with provenance |
+| **Major Cloud Platforms** | RCM provides abstraction layer above vendor primitives (Databricks, Snowflake, AWS, Azure) |
 
 **Key insight**: RCM doesn't replace these patterns—it **complements** them by standardizing context lifecycle.
 
