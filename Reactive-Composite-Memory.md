@@ -132,8 +132,8 @@ v1.0 Initial Community Specification Release
 
 **Participation:** This specification is developed in the open. Contributions, implementations, and feedback are welcome.
 
-**Repository:** github.com/critical-insight/rcm-spec  
-**Conformance Test Kit:** github.com/critical-insight/rcm-conformance  
+**Repository:** github.com/critical-insight-ai/rcm-spec  
+**Conformance Test Kit:** github.com/critical-insight-ai/rcm-conformance  
 **Discussion Forum:** GitHub Discussions  
 **Maintainers:** Dan Vanderboom (Critical Insight Inc.), \[Co-maintainers TBD\]
 
@@ -2874,7 +2874,7 @@ RCM's value multiplies when multiple implementations exist and interoperate.
 
 This specification is developed as a **Community Specification** under open governance:
 
-* **Repository:** github.com/critical-insight/rcm-spec (hypothetical; adjust to actual repo)  
+* **Repository:** github.com/critical-insight-ai/rcm-spec (hypothetical; adjust to actual repo)  
 * **License:** CC-BY-4.0 (spec text), Apache-2.0 (test code)  
 * **Participation:** Open to all via GitHub issues, pull requests, discussions  
 * **Governance:** Maintainer(s) review contributions; rough consensus for changes; versioned releases
@@ -4622,8 +4622,8 @@ This table positions RCM relative to popular AI/LLM frameworks.
 
 **Community Resources:**
 
-* RCM Specification Repository: https://github.com/critical-insight/rcm-spec (adjust to actual)  
-* RCM Conformance Test Kit: https://github.com/critical-insight/rcm-conformance (adjust to actual)  
+* RCM Specification Repository: https://github.com/critical-insight-ai/rcm-spec (adjust to actual)  
+* RCM Conformance Test Kit: https://github.com/critical-insight-ai/rcm-conformance (adjust to actual)  
 * RCM Discussion Forum: GitHub Discussions or mailing list (TBD)
 
 # 
@@ -5709,9 +5709,9 @@ Biological memory consolidates (short-term → long-term) and forgets. In RCM: s
 
 * Dan Vanderboom (Critical Insight Inc.)
 
-**Repository:** github.com/critical-insight/rcm-spec  
+**Repository:** github.com/critical-insight-ai/rcm-spec  
 **Discussion:** GitHub Discussions  
-**Test Kit:** github.com/critical-insight/rcm-conformance
+**Test Kit:** github.com/critical-insight-ai/rcm-conformance
 
 **License:**
 
@@ -5722,7 +5722,7 @@ Biological memory consolidates (short-term → long-term) and forgets. In RCM: s
 
 Vanderboom, Dan. "Reactive Composite Memory: A Pattern for Governed,   
 Versioned Context in Intelligent Systems." Version 1.0. Critical Insight Inc.,   
-January 2025\. https://github.com/critical-insight/rcm-spec
+January 2025\. https://github.com/critical-insight-ai/rcm-spec
 
 **Contact:**
 
