@@ -1,0 +1,1 @@
+pandoc Reactive-Composite-Memory.docx -f docx -t markdown -o Reactive-Composite-Memory.md
