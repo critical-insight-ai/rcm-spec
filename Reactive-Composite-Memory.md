@@ -9,24 +9,11 @@
 
 ## **Abstract**
 
-**Reactive Composite Memory (RCM)** is a design pattern for managing
-context in intelligent systems as governed, versioned views with
-reactive dataflow semantics. Multiple sources compose into versioned
-artifacts (frames) that update automatically when dependencies change,
-with built-in lineage, time semantics, and delivery guarantees. The
-pattern provides well-defined extension points where implementations
-inject cross-cutting behaviors (admission control, resource management,
-security) while preserving RCM\'s core guarantees: deterministic
-recomputation, idempotent delivery, and explainable provenance.
+**Reactive Composite Memory (RCM)** is a design pattern for managing context in intelligent systems as governed, versioned views with reactive dataflow semantics. Multiple sources compose into versioned artifacts (frames) that update automatically when dependencies change, with built-in lineage, time semantics, and delivery guarantees. The pattern provides well-defined extension points where implementations inject cross-cutting behaviors (admission control, resource management, security) while preserving RCM's core guarantees: deterministic recomputation, idempotent delivery, and explainable provenance.
 
-While the name emphasizes its application as agent memory substrate, the
-pattern applies broadly to any system requiring reactive, explainable,
-composite state---from real-time operational dashboards to compliance
-systems to knowledge graphs.
+While the name emphasizes its application as agent memory substrate, the pattern applies broadly to any system requiring reactive, explainable, composite state—from real-time operational dashboards to compliance systems to knowledge graphs.
 
-**Keywords:** reactive systems, composite memory, event-driven
-architecture, context management, AI systems, streaming semantics,
-provenance
+**Keywords:** reactive systems, composite memory, event-driven architecture, context management, AI systems, streaming semantics, provenance
 
 **\**
 
@@ -47,14 +34,16 @@ provenance
 2.1 Operational Challenges\
 2.2 Why Ad-Hoc Approaches Fail\
 2.3 Forces and Trade-Offs\
-2.4 Success Criteria
+2.4 Success Criteria\
+2.5 Summary: The Pattern's Promise
 
 ### **3. RCM in One Picture**
 
 3.1 Visual Model\
 3.2 Core Concepts\
 3.3 Illustrative Flow\
-3.4 Key Implications
+3.4 Key Implications\
+3.5 From Picture to Specification
 
 ### **4. Normative Semantics**
 
@@ -75,7 +64,9 @@ provenance
 5.2 Decision Heuristics\
 5.3 Co-Existence Patterns\
 5.4 Anti-Patterns and Common Confusions\
-5.5 Edge Protocols and Pattern Fit
+5.5 Edge Protocols and Pattern Fit\
+5.6 Quick Selector (Rule of Thumb)\
+5.7 Summary: RCM's Place in the Ecosystem
 
 ### **6. Conclusion**
 
@@ -84,7 +75,8 @@ provenance
 6.3 Adoption Path\
 6.4 Interoperability and Ecosystem\
 6.5 How to Participate\
-6.6 Acknowledgments
+6.6 Acknowledgments\
+6.7 Closing Thoughts
 
 ## **Annexes**
 
@@ -108,8 +100,7 @@ B.4 Crosswalk: RCM vs. AI Frameworks
 
 ### **Annex C (Informative): Glossary**
 
-Alphabetical definitions of key terms with authoritative source
-references
+Alphabetical definitions of key terms with authoritative source references
 
 **\**
 
@@ -122,7 +113,8 @@ D.4 Security and Privacy Patterns\
 D.5 Observability Patterns\
 D.6 Example: Multi-Stage Governance Chain\
 D.7 Example: Simple Rate Limiting\
-D.8 Example: Policy-as-Code Integration
+D.8 Example: Policy-as-Code Integration\
+D.9 Summary: Choosing Extension Patterns
 
 ## **Appendices (Non-Normative)**
 
@@ -136,7 +128,8 @@ Summary of memory science parallels and design heuristics
 
 ### **Appendix III: Version History and Change Log**
 
-v1.0 Initial Community Specification Release
+v1.0 Initial Community Specification Release\
+October 2026 revision (unreleased)
 
 **\**
 
@@ -144,43 +137,30 @@ v1.0 Initial Community Specification Release
 
 **Status:** Community Specification Draft
 
-**License:** Creative Commons Attribution 4.0 (CC-BY-4.0) for
-specification text; Apache License 2.0 for code examples and test suite.
+**License:** Creative Commons Attribution 4.0 (CC-BY-4.0) for specification text; Apache License 2.0 for code examples and test suite.
 
-**Participation:** This specification is developed in the open.
-Contributions, implementations, and feedback are welcome.
+**Participation:** This specification is developed in the open. Contributions, implementations, and feedback are welcome.
 
 **Repository:** github.com/critical-insight-ai/rcm-spec\
 **Conformance Test Kit:** TBD\
 **Discussion Forum:** GitHub Discussions\
-**Maintainers:** Dan Vanderboom (Critical Insight Inc.),
-\[Co-maintainers TBD\]
+**Maintainers:** Dan Vanderboom (Critical Insight Inc.), \[Co-maintainers TBD\]
 
 **Known Implementations:**
 
-- TBD
+- CognOS (Critical Insight Inc.), reference implementation, in development
 
-**Acknowledgments:** This work draws on distributed systems research in
-stream processing (Dataflow Model), reactive architectures (Reactive
-Streams), event-driven patterns (Event Sourcing, CQRS), and cognitive
-science (William James, Atkinson-Shiffrin, Baddeley, Tulving). We thank
-the Confluent, Anthropic (MCP), and broader streaming/AI communities for
-ongoing collaboration.
+**Acknowledgments:** This work draws on distributed systems research in stream processing (Dataflow Model), reactive architectures (Reactive Streams), event-driven patterns (Event Sourcing, CQRS), and cognitive science (William James, Atkinson-Shiffrin, Baddeley, Tulving). We thank the Confluent, Anthropic (MCP), and broader streaming/AI communities for ongoing collaboration.
 
 ## **How to Read This Specification**
 
-- **For Evaluators/Architects:** Read Chapters 1-3, Chapter 5
-  (Comparative Guide)
+- **For Evaluators/Architects:** Read Chapters 1-3, Chapter 5 (Comparative Guide)
 
-- **For Implementers:** Focus on Chapter 4 (Normative Semantics) and
-  Annex A (Conformance)
+- **For Implementers:** Focus on Chapter 4 (Normative Semantics) and Annex A (Conformance)
 
 - **For Users/Consumers:** Read Chapters 1-3; skim Chapter 5 for context
 
-- **For Standards Bodies:** All chapters; Annexes A-C provide formal
-  apparatus
-
-**Total Estimated Length:** 177 pages
+- **For Standards Bodies:** All chapters; Annexes A-C provide formal apparatus
 
 **Target Formats:**
 
@@ -194,92 +174,59 @@ ongoing collaboration.
 
 ## **1.1 Purpose and Scope**
 
-This specification defines **Reactive Composite Memory (RCM)**, a design
-pattern for managing context in intelligent systems---particularly AI
-agents, real-time operations platforms, and event-driven
-architectures---as a governed, reactive dataflow.
+This specification defines **Reactive Composite Memory (RCM)**, a design pattern for managing context in intelligent systems—particularly AI agents, real-time operations platforms, and event-driven architectures—as a governed, reactive dataflow.
 
-Modern systems must **remember across sessions**, **justify outcomes**,
-and **control cost and risk**. Ad-hoc caches and per-request \"context
-assembly\" are brittle: they lack provenance, consistent update
-semantics, and reliable cost attribution. RCM elevates these concerns
-from afterthoughts to first-class design constraints.
+Modern systems must **remember across sessions**, **justify outcomes**, and **control cost and risk**. Ad-hoc caches and per-request "context assembly" are brittle: they lack provenance, consistent update semantics, and reliable cost attribution. RCM elevates these concerns from afterthoughts to first-class design constraints.
 
 **Scope of this specification:**
 
-- **Normative semantics** for reactive composition, versioned frames,
-  time/ordering, determinism, and delivery (Chapter 4)
+- **Normative semantics** for reactive composition, versioned frames, time/ordering, determinism, and delivery (Chapter 4)
 
 - **Conformance requirements** and test procedures (Annex A)
 
 - **Comparative positioning** against adjacent patterns (Chapter 5)
 
-- **Extension points** where implementations inject cross-cutting
-  behaviors (§4.7, Annex D)
+- **Extension points** where implementations inject cross-cutting behaviors (§4.7, Annex D)
 
-This specification is **platform-agnostic** and **vendor-neutral**. It
-defines *what* conformance means, not *how* to implement it.
-Implementation strategies are covered in separate playbooks.
+This specification is **platform-agnostic** and **vendor-neutral**. It defines *what* conformance means, not *how* to implement it. Implementation strategies are covered in separate playbooks.
 
 ## **1.2 The Core Problem**
 
-Intelligent systems---AI agents, real-time dashboards, incident response
-platforms, personalization engines---face a common challenge:
-**maintaining fresh, explainable, composite context** drawn from many
-changing sources.
+Intelligent systems—AI agents, real-time dashboards, incident response platforms, personalization engines—face a common challenge: **maintaining fresh, explainable, composite context** drawn from many changing sources.
 
-Traditional approaches fail at the **read path**---they rebuild context
-per-request or cache stale data. RCM addresses this by standardizing
-reactive, governed **read models**. (The write path---how events enter
-the system---can be non-deterministic; RCM captures those results as
-source signals and deterministically composes them into frames.)
+Traditional approaches fail at the **read path**—they rebuild context per-request or cache stale data. RCM addresses this by standardizing reactive, governed **read models**. (The write path—how events enter the system—can be non-deterministic; RCM captures those results as source signals and deterministically composes them into frames.)
 
 **The traditional approaches:**
 
-- **Per-request assembly:** Every inference or query rebuilds context
-  from scratch---expensive, high-latency, no lineage
+- **Per-request assembly:** Every inference or query rebuilds context from scratch—expensive, high-latency, no lineage
 
-- **Static caches:** Fast but stale; no reactive updates; opaque
-  provenance
+- **Static caches:** Fast but stale; no reactive updates; opaque provenance
 
-- **Batch ETL:** Handles historical data well but lacks real-time
-  semantics and live consumer delivery
+- **Batch ETL:** Handles historical data well but lacks real-time semantics and live consumer delivery
 
 **What breaks at scale:**
 
-1.  **Freshness:** Context falls behind reality; decisions use stale
-    data
+1.  **Freshness:** Context falls behind reality; decisions use stale data
 
-2.  **Explainability:** \"Why did the system know X?\" has no auditable
-    answer
+2.  **Explainability:** "Why did the system know X?" has no auditable answer
 
-3.  **Cost:** Redundant recomputation; every consumer pays the assembly
-    tax
+3.  **Cost:** Redundant recomputation; every consumer pays the assembly tax
 
-4.  **Fairness:** High-priority work starves; no capacity control under
-    load
+4.  **Fairness:** High-priority work starves; no capacity control under load
 
-5.  **Privacy:** Retention and redaction applied inconsistently per
-    pipeline
+5.  **Privacy:** Retention and redaction applied inconsistently per pipeline
 
-6.  **Velocity:** Each new \"memory feature\" requires custom glue code
+6.  **Velocity:** Each new "memory feature" requires custom glue code
 
-**What\'s needed:** A pattern that treats context as a **living,
-versioned, governed artifact** that updates reactively, carries its
-lineage, and can be reused by many consumers---agents, services,
-dashboards, and analytics---without per-consumer duplication.
+**What's needed:** A pattern that treats context as a **living, versioned, governed artifact** that updates reactively, carries its lineage, and can be reused by many consumers—agents, services, dashboards, and analytics—without per-consumer duplication.
 
 ## **1.3 Pattern Overview**
 
-RCM treats memory not as a static store or per-request cache, but as a
-**reactive composition** of sources into contexts (views) that
-materialize as **versioned, immutable frames** whenever dependencies
-change.
+RCM treats memory not as a static store or per-request cache, but as a **reactive composition** of sources into contexts (views) that materialize as **versioned, immutable frames** whenever dependencies change.
 
 **Core flow:**
 
-Source Signals → Context Views → Materializer → Frames → Subscriptions →
-Consumers
+Source Signals → Context Views → Materializer → Frames → Subscriptions → Consumers
 
 ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -287,68 +234,43 @@ Consumers
 
 (deterministic) (time-aware) (lineage) (delivery) (effects)
 
-Sources may involve non-deterministic processes (ML inference, external
-APIs), but once captured as signals, view evaluation is deterministic.
+Sources may involve non-deterministic processes (ML inference, external APIs), but once captured as signals, view evaluation is deterministic.
 
 **Key concepts:**
 
-- **Source Signals:** Typed, timestamped change feeds (events, CDC, file
-  arrivals, API updates) with monotone positions
+- **Source Signals:** Typed, timestamped change feeds (events, CDC, file arrivals, API updates) with monotone positions
 
-- **Context Views:** Declarative compositions over sources and other
-  views---joins, filters, windows, summaries---expressed as
-  deterministic plans
+- **Context Views:** Declarative compositions over sources and other views—joins, filters, windows, summaries—expressed as deterministic plans
 
-- **Materializer:** The executor that applies time semantics
-  (event-time, watermarks, window closure) and evaluates plans to
-  produce frames
+- **Materializer:** The executor that applies time semantics (event-time, watermarks, window closure) and evaluates plans to produce frames
 
-- **Frames:** Immutable materializations (snapshots or deltas) carrying
-  headers for identity, version, lineage (input ranges + plan hash),
-  time window, TTL, and extension metadata
+- **Frames:** Immutable materializations (snapshots or deltas) carrying headers for identity, version, lineage (input ranges + plan hash), time window, TTL, and extension metadata
 
-- **Subscriptions:** At-least-once, per-key--ordered delivery to many
-  heterogeneous consumers
+- **Subscriptions:** At-least-once, per-key–ordered delivery to many heterogeneous consumers
 
-- **Consumers:** Agents, services, UIs, analytics pipelines that process
-  frames idempotently (effect-once despite duplicate deliveries)
+- **Consumers:** Agents, services, UIs, analytics pipelines that process frames idempotently (effect-once despite duplicate deliveries)
 
 **What makes this reactive:**
 
-When a source changes, affected views recompute and emit new frames
-automatically. Consumers subscribe to frame streams rather than polling
-or rebuilding context. The effect is **memory that stays fresh**,
-**operations that are explainable** (every frame cites its sources), and
-**costs that are predictable** (recomputation happens on change, not on
-traffic).
+When a source changes, affected views recompute and emit new frames automatically. Consumers subscribe to frame streams rather than polling or rebuilding context. The effect is **memory that stays fresh**, **operations that are explainable** (every frame cites its sources), and **costs that are predictable** (recomputation happens on change, not on traffic).
 
 **Extension points:**
 
-RCM provides well-defined hooks where implementations inject
-cross-cutting behaviors---admission control (policy checks, rate
-limits), resource management (budgets, quotas), security posture
-(classification, redaction), and human-in-the-loop gates. The pattern
-specifies *where* these extensions attach and *what telemetry* they must
-emit; the specific policies are implementation-defined. (See §4.7 and
-Annex D.)
+RCM provides well-defined hooks where implementations inject cross-cutting behaviors—admission control (policy checks, rate limits), resource management (budgets, quotas), security posture (classification, redaction), and human-in-the-loop gates. The pattern specifies *where* these extensions attach and *what telemetry* they must emit; the specific policies are implementation-defined. (See §4.7 and Annex D.)
 
 ## **1.4 What RCM Is (and Is Not)**
 
 **RCM is:**
 
-- ✅ A **design pattern** for reactive, versioned, governed context
-  management
+- ✅ A **design pattern** for reactive, versioned, governed context management
 
-- ✅ A pattern for **reactive, versioned views** that serve as memory
-  substrate (but applicable beyond just \'memory\' use cases)
+- ✅ A pattern for **reactive, versioned views** that serve as memory substrate (but applicable beyond just 'memory' use cases)
 
 - ✅ A **specification** with normative semantics and conformance tests
 
-- ✅ **Platform-agnostic**: implementable on Kafka, Pulsar, Flink,
-  custom runtimes, cloud services
+- ✅ **Platform-agnostic**: implementable on Kafka, Pulsar, Flink, custom runtimes, cloud services
 
-- ✅ **Interoperable**: plays well with Event Sourcing, CQRS, search
-  indices, knowledge graphs, edge protocols (MCP, A2A)
+- ✅ **Interoperable**: plays well with Event Sourcing, CQRS, search indices, knowledge graphs, edge protocols (MCP, A2A)
 
 **RCM is not:**
 
@@ -356,11 +278,9 @@ Annex D.)
 
 - ❌ A **database** or **cache** (though it leverages both)
 
-- ❌ A **replacement** for Event Sourcing, CQRS, or streaming engines
-  (it complements them)
+- ❌ A **replacement** for Event Sourcing, CQRS, or streaming engines (it complements them)
 
-- ❌ A **UI architecture** (though it borrows unidirectional flow from
-  Elm/Redux and extends it to durable, multi-consumer memory)
+- ❌ A **UI architecture** (though it borrows unidirectional flow from Elm/Redux and extends it to durable, multi-consumer memory)
 
 **\**
 
@@ -372,66 +292,49 @@ Annex D.)
 
 - CQRS is to read/write separation
 
-RCM is to **context lifecycle**: it defines how composite knowledge
-forms, versions, persists, and flows---with time, lineage, and
-governance as first-class concerns.
+RCM is to **context lifecycle**: it defines how composite knowledge forms, versions, persists, and flows—with time, lineage, and governance as first-class concerns.
 
 ## **1.5 Audience and Document Structure**
 
 **Primary audiences:**
 
-- **Architects and decision-makers** evaluating whether RCM fits their
-  systems (read Chapters 1-3, 5)
+- **Architects and decision-makers** evaluating whether RCM fits their systems (read Chapters 1-3, 5)
 
-- **Implementers** building RCM-conformant systems (focus on Chapter 4,
-  Annex A)
+- **Implementers** building RCM-conformant systems (focus on Chapter 4, Annex A)
 
-- **Operators and SREs** running RCM systems in production (read
-  Chapters 1-3; skim §4.7 and Annex D for extension patterns)
+- **Operators and SREs** running RCM systems in production (read Chapters 1-3; skim §4.7 and Annex D for extension patterns)
 
-- **Standards bodies and researchers** assessing the pattern\'s rigor
-  and portability (all chapters; Annexes A-C)
+- **Standards bodies and researchers** assessing the pattern's rigor and portability (all chapters; Annexes A-C)
 
 **Document structure:**
 
 - **Chapter 2** clarifies the problem and design forces RCM balances
 
-- **Chapter 3** gives a visual model and illustrative flow in plain
-  language
+- **Chapter 3** gives a visual model and illustrative flow in plain language
 
-- **Chapter 4** specifies normative semantics (envelope, time/ordering,
-  determinism, delivery, extension points)
+- **Chapter 4** specifies normative semantics (envelope, time/ordering, determinism, delivery, extension points)
 
-- **Chapter 5** positions RCM against adjacent patterns (Event Sourcing,
-  CQRS, caching, etc.) with decision heuristics
+- **Chapter 5** positions RCM against adjacent patterns (Event Sourcing, CQRS, caching, etc.) with decision heuristics
 
-- **Chapter 6** concludes with conformance summary and participation
-  guidance
+- **Chapter 6** concludes with conformance summary and participation guidance
 
-- **Annex A (Normative)** defines conformance tests, required telemetry,
-  and SLO measurement
+- **Annex A (Normative)** defines conformance tests, required telemetry, and SLO measurement
 
-- **Annex B (Informative)** provides references and crosswalks to
-  related work
+- **Annex B (Informative)** provides references and crosswalks to related work
 
-- **Annex C (Informative)** is a glossary of terms with authoritative
-  citations
+- **Annex C (Informative)** is a glossary of terms with authoritative citations
 
-- **Annex D (Informative)** documents common extension patterns
-  (governance chains, rate limiting, policy-as-code)
+- **Annex D (Informative)** documents common extension patterns (governance chains, rate limiting, policy-as-code)
 
 **\**
 
 ## **1.6 Conformance**
 
-RCM defines **one conformance class** covering reactive composition,
-versioned frames, time semantics, deterministic materialization, and
-idempotent delivery.
+RCM defines **one conformance class** covering reactive composition, versioned frames, time semantics, deterministic materialization, and idempotent delivery.
 
 **To claim RCM conformance, an implementation MUST:**
 
-1.  Satisfy normative requirements in §§4.2-4.6 (roles, envelope,
-    time/ordering, determinism, delivery)
+1.  Satisfy normative requirements in §§4.2-4.6 (roles, envelope, time/ordering, determinism, delivery)
 
 2.  Pass test vectors defined in Annex A.5
 
@@ -439,74 +342,49 @@ idempotent delivery.
 
 4.  Produce a conformance report in the specified format (Annex A.6)
 
-**Extension points** (§4.7) allow implementations to inject admission
-control, resource management, security, and observability behaviors.
-These extensions are **implementation-defined**; RCM specifies the
-*hooks* and *telemetry semantics*, not the *policies*. Common patterns
-are documented in Annex D (Informative).
+**Extension points** (§4.7) allow implementations to inject admission control, resource management, security, and observability behaviors. These extensions are **implementation-defined**; RCM specifies the *hooks* and *telemetry semantics*, not the *policies*. Common patterns are documented in Annex D (Informative).
 
 **Why one class:**
 
-Earlier drafts included \"RCM-Core\" and \"RCM-Governed\" classes. We
-consolidated to a single class because **governance is a cross-cutting
-concern** that implementations address via extension points, not a
-fundamental variant of the pattern. This simplifies adoption: teams can
-implement the core reactive semantics first and layer governance as
-operational needs dictate.
+Earlier drafts included "RCM-Core" and "RCM-Governed" classes. We consolidated to a single class because **governance is a cross-cutting concern** that implementations address via extension points, not a fundamental variant of the pattern. This simplifies adoption: teams can implement the core reactive semantics first and layer governance as operational needs dictate.
 
 ## **1.7 Normative Language and Conventions**
 
-This specification uses normative keywords as defined in **RFC 2119**
-and **RFC 8174**:
+This specification uses normative keywords as defined in **RFC 2119** and **RFC 8174**:
 
 - **MUST / REQUIRED / SHALL:** Absolute requirement for conformance
 
 - **MUST NOT / SHALL NOT:** Absolute prohibition
 
-- **SHOULD / RECOMMENDED:** Strong recommendation; may be valid reasons
-  to ignore in particular circumstances, but implications must be
-  understood
+- **SHOULD / RECOMMENDED:** Strong recommendation; may be valid reasons to ignore in particular circumstances, but implications must be understood
 
-- **SHOULD NOT / NOT RECOMMENDED:** Strong discouragement; valid reasons
-  may exist
+- **SHOULD NOT / NOT RECOMMENDED:** Strong discouragement; valid reasons may exist
 
-- **MAY / OPTIONAL:** Truly optional; implementers may choose to include
-  or omit
+- **MAY / OPTIONAL:** Truly optional; implementers may choose to include or omit
 
-Only the **uppercase forms** carry the special RFC meanings. Lowercase
-usage (e.g., \"implementations should consider\...\") is ordinary
-English.
+Only the **uppercase forms** carry the special RFC meanings. Lowercase usage (e.g., "implementations should consider...") is ordinary English.
 
 **\**
 
 **Document conventions:**
 
-- **Normative sections** impose requirements for conformance (Chapters
-  4, 6; Annex A)
+- **Normative sections** impose requirements for conformance (Chapter 4; Annex A)
 
-- **Informative sections** provide context, rationale, and examples but
-  do not impose requirements (Chapters 1-3, 5; Annexes B-D; Appendices)
+- **Informative sections** provide context, rationale, and examples but do not impose requirements (Chapters 1-3, 5-6; Annexes B-D; Appendices)
 
-- **Illustrative pseudocode and diagrams** clarify intent but are not
-  themselves normative unless explicitly stated
+- **Illustrative pseudocode and diagrams** clarify intent but are not themselves normative unless explicitly stated
 
-- **Telemetry names** (events, metrics) in Annex A are normative for
-  semantics; exact spelling MAY vary if meaning is preserved and
-  documented
+- **Telemetry names** (events, metrics) in Annex A are normative for semantics; exact spelling MAY vary if meaning is preserved and documented
 
 **Versioning:**
 
-This is version **1.0** of the RCM specification. Future versions will
-be numbered according to semantic versioning principles:
+This is version **1.0** of the RCM specification. Future versions will be numbered according to semantic versioning principles:
 
-- **Major version** increments indicate breaking changes to conformance
-  requirements
+- **Major version** increments indicate breaking changes to conformance requirements
 
-- **Minor version** increments add new optional features or
-  clarifications
+- **Minor version** increments add new optional features or clarifications
 
-- **Patch version** increments fix errors or ambiguities without
-  semantic change
+- **Patch version** increments fix errors or ambiguities without semantic change
 
 **Changes are tracked in Appendix III (Version History).**
 
@@ -514,60 +392,45 @@ be numbered according to semantic versioning principles:
 
 ## **2.1 Operational Challenges**
 
-RCM addresses a constellation of operational pains that surface when
-systems scale beyond ad-hoc context assembly. Each challenge is real;
-collectively, they demand a coherent pattern rather than point
-solutions.
+RCM addresses a constellation of operational pains that surface when systems scale beyond ad-hoc context assembly. Each challenge is real; collectively, they demand a coherent pattern rather than point solutions.
 
 ### **2.1.1 Freshness at Scale**
 
-**The problem:** Composite context---joining user profiles, recent
-activity, policy updates, and external signals---must stay current as
-upstream sources change. Poll-based approaches create storms; push-based
-glue code proliferates.
+**The problem:** Composite context—joining user profiles, recent activity, policy updates, and external signals—must stay current as upstream sources change. Poll-based approaches create storms; push-based glue code proliferates.
 
 **What breaks:**
 
 - Agent decisions use stale entitlements or outdated threat intelligence
 
-- Dashboards show \"current state\" that lags reality by minutes or
-  hours
+- Dashboards show "current state" that lags reality by minutes or hours
 
 - Per-consumer polling creates N × M traffic (N consumers × M sources)
 
-- Custom \"watch and invalidate\" logic is fragile and hard to audit
+- Custom "watch and invalidate" logic is fragile and hard to audit
 
-**What\'s needed:** Declarative reactive recomputation that propagates
-changes to affected contexts automatically, with bounded staleness and
-observable lag.
+**What's needed:** Declarative reactive recomputation that propagates changes to affected contexts automatically, with bounded staleness and observable lag.
 
 ### **2.1.2 Explainability and Provenance**
 
-**The problem:** Systems must answer \"what did we know, why did we know
-it, and since when?\" for compliance, debugging, and trust---but ad-hoc
-assembly leaves no trail.
+**The problem:** Systems must answer "what did we know, why did we know it, and since when?" for compliance, debugging, and trust—but ad-hoc assembly leaves no trail.
 
 **What breaks:**
 
-- Post-incident reviews can\'t replay the context that fed a decision
+- Post-incident reviews can't replay the context that fed a decision
 
 - Compliance audits find no lineage connecting outputs to inputs
 
-- Trust erodes when systems can\'t justify recommendations or actions
+- Trust erodes when systems can't justify recommendations or actions
 
 - Debugging requires reconstructing history from logs and intuition
 
-**What\'s needed:** Every materialization must carry machine-readable
-lineage (source ranges, transform identity, time window) so decisions
-are auditable by construction.
+**What's needed:** Every materialization must carry machine-readable lineage (source ranges, transform identity, time window) so decisions are auditable by construction.
 
 **\**
 
 ### **2.1.3 Cost and Resource Control**
 
-**The problem:** Context assembly burns compute, network, and
-storage---but without instrumentation, teams can\'t predict or bound
-spend. Traffic spikes become cost surprises.
+**The problem:** Context assembly burns compute, network, and storage—but without instrumentation, teams can't predict or bound spend. Traffic spikes become cost surprises.
 
 **What breaks:**
 
@@ -579,15 +442,11 @@ spend. Traffic spikes become cost surprises.
 
 - Burst traffic causes cascading overload with no graceful degradation
 
-**What\'s needed:** Shift cost from per-request (traffic-driven) to
-per-change (data-driven), with visible budgets, leases, and capacity
-controls that allow predictable spend under load.
+**What's needed:** Shift cost from per-request (traffic-driven) to per-change (data-driven), with visible budgets, leases, and capacity controls that allow predictable spend under load.
 
 ### **2.1.4 Consistency Under Load**
 
-**The problem:** When many consumers need updates simultaneously,
-systems experience stampedes, priority inversion, and non-deterministic
-failures---no fair arbitration exists.
+**The problem:** When many consumers need updates simultaneously, systems experience stampedes, priority inversion, and non-deterministic failures—no fair arbitration exists.
 
 **What breaks:**
 
@@ -599,37 +458,29 @@ failures---no fair arbitration exists.
 
 - No coordination: each team builds custom throttling
 
-**What\'s needed:** Explicit concurrency control, fair scheduling with
-priority and aging, and queue disciplines that degrade gracefully rather
-than collapse.
+**What's needed:** Explicit concurrency control, fair scheduling with priority and aging, and queue disciplines that degrade gracefully rather than collapse.
 
 ### **2.1.5 Privacy and Policy Enforcement**
 
-**The problem:** Retention, redaction, access control, and consent apply
-inconsistently across pipelines. Each team interprets policies
-differently; audits find gaps.
+**The problem:** Retention, redaction, access control, and consent apply inconsistently across pipelines. Each team interprets policies differently; audits find gaps.
 
 **What breaks:**
 
 - PII lingers beyond stated retention in orphaned caches
 
-- Redaction happens (or doesn\'t) based on which service path was taken
+- Redaction happens (or doesn't) based on which service path was taken
 
-- \"Right to erasure\" requests miss derivative contexts
+- "Right to erasure" requests miss derivative contexts
 
 - Cross-border data movement violates policy silently
 
-**What\'s needed:** Uniform policy attachment to every
-artifact---classification, redaction paths, TTL---enforced at
-materialization and egress, with telemetry proving compliance.
+**What's needed:** Uniform policy attachment to every artifact—classification, redaction paths, TTL—enforced at materialization and egress, with telemetry proving compliance.
 
 **\**
 
 ### **2.1.6 Velocity Without Entropy**
 
-**The problem:** Shipping new \"memory features\"---additional joins,
-summaries, or projections---requires bespoke pipelines, deployment risk,
-and maintenance burden. Systems calcify.
+**The problem:** Shipping new "memory features"—additional joins, summaries, or projections—requires bespoke pipelines, deployment risk, and maintenance burden. Systems calcify.
 
 **What breaks:**
 
@@ -641,9 +492,7 @@ and maintenance burden. Systems calcify.
 
 - Fear of breaking existing consumers slows iteration
 
-**What\'s needed:** Declarative composition where new views are added,
-tested via replay, and promoted safely---with the platform handling
-timing, delivery, and lineage automatically.
+**What's needed:** Declarative composition where new views are added, tested via replay, and promoted safely—with the platform handling timing, delivery, and lineage automatically.
 
 ## **2.2 Why Ad-Hoc Approaches Fail**
 
@@ -667,18 +516,15 @@ On inference request:
 
 **Why it fails:**
 
-- **No reuse:** Every inference re-fetches and re-joins, even if nothing
-  changed
+- **No reuse:** Every inference re-fetches and re-joins, even if nothing changed
 
-- **No lineage:** Can\'t answer \"what context fed this response?\"
+- **No lineage:** Can't answer "what context fed this response?"
 
-- **Cost scales with traffic, not change:** 10× requests = 10× assembly
-  work
+- **Cost scales with traffic, not change:** 10× requests = 10× assembly work
 
 - **Latency compounds:** Critical path includes all fetch latencies
 
-- **Non-deterministic:** Concurrent updates create race conditions;
-  replays differ
+- **Non-deterministic:** Concurrent updates create race conditions; replays differ
 
 **\**
 
@@ -694,17 +540,13 @@ TTL: 5 minutes
 
 **Why it fails:**
 
-- **Reactive gap:** Changes upstream don\'t invalidate automatically;
-  stale windows are inevitable
+- **Reactive gap:** Changes upstream don't invalidate automatically; stale windows are inevitable
 
-- **Provenance void:** Cache blobs carry no lineage; \"where did this
-  come from?\" has no answer
+- **Provenance void:** Cache blobs carry no lineage; "where did this come from?" has no answer
 
-- **Invalidation storms:** Expiration triggers N simultaneous rebuilds
-  (thundering herd)
+- **Invalidation storms:** Expiration triggers N simultaneous rebuilds (thundering herd)
 
-- **No versioning:** Consumers can\'t pin to a stable view or replay
-  history
+- **No versioning:** Consumers can't pin to a stable view or replay history
 
 ### **2.2.3 Batch ETL Pipelines**
 
@@ -722,30 +564,24 @@ Every hour:
 
 - **Latency floor:** Freshness measured in hours or days, not seconds
 
-- **No live consumers:** Agents and dashboards can\'t subscribe to
-  incremental updates
+- **No live consumers:** Agents and dashboards can't subscribe to incremental updates
 
-- **All-or-nothing:** Can\'t selectively recompute one key without full
-  batch
+- **All-or-nothing:** Can't selectively recompute one key without full batch
 
-- **Delivery semantics unclear:** Consumers poll and diff; no
-  at-least-once guarantee
+- **Delivery semantics unclear:** Consumers poll and diff; no at-least-once guarantee
 
 **\**
 
 ## **2.3 Forces and Trade-Offs**
 
-RCM must balance competing forces. The pattern doesn\'t eliminate
-trade-offs; it makes them **explicit and tunable**.
+RCM must balance competing forces. The pattern doesn't eliminate trade-offs; it makes them **explicit and tunable**.
 
 ### **2.3.1 Reactivity ↔ Stability**
 
-**Reactivity:** Recompute and emit frames immediately when sources
-change---minimizes staleness\
-**Stability:** Coalesce changes within small windows to avoid version
-churn and consumer thrash
+**Reactivity:** Recompute and emit frames immediately when sources change—minimizes staleness\
+**Stability:** Coalesce changes within small windows to avoid version churn and consumer thrash
 
-**RCM\'s answer:**
+**RCM's answer:**
 
 - Configurable coalescing windows (e.g., tens of milliseconds) per view
 
@@ -753,113 +589,89 @@ churn and consumer thrash
 
 - Brownout mode: widen coalescing under load to preserve SLOs
 
-**Knob:** Coalescing duration and snapshot cadence (view-specific
-policy)
+**Knob:** Coalescing duration and snapshot cadence (view-specific policy)
 
 ### **2.3.2 Consistency ↔ Availability**
 
-**Consistency:** Wait for all inputs and perfect ordering before
-emitting---guarantees correctness\
-**Availability:** Emit with best-effort inputs to reduce
-latency---tolerates disorder
+**Consistency:** Wait for all inputs and perfect ordering before emitting—guarantees correctness\
+**Availability:** Emit with best-effort inputs to reduce latency—tolerates disorder
 
-**RCM\'s answer:**
+**RCM's answer:**
 
-- Use watermarks to bound staleness explicitly (no earlier events
-  expected)
+- Use watermarks to bound staleness explicitly (no earlier events expected)
 
-- Define late-arrival policies per view (accept within Δ, emit
-  corrective deltas, or ignore)
+- Define late-arrival policies per view (accept within Δ, emit corrective deltas, or ignore)
 
-- Per-key ordering guarantees at delivery preserve causal consistency
-  where it matters
+- Per-key ordering guarantees at delivery preserve causal consistency where it matters
 
 **Knob:** Watermark advancement strategy and late-data acceptance window
 
 ### **2.3.3 Recall ↔ Privacy**
 
-**Recall:** Retain frames indefinitely for forensics, learning, and
-compliance\
-**Privacy:** Minimize retention to reduce exposure and satisfy \"right
-to erasure\"
+**Recall:** Retain frames indefinitely for forensics, learning, and compliance\
+**Privacy:** Minimize retention to reduce exposure and satisfy "right to erasure"
 
-**RCM\'s answer:**
+**RCM's answer:**
 
-- Default to **short, non-zero TTLs** (auditable by default without
-  indefinite retention)
+- Default to **short, non-zero TTLs** (auditable by default without indefinite retention)
 
-- Explicit opt-in for longer retention (with classification and
-  justification)
+- Explicit opt-in for longer retention (with classification and justification)
 
 - Explicit opt-in for ephemeral (TTL=0) when policy demands it
 
-- Redaction applies before egress; redacted fields don\'t propagate
+- Redaction applies before egress; redacted fields don't propagate
 
-**Knob:** TTL policy per view and classification; redaction rules in
-security posture
+**Knob:** TTL policy per view and classification; redaction rules in security posture
 
 ### **2.3.4 Centralization ↔ Federation**
 
-**Centralization:** One memory plane for all teams---simplifies reuse
-and governance\
-**Federation:** Domain-specific planes with selective sharing---respects
-boundaries and autonomy
+**Centralization:** One memory plane for all teams—simplifies reuse and governance\
+**Federation:** Domain-specific planes with selective sharing—respects boundaries and autonomy
 
-**RCM\'s answer:**
+**RCM's answer:**
 
-- Support both: run RCM per domain; federate via gateways that enforce
-  policy and sign frames
+- Support both: run RCM per domain; federate via gateways that enforce policy and sign frames
 
-- Frames carry provenance across trust boundaries; consuming domains can
-  verify integrity
+- Frames carry provenance across trust boundaries; consuming domains can verify integrity
 
-- Views can compose over local and remote sources with different
-  retention/redaction rules
+- Views can compose over local and remote sources with different retention/redaction rules
 
-**Knob:** Deployment topology (monolithic vs. federated); gateway
-policies at edges
+**Knob:** Deployment topology (monolithic vs. federated); gateway policies at edges
 
 ### **2.3.5 Granularity ↔ Cost**
 
-**Granularity:** Fine-grained frames (per-user, per-asset) improve
-traceability and reuse\
-**Cost:** Coarser frames (per-tenant, per-aggregate) reduce
-materialization and storage spend
+**Granularity:** Fine-grained frames (per-user, per-asset) improve traceability and reuse\
+**Cost:** Coarser frames (per-tenant, per-aggregate) reduce materialization and storage spend
 
-**RCM\'s answer:**
+**RCM's answer:**
 
 - Choose keys that reflect natural ownership and consumption patterns
 
-- Use hierarchical views: fine-grained local rolls; coarse aggregates
-  atop them
+- Use hierarchical views: fine-grained local rolls; coarse aggregates atop them
 
-- Emit deltas for high-rate fine-grained updates; snapshot periodically
-  to cap replay cost
+- Emit deltas for high-rate fine-grained updates; snapshot periodically to cap replay cost
 
-**Knob:** Key selection (user vs. tenant vs. global); snapshot-to-delta
-ratio
+**Knob:** Key selection (user vs. tenant vs. global); snapshot-to-delta ratio
 
 **\**
 
 ## **2.4 Success Criteria**
 
-RCM succeeds when it transforms context management from ad-hoc chaos
-into a **disciplined, observable, cost-effective** capability.
-Concretely:
+RCM succeeds when it transforms context management from ad-hoc chaos into a **disciplined, observable, cost-effective** capability. Concretely:
 
 ### **2.4.1 Freshness Becomes Measurable**
 
 **Before RCM:**
 
-- \"Is our context fresh?\" has no answer
+- "Is our context fresh?" has no answer
 
-- Staleness discovered post-incident (\"we used yesterday\'s data\")
+- Staleness discovered post-incident ("we used yesterday's data")
 
 **After RCM:**
 
 - Freshness = watermark_lag_ms per context, tracked and alerted
 
-- SLOs like \"p95 lag \< 2 seconds\" are testable and enforceable
+- SLOs like "p95 lag \< 2 seconds" are testable and enforceable
 
 - Brownout mode activates before SLO breach, not after collapse
 
@@ -867,19 +679,17 @@ Concretely:
 
 **Before RCM:**
 
-- \"Why did the agent recommend X?\" requires detective work
+- "Why did the agent recommend X?" requires detective work
 
 - Compliance teams demand lineage; engineers shrug
 
 **After RCM:**
 
-- Every frame header cites inputs (source ranges + hashes), plan
-  identity, and time window
+- Every frame header cites inputs (source ranges + hashes), plan identity, and time window
 
 - Replay by version or interval is routine, not heroic
 
-- Auditors query frame store: \"show me what the system knew at time T
-  for user U\"
+- Auditors query frame store: "show me what the system knew at time T for user U"
 
 ### **2.4.3 Cost Is Visible and Controllable**
 
@@ -887,12 +697,11 @@ Concretely:
 
 - Spend correlates with traffic, not change; surprises are common
 
-- No attribution: \"why did last month cost 30% more?\"
+- No attribution: "why did last month cost 30% more?"
 
 **After RCM:**
 
-- Recomputation happens on change; frame reuse across consumers
-  amortizes cost
+- Recomputation happens on change; frame reuse across consumers amortizes cost
 
 - Budget leases and commit telemetry show spend per context/view/tenant
 
@@ -910,9 +719,9 @@ Concretely:
 
 - One view definition serves agents, dashboards, analytics, and indices
 
-- New consumers subscribe to existing frames---no duplicate pipelines
+- New consumers subscribe to existing frames—no duplicate pipelines
 
-- New views compose over existing views---hierarchical reuse
+- New views compose over existing views—hierarchical reuse
 
 ### **2.4.5 Policies Apply Uniformly**
 
@@ -920,7 +729,7 @@ Concretely:
 
 - Retention and redaction are per-pipeline band-aids
 
-- \"Right to erasure\" requires manual hunting
+- "Right to erasure" requires manual hunting
 
 **After RCM:**
 
@@ -928,8 +737,7 @@ Concretely:
 
 - Edge gateways enforce policy before egress
 
-- Telemetry proves compliance (redaction.applied.count,
-  policy.denied.count)
+- Telemetry proves compliance (security_redaction_count, policy_denied_count)
 
 ### **2.4.6 Iteration Is Safe**
 
@@ -949,39 +757,27 @@ Concretely:
 
 **\**
 
-## **2.5 Summary: The Pattern\'s Promise**
+## **2.5 Summary: The Pattern's Promise**
 
-RCM doesn\'t eliminate complexity---it **organizes** it. The pattern
-acknowledges that:
+RCM doesn't eliminate complexity—it **organizes** it. The pattern acknowledges that:
 
-- Context management is **hard** (multiple sources, time semantics,
-  load, privacy)
+- Context management is **hard** (multiple sources, time semantics, load, privacy)
 
-- Ad-hoc solutions **fragment** (each team solves it differently,
-  poorly)
+- Ad-hoc solutions **fragment** (each team solves it differently, poorly)
 
-- The forces are **real** (reactivity vs. stability, recall vs. privacy,
-  cost vs. granularity)
+- The forces are **real** (reactivity vs. stability, recall vs. privacy, cost vs. granularity)
 
-**RCM\'s contribution:**
+**RCM's contribution:**
 
-A coherent design that makes these forces **explicit**, trade-offs
-**tunable**, and outcomes **observable**---so teams can build
-intelligent systems that remember reliably, explain credibly, and scale
-economically.
+A coherent design that makes these forces **explicit**, trade-offs **tunable**, and outcomes **observable**—so teams can build intelligent systems that remember reliably, explain credibly, and scale economically.
 
-**Next:** Chapter 3 translates these requirements into a visual model
-and illustrative flow.
+**Next:** Chapter 3 translates these requirements into a visual model and illustrative flow.
 
 # **3. RCM in One Picture**
 
 ## **3.1 Visual Model**
 
-The following diagram captures RCM\'s structure and flow at a glance.
-Read left to right: changes flow from sources through composition and
-materialization into versioned frames, which are delivered to many
-consumers. Extension points (dotted lines) show where implementations
-inject cross-cutting behaviors.
+The following diagram captures RCM's structure and flow at a glance. Read left to right: changes flow from sources through composition and materialization into versioned frames, which are delivered to many consumers. Extension points (dotted lines) show where implementations inject cross-cutting behaviors.
 
 ┌─────────────────────────────────────────────┐
 
@@ -995,7 +791,7 @@ inject cross-cutting behaviors.
 
 └──────────────┬──────────────────────────────┘
 
-│ Results captured as\...
+│ Results captured as...
 
 ▼
 
@@ -1011,7 +807,7 @@ inject cross-cutting behaviors.
 
 └──────────────┬──────────────────────────────┘
 
-│ Deterministically composed\...
+│ Deterministically composed...
 
 ▼
 
@@ -1023,7 +819,7 @@ inject cross-cutting behaviors.
 
 └──────────────┬──────────────────────────────┘
 
-│ Materialize as\...
+│ Materialize as...
 
 ▼
 
@@ -1033,100 +829,31 @@ inject cross-cutting behaviors.
 
 └─────────────────────────────────────────────┘
 
-RCM\'s determinism boundary: Non-determinism is acceptable in write
-paths (how facts are created); determinism is required in read paths
-(how facts are composed into frames).
+RCM's determinism boundary: Non-determinism is acceptable in write paths (how facts are created); determinism is required in read paths (how facts are composed into frames).
 
-flowchart LR
-
-subgraph Sources
-
-E\[Event Streams\]
-
-D\[Databases / CDC\]
-
-G\[Graphs / Indices\]
-
-X\[External APIs\]
-
-end
-
-Sources \--\>\|changes\| V\[Context Views\<br/\>declarative
-composition\]
-
-V \--\> M\[Materializer\<br/\>windowing, time semantics\]
-
-M \--\> F\[(Frames\<br/\>versioned, immutable)\]
-
-F \--\> B\[Subscriptions Bus\<br/\>ordered delivery\]
-
-B \--\> C1\[Agents\]
-
-B \--\> C2\[Services\]
-
-B \--\> C3\[Dashboards/UI\]
-
-B \--\> C4\[Analytics\]
-
-subgraph Extensions
-
-P\[Policy / Access\]
-
-R\[Resource Mgmt\]
-
-S\[Security / Privacy\]
-
-O\[Observability\]
-
-end
-
-V -.-\>\|inject\| P
-
-M -.-\>\|inject\| R
-
-F -.-\>\|inject\| S
-
-B -.-\>\|inject\| O
-
-style Extensions fill:#f0f0f0,stroke:#999,stroke-dasharray: 5 5
-
-![](media/image1.png){width="6.5in" height="2.375in"}
+<img src="./media/image1.png" style="width:6.5in;height:2.375in" />
 
 **\**
 
 **Key observations:**
 
-Unidirectional flow: Changes propagate forward through the pipeline.
-Consumers never mutate frames; new knowledge generates new frames.
+Unidirectional flow: Changes propagate forward through the pipeline. Consumers never mutate frames; new knowledge generates new frames.
 
-Separation of concerns: Views define *what* to compute (declarative).
-The Materializer handles *when* to compute (time semantics). Frames are
-*immutable artifacts*. Subscriptions handle *delivery*. Extensions
-inject *policies*.
+Separation of concerns: Views define *what* to compute (declarative). The Materializer handles *when* to compute (time semantics). Frames are *immutable artifacts*. Subscriptions handle *delivery*. Extensions inject *policies*.
 
-One memory, many consumers: The same frames serve agents, operational
-services, dashboards, and analytics---no parallel caches to drift.
+One memory, many consumers: The same frames serve agents, operational services, dashboards, and analytics—no parallel caches to drift.
 
 ## **3.2 Core Concepts**
 
 ### **Source Signals**
 
-Typed, timestamped change feeds that drive reactive recomputation.
-Examples include event streams (clicks, transactions),
-change-data-capture from databases, document arrivals, embedding
-updates, and external API webhooks.
+Typed, timestamped change feeds that drive reactive recomputation. Examples include event streams (clicks, transactions), change-data-capture from databases, document arrivals, embedding updates, and external API webhooks.
 
-Each source provides a monotone position (offset, sequence number,
-timestamp) per partition or key, enabling deterministic replay.
-
-###  
+Each source provides a monotone position (offset, sequence number, timestamp) per partition or key, enabling deterministic replay.
 
 ### **Context Views**
 
-Declarative compositions over sources and other views. A view specifies
-*what* to compute---joins, filters, windows, aggregations,
-summaries---as a deterministic plan. Views hold no mutable state; they
-are recipes.
+Declarative compositions over sources and other views. A view specifies *what* to compute—joins, filters, windows, aggregations, summaries—as a deterministic plan. Views hold no mutable state; they are recipes.
 
 Example views:
 
@@ -1140,8 +867,7 @@ Views compose hierarchically: complex contexts build on simpler ones.
 
 ### **Materializer**
 
-The executor that applies time semantics and evaluates view plans to
-produce frames. The Materializer:
+The executor that applies time semantics and evaluates view plans to produce frames. The Materializer:
 
 - Tracks event-time and advances watermarks per context and key
 
@@ -1153,39 +879,31 @@ produce frames. The Materializer:
 
 - Emits immutable frames with complete envelopes
 
-The Materializer is the system\'s timing and correctness hinge. It
-enforces \"no frame emitted before window closure\" and handles
-late/duplicate data per policy.
+The Materializer is the system's timing and correctness hinge. It enforces "no frame emitted before window closure" and handles late/duplicate data per policy.
 
 ### **Frames**
 
-Immutable materializations of a view at a point or interval in
-event-time. Each frame carries a header with:
+Immutable materializations of a view at a point or interval in event-time. Each frame carries a header with:
 
-- Identity: frameId (globally unique), contextId (view identity), key
-  (partition), version (monotone per context+key)
+- Identity: frameId (globally unique), contextId (view identity), key (partition), version (monotone per context+key)
 
 - Type: snapshot (whole state) or delta (incremental change)
 
 - Time: window (event-time interval), watermarkAt (staleness bound)
 
-- Provenance: inputs (source ranges + hashes), planHash (transform
-  identity)
+- Provenance: inputs (source ranges + hashes), planHash (transform identity)
 
 - Determinism: idempotencyKey (stable deduplication key)
 
 - Lifecycle: ttl (retention policy), createdAt (wall-clock emit time)
 
-- Extensions: extensions object for implementation-defined metadata
-  (classification, redactions, budgets, approvals)
+- Extensions: extensions object for implementation-defined metadata (classification, redactions, budgets, approvals)
 
-Frames are the durable substrate of memory. Consumers reference frames
-by ID; operators replay by version or time interval.
+Frames are the durable substrate of memory. Consumers reference frames by ID; operators replay by version or time interval.
 
 ### **Subscriptions**
 
-Delivery relationships where consumers receive frames with
-at-least-once, per-key ordering guarantees. The subscriptions bus:
+Delivery relationships where consumers receive frames with at-least-once, per-key ordering guarantees. The subscriptions bus:
 
 - Maintains per-key order by (window.end, version)
 
@@ -1193,66 +911,43 @@ at-least-once, per-key ordering guarantees. The subscriptions bus:
 
 - Routes terminal failures to dead-letter queues
 
-- Supports filtering (consumers bind to specific contexts and key
-  patterns)
+- Supports filtering (consumers bind to specific contexts and key patterns)
 
 - Decouples producers from consumers (independent scaling, fan-out)
 
-Consumers must process frames idempotently using idempotencyKey for
-deduplication.
+Consumers must process frames idempotently using idempotencyKey for deduplication.
 
 ### **Extension Points**
 
-Well-defined hooks where implementations inject cross-cutting behaviors.
-RCM specifies *where* these hooks attach and *what telemetry* they emit;
-the specific policies are implementation-defined.
+Well-defined hooks where implementations inject cross-cutting behaviors. RCM specifies *where* these hooks attach and *what telemetry* they emit; the specific policies are implementation-defined.
 
 Common extension points:
 
-- **Before materialization:** Admission control (policy checks, rate
-  gates, concurrency limits, priority scheduling)
+- **Before materialization:** Admission control (policy checks, rate gates, concurrency limits, priority scheduling), followed by budget leases for the materialization itself (compute, memory, tokens); gates are evaluated before any lease is taken
 
-- **During materialization:** Resource management (budget leases for
-  compute/memory/network/tokens)
+- **After publish:** Resource settlement (commit or cancel the leases taken before materialization; frame size and timing metrics)
 
-- **Before publish:** Security posture (classification, redaction,
-  approvals)
+- **Before publish:** Security posture (classification, redaction, approvals)
 
-- **At delivery:** Observability (lineage tracking, cost attribution,
-  health metrics)
+- **At delivery:** Access checks, then egress budget leases (network, egress bytes), then observability (lineage tracking, cost attribution, health metrics)
 
-Extensions are orthogonal to the core pattern. Implementations may
-provide simple extensions (basic rate limiting) or sophisticated ones
-(multi-stage governance with fairness and budgets). Annex D documents
-common patterns.
-
-##  
+Extensions are orthogonal to the core pattern. Implementations may provide simple extensions (basic rate limiting) or sophisticated ones (multi-stage governance with fairness and budgets). Annex D documents common patterns.
 
 ## **3.3 Illustrative Flow**
 
-This section walks through RCM\'s behavior in steady state: a source
-changes, a view recomputes, a frame emits, and consumers receive it.
+This section walks through RCM's behavior in steady state: a source changes, a view recomputes, a frame emits, and consumers receive it.
 
 ### **Step 1: Source Change Detected**
 
-An event arrives in a source stream (e.g., user clicks a button, a
-support ticket updates, a document is ingested). The source assigns a
-monotone position (offset 42) and timestamp (event-time T).
+An event arrives in a source stream (e.g., user clicks a button, a support ticket updates, a document is ingested). The source assigns a monotone position (offset 42) and timestamp (event-time T).
 
-The Materializer observes the change and identifies affected views. For
-a view support_context keyed by (tenantId, userId), the change maps to
-key (acme, alice).
+The Materializer observes the change and identifies affected views. For a view support_context keyed by (tenantId, userId), the change maps to key (acme, alice).
 
 ### **Step 2: Watermark Advancement**
 
-The Materializer advances the watermark for (support_context,
-acme/alice) based on the new event\'s timestamp. If the watermark now
-exceeds the end of an open window, the window transitions from Accepting
-to Closing.
+The Materializer advances the watermark for (support_context, acme/alice) based on the new event's timestamp. If the watermark now exceeds the end of an open window, the window transitions from Accepting to Closing.
 
-Late-arrival policy determines whether to accept events that arrive
-after the watermark. If accepted, a corrective delta frame will emit
-with incremented version.
+Late-arrival policy determines whether to accept events that arrive after the watermark. If accepted, a corrective delta frame will emit with incremented version.
 
 ### **Step 3: View Evaluation (Deterministic Plan)**
 
@@ -1264,13 +959,11 @@ The Materializer fetches inputs for the window:
 
 - From reference data: snapshots at the watermark time
 
-It retrieves the view\'s plan (compiled, with operator versions and
-configuration baked in) and computes planHash = hash(plan).
+It retrieves the view's plan (compiled, with operator versions and configuration baked in) and computes planHash = hash(plan).
 
-The plan evaluates deterministically: given the same inputs, window, and
-parameters, it produces the same frame body and idempotencyKey.
+Before evaluation, the pre-materialization hook runs if configured: policy check, rate gate, concurrency and priority scheduling, and then a budget lease for the expected compute (gate-before-budget; see section 4.7.2). If the hook denies, the plan is not evaluated.
 
-###  
+The plan evaluates deterministically: given the same inputs, window, and parameters, it produces the same frame body and idempotencyKey.
 
 ### **Step 4: Frame Construction**
 
@@ -1290,71 +983,47 @@ The Materializer constructs the frame envelope:
 
 - watermarkAt: current watermark
 
-- inputs: \[{sourceId: \"tickets\", from: \"37\", to: \"42\", hash:
-  \"abc123\"}, \...\]
+- inputs: \[{sourceId: "tickets", from: "37", to: "42", hash: "abc123"}, ...\]
 
 - planHash: sha256(plan)
 
-- idempotencyKey: sha256(contextId, key, window, inputs_summary,
-  planHash)
+- idempotencyKey: sha256(contextId, key, window, inputs_summary, planHash)
 
 - ttl: from view policy (e.g., PT5M for 5 minutes)
 
 - createdAt: wall-clock now
 
-- extensions: implementation-defined (e.g., {classification:
-  \"internal\", budgetUsed: {timeMs: 120}})
+- extensions: implementation-defined (e.g., {classification: "internal", budgetUsed: {timeMs: 120}})
 
-The frame body contains the computed payload (user profile + recent
-tickets + relevant KB articles).
+The frame body contains the computed payload (user profile + recent tickets + relevant KB articles).
 
 ### **Step 5: Extension Point: Before Publish**
 
-Before emitting the frame, the implementation invokes extension hooks
-(if configured):
+Before emitting the frame, the implementation invokes extension hooks (if configured):
 
-- **Policy check:** Does the requester have access? Is the
-  classification allowed?
+- **Policy check:** Does the requester have access? Is the classification allowed?
 
-- **Rate gate:** Has this tenant exceeded their emission quota?
+- **Redaction:** Apply redaction paths from security policy (e.g., mask PII fields)
 
-- **Budget lease:** Reserve 120ms of compute time; commit after publish
-  succeeds
+- **Approval (optional):** For high-risk contexts, request human approval before exposing
 
-- **Redaction:** Apply redaction paths from security policy (e.g., mask
-  PII fields)
-
-- **Approval (optional):** For high-risk contexts, request human
-  approval before exposing
-
-Each hook emits telemetry (e.g., admission.decision, budget.commit,
-redaction.applied). If any hook denies, the frame does not publish; the
-decision is logged and may trigger alerting.
-
-###  
+Each hook emits telemetry (e.g., admission.decision, security.classification, security.redaction). If any hook denies, the frame does not publish; the decision is logged and may trigger alerting.
 
 ### **Step 6: Publish to Frame Store**
 
-The frame (headers + body) writes to the immutable frame store. The
-store indexes by (contextId, key, version) and by frameId. TTL metadata
-schedules eventual deletion.
+The frame (headers + body) writes to the immutable frame store. The store indexes by (contextId, key, version) and by frameId. TTL metadata schedules eventual deletion.
 
-If an identical idempotencyKey already exists (duplicate work detected),
-the store deduplicates: no new artifact created, but telemetry
-increments a duplicate.materialization counter.
+If an identical idempotencyKey already exists (duplicate work detected), the store deduplicates: no new artifact is created, but telemetry emits duplicate.detected (stage=materialization) and increments duplicate_dedup_count.
+
+After a successful publish, the post-publish hook settles the budget lease taken before materialization (budget.commit with actual usage); if publication fails or is denied, the lease is released (budget.cancel).
 
 ### **Step 7: Notify Subscriptions**
 
-The Materializer publishes a lightweight notification to the
-subscriptions bus: (contextId=support_context, key=acme/alice,
-frameId=\...). The bus does not carry the full frame body; subscribers
-fetch by ID if needed, or the bus delivers headers + pointers.
+The Materializer publishes a lightweight notification to the subscriptions bus: (contextId=support_context, key=acme/alice, frameId=...). The bus does not carry the full frame body; subscribers fetch by ID if needed, or the bus delivers headers + pointers.
 
 ### **Step 8: Delivery to Consumers**
 
-Subscribers bound to support_context and matching key patterns receive
-the frame in per-key order (by window.end, then version). Delivery is
-at-least-once; consumers may see duplicates during retries.
+Subscribers bound to support_context and matching key patterns receive the frame in per-key order (by window.end, then version). Delivery is at-least-once; consumers may see duplicates during retries.
 
 Consumer pseudocode:
 
@@ -1372,18 +1041,13 @@ recordSeen(frame.idempotencyKey)
 
 ack()
 
-If processing fails, the bus retries with exponential backoff. After
-exhausting retries, the frame routes to a dead-letter queue with enough
-context (frame headers, failure reason) to remediate and re-drive.
-
-###  
+If processing fails, the bus retries with exponential backoff. After exhausting retries, the frame routes to a dead-letter queue with enough context (frame headers, failure reason) to remediate and re-drive.
 
 ### **Step 9: Observability and Settlement**
 
 Throughout the flow, telemetry emits:
 
-- frame.materialized (context, key, version, window, watermark,
-  planHash, ttl)
+- frame.materialized (context, key, version, window, watermark, planHash, ttl)
 
 - view.window.closed (context, key, window)
 
@@ -1391,7 +1055,7 @@ Throughout the flow, telemetry emits:
 
 - delivery.attempt, delivery.retry, delivery.dlq
 
-- redaction.applied (if security extension active)
+- security.redaction (if security extension active)
 
 Operators monitor dashboards showing:
 
@@ -1399,38 +1063,27 @@ Operators monitor dashboards showing:
 
 - Latency: recompute_latency_ms, delivery_latency_ms
 
-- Cost: budget.timeMs_committed per tenant/view
+- Cost: budget_timeMs_committed per tenant/view
 
-- Health: delivery.retry.count, dlq.count
+- Health: delivery_retry_count, delivery_dlq_count
 
-SLOs like \"p95 freshness \< 2s\" are continuously evaluated. Brownout
-mode activates if backlog or lag exceeds thresholds, widening coalescing
-windows and emitting coarse frames to preserve SLOs.
+SLOs like "p95 freshness \< 2s" are continuously evaluated. Brownout mode activates if backlog or lag exceeds thresholds, widening coalescing windows and emitting coarse frames to preserve SLOs.
 
 ## **3.4 Key Implications**
 
 ### **Unidirectional Flow**
 
-Events flow forward: source changes trigger view recomputation, which
-emits frames, which notify subscribers. There is no backward mutation.
-Corrections emit new frames with incremented versions.
+Events flow forward: source changes trigger view recomputation, which emits frames, which notify subscribers. There is no backward mutation. Corrections emit new frames with incremented versions.
 
-This mirrors Elm/MVU/Redux for UI state but extends it to durable,
-multi-session, multi-consumer memory.
+This mirrors Elm/MVU/Redux for UI state but extends it to durable, multi-session, multi-consumer memory.
 
 ### **Time as First-Class**
 
-Event-time (when things happened) is distinct from processing-time (when
-the system sees them). Watermarks and windows make staleness explicit
-and controllable. Late data is handled deterministically per policy, not
-ad hoc.
-
-###  
+Event-time (when things happened) is distinct from processing-time (when the system sees them). Watermarks and windows make staleness explicit and controllable. Late data is handled deterministically per policy, not ad hoc.
 
 ### **Determinism Where It Counts**
 
-Given identical inputs, window, and plan, the Materializer produces the
-same frame body and idempotencyKey. This enables:
+Given identical inputs, window, and plan, the Materializer produces the same frame body and idempotencyKey. This enables:
 
 - Replay for audit and debugging
 
@@ -1438,8 +1091,7 @@ same frame body and idempotencyKey. This enables:
 
 - Safe dual-run of plan changes (compare outputs before cutover)
 
-Non-determinism (randomness, wall-clock reads) is discouraged in plans.
-If unavoidable, seed with event-time or include in planHash.
+Non-determinism (randomness, wall-clock reads) is discouraged in plans. If unavoidable, seed with event-time or include in planHash.
 
 ### **Separation of Concerns**
 
@@ -1449,38 +1101,25 @@ If unavoidable, seed with event-time or include in planHash.
 **Subscriptions** handle *delivery* (fan-out, retries).\
 **Extensions** inject *policy* (governance, security, observability).
 
-This separation allows independent evolution: change the delivery
-mechanism without touching view logic; add a new extension (e.g., budget
-tracking) without rewriting the Materializer.
+This separation allows independent evolution: change the delivery mechanism without touching view logic; add a new extension (e.g., budget tracking) without rewriting the Materializer.
 
 ### **Reuse Across Consumers**
 
-One set of frames serves agents, operational services, dashboards, CMS,
-and analytics pipelines. No parallel caches. No drift. New consumers
-subscribe to existing frames without triggering recomputation.
+One set of frames serves agents, operational services, dashboards, CMS, and analytics pipelines. No parallel caches. No drift. New consumers subscribe to existing frames without triggering recomputation.
 
-This amortizes cost: recomputation happens on change (proportional to
-data velocity) not on traffic (proportional to consumer requests).
+This amortizes cost: recomputation happens on change (proportional to data velocity) not on traffic (proportional to consumer requests).
 
 **Write Path vs Read Path**
 
-Source generation may be non-deterministic (e.g., LLM responses,
-external API calls, human decisions). RCM captures these results as
-immutable source signals, then deterministically composes them. This
-separation enables both flexibility (use any tool to generate facts) and
-reproducibility (replay always produces same frames from same signals).
+Source generation may be non-deterministic (e.g., LLM responses, external API calls, human decisions). RCM captures these results as immutable source signals, then deterministically composes them. This separation enables both flexibility (use any tool to generate facts) and reproducibility (replay always produces same frames from same signals).
 
 **\**
 
 ### **Governance via Extension Points**
 
-The core pattern (reactive composition, versioned frames, idempotent
-delivery) is lean and portable. Cross-cutting concerns (policy, budgets,
-security) attach at well-defined hooks.
+The core pattern (reactive composition, versioned frames, idempotent delivery) is lean and portable. Cross-cutting concerns (policy, budgets, security) attach at well-defined hooks.
 
-Implementations range from simple (basic rate limiter) to sophisticated
-(multi-stage governance with fairness, budgets, and human approvals).
-The pattern doesn\'t mandate; it accommodates.
+Implementations range from simple (basic rate limiter) to sophisticated (multi-stage governance with fairness, budgets, and human approvals). The pattern doesn't mandate; it accommodates.
 
 ### **Explainability by Construction**
 
@@ -1494,31 +1133,21 @@ Every frame header answers:
 
 - **What version?** Monotone version enables replay
 
-Auditors and operators can ask \"what did the system know at time T for
-key K?\" and get a definitive, replayable answer.
+Auditors and operators can ask "what did the system know at time T for key K?" and get a definitive, replayable answer.
 
 ## **3.5 From Picture to Specification**
 
-This chapter provided intuition: the visual model, the flow, and the
-implications. Chapter 4 makes it normative: testable requirements for
-conformance.
+This chapter provided intuition: the visual model, the flow, and the implications. Chapter 4 makes it normative: testable requirements for conformance.
 
-If Chapter 3 is the \"what RCM looks like,\" Chapter 4 is \"what RCM
-guarantees.\"
+If Chapter 3 is the "what RCM looks like," Chapter 4 is "what RCM guarantees."
 
 # **4. Normative Semantics**
 
-This chapter specifies the testable, vendor-neutral semantics of
-Reactive Composite Memory (RCM). It uses RFC-2119 keywords (MUST,
-SHOULD, MAY) to define conformance requirements. Implementations
-claiming RCM conformance MUST satisfy these requirements and pass the
-test procedures in Annex A.
+This chapter specifies the testable, vendor-neutral semantics of Reactive Composite Memory (RCM). It uses RFC-2119 keywords (MUST, SHOULD, MAY) to define conformance requirements. Implementations claiming RCM conformance MUST satisfy these requirements and pass the test procedures in Annex A.
 
 ## **4.1 Conformance**
 
-RCM defines **one conformance class** covering reactive composition,
-versioned frames, time semantics, deterministic materialization, and
-idempotent delivery.
+RCM defines **one conformance class** covering reactive composition, versioned frames, time semantics, deterministic materialization, and idempotent delivery.
 
 **To claim RCM conformance, an implementation MUST:**
 
@@ -1530,40 +1159,19 @@ idempotent delivery.
 
 4.  Produce a conformance report in the format specified in Annex A.6
 
-**Extension points** (section 4.7) provide hooks where implementations
-inject cross-cutting behaviors such as admission control, resource
-management, and security. These extensions are
-**implementation-defined**; RCM specifies the hooks and required
-telemetry semantics but not the specific policies. Common extension
-patterns are documented in Annex D (Informative).
+**Extension points** (section 4.7) provide hooks where implementations inject cross-cutting behaviors such as admission control, resource management, and security. These extensions are **implementation-defined**; RCM specifies the hooks and required telemetry semantics but not the specific policies. Common extension patterns are documented in Annex D (Informative).
 
-**Verification:** Conformance is demonstrated by executing the test
-harness defined in Annex A.1 against the implementation and producing a
-report that documents test results, SLO attainment, and telemetry
-mappings.
+**Verification:** Conformance is demonstrated by executing the test harness defined in Annex A.1 against the implementation and producing a report that documents test results, SLO attainment, and telemetry mappings.
 
-**Scope of requirements:** These requirements apply to the runtime
-behavior of systems claiming RCM conformance. They do not mandate
-specific implementation technologies, programming languages, or
-deployment topologies. Two implementations are conformant if they
-satisfy the same external contracts (envelope format, delivery
-guarantees, telemetry semantics) even if their internal mechanisms
-differ.
+**Scope of requirements:** These requirements apply to the runtime behavior of systems claiming RCM conformance. They do not mandate specific implementation technologies, programming languages, or deployment topologies. Two implementations are conformant if they satisfy the same external contracts (envelope format, delivery guarantees, telemetry semantics) even if their internal mechanisms differ.
 
 ## **4.2 Roles and Terms**
 
-This section defines the key roles and terms used throughout the
-specification. These definitions are **normative**: conformant
-implementations MUST use these semantics, though the exact naming in
-APIs or configuration MAY vary if documented.
-
-###  
+This section defines the key roles and terms used throughout the specification. These definitions are **normative**: conformant implementations MUST use these semantics, though the exact naming in APIs or configuration MAY vary if documented.
 
 ### **4.2.1 Source Signal**
 
-A **Source Signal** is a typed, timestamped change feed that provides
-input to Context Views. Source Signals represent events, updates, or
-arrivals from external systems.
+A **Source Signal** is a typed, timestamped change feed that provides input to Context Views. Source Signals represent events, updates, or arrivals from external systems.
 
 **Required properties:**
 
@@ -1571,43 +1179,27 @@ arrivals from external systems.
 
 - **Timestamp:** Each element MUST carry an event-time timestamp
 
-- **Position:** Each element MUST have a monotone position (offset,
-  sequence number, or equivalent) per partition or key that enables
-  deterministic replay
+- **Position:** Each element MUST have a monotone position (offset, sequence number, or equivalent) per partition or key that enables deterministic replay
 
-- **Ordering:** Within a partition or key, positions MUST be
-  monotonically increasing
+- **Ordering:** Within a partition or key, positions MUST be monotonically increasing
 
-**Examples:** Event streams (Kafka topics, Kinesis streams),
-change-data-capture feeds from databases, file arrival notifications,
-API webhook deliveries, vector embedding updates.
+**Examples:** Event streams (Kafka topics, Kinesis streams), change-data-capture feeds from databases, file arrival notifications, API webhook deliveries, vector embedding updates.
 
 ### **4.2.2 Context View**
 
-A **Context View** is a declarative specification of how to compose one
-or more Source Signals (and/or other Context Views) into a derived
-context. Views are plans, not stateful entities.
+A **Context View** is a declarative specification of how to compose one or more Source Signals (and/or other Context Views) into a derived context. Views are plans, not stateful entities.
 
 **Required properties:**
 
-- **Determinism:** Given identical inputs and parameters, evaluating a
-  view\'s plan MUST produce identical output
+- **Determinism:** Given identical inputs and parameters, evaluating a view's plan MUST produce identical output
 
-- **Composability:** Views MAY reference other views as inputs, creating
-  hierarchical compositions
+- **Composability:** Views MAY reference other views as inputs, creating hierarchical compositions
 
-- **Parameterization:** Views MAY accept parameters (e.g., window size,
-  aggregation functions) that are fixed at plan compilation time
+- **Parameterization:** Views MAY accept parameters (e.g., window size, aggregation functions) that are fixed at plan compilation time
 
-- **No mutable state:** Views describe transformations; they do not hold
-  state between evaluations
+- **No mutable state:** Views describe transformations; they do not hold state between evaluations
 
-**Logical operations:** Views typically express joins, filters,
-windowing, aggregations, and projections. The specific operators and
-expression language are implementation-defined, but the determinism
-requirement is normative.
-
-###  
+**Logical operations:** Views typically express joins, filters, windowing, aggregations, and projections. The specific operators and expression language are implementation-defined, but the determinism requirement is normative.
 
 ### **4.2.3 Materializer**
 
@@ -1629,197 +1221,131 @@ The **Materializer** is the executor responsible for:
 
 - The Materializer MUST track event-time separately from processing-time
 
-- The Materializer MUST maintain watermarks per (contextId, key) pair
+- The Materializer MUST maintain watermarks per (contextId, key) pair, or per partition (see section 4.4.2)
 
-- The Materializer MUST NOT emit frames before window closure (see
-  section 4.4.4)
+- The Materializer MUST NOT emit frames before window closure (see section 4.4.4)
 
-- The Materializer MUST compute frames deterministically given identical
-  inputs and plans
+- The Materializer MUST compute frames deterministically given identical inputs and plans
 
 - The Materializer MUST emit required telemetry (see Annex A.2)
 
 ### **4.2.4 Frame**
 
-A **Frame** is an immutable materialization of a Context View at a
-specific point or interval in event-time. Frames are the durable
-artifacts that carry context, lineage, and version information.
+A **Frame** is an immutable materialization of a Context View at a specific point or interval in event-time. Frames are the durable artifacts that carry context, lineage, and version information.
 
 **Types of frames:**
 
-- **Snapshot Frame:** Represents complete state for the view, key, and
-  window. Consumers can process snapshots independently.
+- **Snapshot Frame:** Represents complete state for the view, key, and window. Consumers can process snapshots independently.
 
-- **Delta Frame:** Represents an incremental change relative to prior
-  state. Consumers MUST fold deltas to reconstruct full state.
+- **Delta Frame:** Represents an incremental change relative to prior state. Consumers MUST fold deltas to reconstruct full state.
 
 **Frame lifecycle states:**
 
-- **Emitted:** Frame published to Frame Store and notified to
-  Subscriptions
+- **Emitted:** Frame published to Frame Store and notified to Subscriptions
 
 - **Accessible:** Frame retrievable by consumers within TTL
 
-- **Expired:** TTL elapsed; frame eligible for deletion per retention
-  policy
+- **Expired:** TTL elapsed; frame eligible for deletion per retention policy
 
-Frames MUST be immutable after emission. Corrections or updates MUST
-generate new frames with incremented versions.
-
-###  
+Frames MUST be immutable after emission. Corrections or updates MUST generate new frames with incremented versions.
 
 ### **4.2.5 Subscription**
 
-A **Subscription** is a delivery relationship in which consumers receive
-Frames for specified contexts and keys.
+A **Subscription** is a delivery relationship in which consumers receive Frames for specified contexts and keys.
 
 **Required guarantees:**
 
-- **At-least-once delivery:** Frames MUST be delivered to subscribers at
-  least once; duplicate deliveries are permitted
+- **At-least-once delivery:** Frames MUST be delivered to subscribers at least once; duplicate deliveries are permitted
 
-- **Per-key ordering:** For a given (contextId, key) pair, frames MUST
-  be delivered in order by (window.end, version)
+- **Per-key ordering:** For a given (contextId, key) pair, frames MUST be delivered in order by (window.end, version)
 
-- **Discovery:** Implementations MUST provide a mechanism for consumers
-  to discover available contexts and subscribe by contextId and optional
-  key filters
+- **Discovery:** Implementations MUST provide a mechanism for consumers to discover available contexts and subscribe by contextId and optional key filters
 
 ### **4.2.6 Consumer**
 
-A **Consumer** is any agent, service, UI component, or analytics
-pipeline that subscribes to and processes Frames.
+A **Consumer** is any agent, service, UI component, or analytics pipeline that subscribes to and processes Frames.
 
 **Consumer obligations:**
 
-Consumers MUST process frames idempotently using the idempotencyKey for
-deduplication. Consumers MUST acknowledge successfully processed frames
-to allow the subscription system to advance. Consumers SHOULD handle
-both snapshot and delta frame types if subscribing to views that may
-emit either.
+Consumers MUST process frames idempotently using the idempotencyKey for deduplication. Consumers MUST acknowledge successfully processed frames to allow the subscription system to advance. Consumers SHOULD handle both snapshot and delta frame types if subscribing to views that may emit either.
 
 ## **4.3 Portable Materialization Envelope**
 
-Every emitted Frame MUST carry a header (envelope) with the fields
-defined in this section. The envelope makes frames self-describing,
-replayable, and governable.
+Every emitted Frame MUST carry a header (envelope) with the fields defined in this section. The envelope makes frames self-describing, replayable, and governable.
 
 ### **4.3.1 Required Header Fields**
 
-Implementations MUST include the following fields in every frame header.
-Field names shown here are illustrative; exact spelling MAY vary if the
-semantics are preserved and the mapping is documented in the conformance
-report.
+Implementations MUST include the following fields in every frame header. Field names shown here are illustrative; exact spelling MAY vary if the semantics are preserved and the mapping is documented in the conformance report.
 
 **Identity and Versioning:**
 
-- **frameId** (string): Globally unique identifier for this frame
-  instance (e.g., ULID, UUID). MUST be unique across the entire system.
+- **frameId** (string): Globally unique identifier for this frame instance (e.g., ULID, UUID). MUST be unique across the entire system.
 
-- **contextId** (string): Identifies the Context View that produced this
-  frame. MUST be stable across recomputations of the same view.
+- **contextId** (string): Identifies the Context View that produced this frame. MUST be stable across recomputations of the same view.
 
-- **key** (string): Partition or correlation key (e.g., tenant ID, user
-  ID, asset ID). Frames with the same (contextId, key) form an ordered
-  sequence.
+- **key** (string): Partition or correlation key (e.g., tenant ID, user ID, asset ID). Frames with the same (contextId, key) form an ordered sequence.
 
-- **version** (integer): Monotonically increasing counter per
-  (contextId, key) pair. MUST increment by 1 for each new frame
-  (snapshots and deltas share the same version sequence).
+- **version** (integer): Monotonically increasing counter per (contextId, key) pair. MUST increment by 1 for each new frame (snapshots and deltas share the same version sequence).
 
 **Frame Type:**
 
-- **type** (enum: \"snapshot\" \| \"delta\"): Indicates whether this
-  frame represents complete state or an incremental change.
+- **type** (enum: "snapshot" \| "delta"): Indicates whether this frame represents complete state or an incremental change.
 
 **Time Semantics:**
 
 - **window** (object): Event-time interval for this frame
 
-  - **start** (RFC 3339 timestamp): Beginning of the event-time window
-    (inclusive)
+  - **start** (RFC 3339 timestamp): Beginning of the event-time window (inclusive)
 
-  - **end** (RFC 3339 timestamp): End of the event-time window
-    (exclusive)
+  - **end** (RFC 3339 timestamp): End of the event-time window (exclusive)
 
-- **watermarkAt** (RFC 3339 timestamp): Watermark observed at frame
-  emission. Indicates \"no events with event-time earlier than this are
-  expected\" for this context and key.
+- **watermarkAt** (RFC 3339 timestamp): Watermark observed at frame emission. Indicates "no events with event-time earlier than this are expected" for this context and key.
 
 **Provenance:**
 
-- **inputs** (array of objects): Describes the source data that
-  contributed to this frame. Each input object MUST contain:
+- **inputs** (array of objects): Describes the source data that contributed to this frame. Each input object MUST contain:
 
-  - **sourceId** (string): Identifier of the source signal or upstream
-    view
+  - **sourceId** (string): Identifier of the source signal or upstream view
 
-  - **from** (string): Starting position (offset, sequence number,
-    timestamp)
+  - **from** (string): Starting position (offset, sequence number, timestamp)
 
-  - **to** (string): Ending position (inclusive or exclusive per
-    implementation; MUST be documented)
+  - **to** (string): Ending position (inclusive or exclusive per implementation; MUST be documented)
 
-  - **hash** (string): Cryptographic hash (e.g., SHA-256) of the input
-    range content for integrity verification
+  - **hash** (string): Cryptographic hash (e.g., SHA-256) of the input range content for integrity verification
 
 **Determinism:**
 
-- **planHash** (string): Cryptographic hash of the view\'s compiled
-  plan, including operator versions, library dependencies, and
-  configuration. MUST change if and only if the effective transform
-  changes.
+- **planHash** (string): Cryptographic hash of the view's compiled plan, including operator versions, library dependencies, and configuration. MUST change if and only if the effective transform changes.
 
-- **idempotencyKey** (string): Stable hash computed from contextId, key,
-  window, canonicalized inputs summary, and planHash. MUST be identical
-  for identical work (same inputs, same plan, same window).
+- **idempotencyKey** (string): Stable hash computed from contextId, key, window, canonicalized inputs summary, and planHash. MUST be identical for identical work (same inputs, same plan, same window).
 
 **Lifecycle:**
 
-- **ttl** (ISO 8601 duration): Time-to-live for this frame. After TTL
-  expires, the frame MAY be deleted per retention policy. A value of
-  PT0S indicates ephemeral (delete immediately after delivery to all
-  current subscribers).
+- **ttl** (ISO 8601 duration): Time-to-live for this frame. After TTL expires, the frame MAY be deleted per retention policy. A value of PT0S indicates ephemeral (delete immediately after delivery to all current subscribers).
 
-- **createdAt** (RFC 3339 timestamp): Wall-clock time when the frame was
-  emitted.
+- **createdAt** (RFC 3339 timestamp): Wall-clock time when the frame was emitted.
 
 **Extensions:**
 
-- **extensions** (object, optional): Implementation-defined metadata.
-  Common uses include security classification, redaction paths, budget
-  usage, approval status, and custom tags. The structure and semantics
-  of this field are implementation-defined but SHOULD be documented.
+- **extensions** (object, optional): Implementation-defined metadata. Common uses include security classification, redaction paths, budget usage, approval status, and custom tags. The structure and semantics of this field are implementation-defined but SHOULD be documented.
 
 ### **4.3.2 Additional Fields**
 
-Implementations MAY include additional header fields beyond those
-required above. Any additional fields SHOULD be documented in the
-conformance report.
+Implementations MAY include additional header fields beyond those required above. Any additional fields SHOULD be documented in the conformance report.
+
+Two additional header fields are RECOMMENDED: **schemaRef** (string), a reference to the schema of the frame body, and **checksum** (string), an integrity hash over the encoded frame body. Together with the required fields they let a consumer validate and verify a frame without consulting the producer.
 
 ### **4.3.3 Immutability Requirement**
 
-Frames MUST NOT be mutated after publication. If a correction or update
-is needed, the implementation MUST emit a new frame with an incremented
-version. The new frame MAY reference the prior version (e.g., via
-extensions metadata) but MUST NOT alter the prior frame\'s content.
+Frames MUST NOT be mutated after publication. If a correction or update is needed, the implementation MUST emit a new frame with an incremented version. The new frame MAY reference the prior version (e.g., via extensions metadata) but MUST NOT alter the prior frame's content.
 
 ### **4.3.4 Uniqueness and Monotonicity**
 
-**frameId uniqueness:** No two frames in the system MAY share the same
-frameId, even across different contexts or time periods.
+**frameId uniqueness:** No two frames in the system MAY share the same frameId, even across different contexts or time periods.
 
-**version monotonicity:** For a given (contextId, key) pair, version
-numbers MUST form a monotonically increasing sequence with no gaps or
-reuse. If frame N has version=42, the next frame for that (contextId,
-key) MUST have version=43.
+**version monotonicity:** For a given (contextId, key) pair, version numbers MUST form a monotonically increasing sequence with no gaps or reuse. If frame N has version=42, the next frame for that (contextId, key) MUST have version=43.
 
-**Implication:** Implementations MUST coordinate version assignment to
-prevent concurrent materializers from emitting conflicting versions for
-the same key. Common strategies include single-writer-per-key (actor
-model) or optimistic concurrency with retry.
-
-###  
+**Implication:** Implementations MUST coordinate version assignment to prevent concurrent materializers from emitting conflicting versions for the same key. Common strategies include single-writer-per-key (actor model) or optimistic concurrency with retry.
 
 ### **4.3.5 Provenance Sufficiency**
 
@@ -1831,10 +1357,7 @@ The inputs field MUST contain sufficient information to:
 
 3.  Verify input integrity (via hashes)
 
-If exact replay is impossible (e.g., due to non-deterministic external
-API calls), the implementation MUST document this limitation and MAY
-include API response hashes or snapshots in the inputs to enable
-best-effort verification.
+If exact replay is impossible (e.g., due to non-deterministic external API calls), the implementation MUST document this limitation and MAY include API response hashes or snapshots in the inputs to enable best-effort verification.
 
 ### **4.3.6 Stable Idempotency Key**
 
@@ -1846,125 +1369,89 @@ The idempotencyKey MUST be a pure function of:
 
 - window (both start and end)
 
-- Canonicalized summary of inputs (e.g., sorted array of {sourceId,
-  from, to, hash})
+- Canonicalized summary of inputs (e.g., sorted array of {sourceId, from, to, hash})
 
 - planHash
 
-**Canonicalization:** The inputs summary MUST be deterministically
-ordered (e.g., lexicographically by sourceId) so that different
-orderings of the same inputs produce the same key.
+**Canonicalization:** The inputs summary MUST be deterministically ordered (e.g., lexicographically by sourceId, then from, then to) so that different orderings of the same inputs produce the same key.
 
-**Purpose:** Duplicate work (same inputs, same plan, same window) MUST
-produce the same idempotencyKey, allowing publishers and subscribers to
-deduplicate without coordination.
+**Purpose:** Duplicate work (same inputs, same plan, same window) MUST produce the same idempotencyKey, allowing publishers and subscribers to deduplicate without coordination.
 
 **Illustrative algorithm (informative):**
 
 function makeIdempotencyKey(contextId, key, window, inputs, planHash):
 
-inputsSummary = sort(inputs, by: sourceId).map(i =\> \[i.sourceId,
-i.from, i.to, i.hash\])
+inputsSummary = sort(inputs, by: \[sourceId, from, to\]).map(i =\> \[i.sourceId, i.from, i.to, i.hash\])
 
 canonical = {contextId, key, window, inputsSummary, planHash}
 
 return sha256(serialize(canonical))
 
-Implementations MAY use different hash algorithms (e.g., BLAKE3) if
-documented.
-
-##  
+Implementations MAY use different hash algorithms (e.g., BLAKE3) if documented.
 
 ## **4.4 Time, Ordering, and Reactive Recomputation**
 
-RCM\'s time semantics ensure that frames are emitted at deterministic,
-explainable points in event-time, even when processing is out-of-order
-or delayed.
+RCM's time semantics ensure that frames are emitted at deterministic, explainable points in event-time, even when processing is out-of-order or delayed.
 
 ### **4.4.1 Event Time vs. Processing Time**
 
-**Event time** is the timestamp reflecting when an event actually
-occurred in the source domain (e.g., when a user clicked, when a sensor
-reading was taken).
+**Event time** is the timestamp reflecting when an event actually occurred in the source domain (e.g., when a user clicked, when a sensor reading was taken).
 
-**Processing time** is the wall-clock time when the system observes or
-processes the event.
+**Processing time** is the wall-clock time when the system observes or processes the event.
 
-**Requirement:** Implementations MUST distinguish event-time from
-processing-time. Frames MUST be associated with event-time windows (via
-the window field), not processing-time intervals.
+**Requirement:** Implementations MUST distinguish event-time from processing-time. Frames MUST be associated with event-time windows (via the window field), not processing-time intervals.
 
-**Rationale:** Event-time semantics enable deterministic replay and
-correct handling of out-of-order data. Processing-time semantics produce
-non-reproducible results when replay order differs from original order.
+**Rationale:** Event-time semantics enable deterministic replay and correct handling of out-of-order data. Processing-time semantics produce non-reproducible results when replay order differs from original order.
 
 ### **4.4.2 Watermarks**
 
-A **watermark** is a threshold in event-time that indicates \"the system
-believes no events with timestamps earlier than this will arrive\" for a
-given (contextId, key).
+A **watermark** is a threshold in event-time that indicates "the system believes no events with timestamps earlier than this will arrive" for a given (contextId, key).
 
 **Requirements:**
 
-- Implementations MUST maintain a watermark per (contextId, key) pair
+- Implementations MUST maintain a watermark per (contextId, key) pair, or per partition provided that every key maps to exactly one partition and the partition’s watermark is used for all of its keys
 
 - Watermarks MUST advance monotonically (never decrease)
 
-- Watermark advancement MAY be based on heuristics (e.g., \"highest
-  timestamp seen + epsilon\") or explicit source signals (e.g., Kafka
-  timestamps, Flink watermarks)
+- Watermark advancement MAY be based on heuristics (e.g., "highest timestamp seen + epsilon") or explicit source signals (e.g., Kafka timestamps, Flink watermarks)
 
-- The watermark observed at frame emission MUST be recorded in the
-  frame\'s watermarkAt field
+- The watermark observed at frame emission MUST be recorded in the frame's watermarkAt field
 
-**Purpose:** Watermarks bound staleness and enable deterministic window
-closure in the presence of out-of-order events.
-
-###  
+**Purpose:** Watermarks bound staleness and enable deterministic window closure in the presence of out-of-order events.
 
 ### **4.4.3 Windows**
 
-A **window** is an event-time interval \[start, end) that defines the
-scope of data included in a frame.
+A **window** is an event-time interval \[start, end) that defines the scope of data included in a frame.
 
 **Window kinds:**
 
 Implementations MAY support different windowing strategies:
 
-- **Tumbling windows:** Fixed-size, non-overlapping intervals (e.g.,
-  every 1 minute)
+- **Tumbling windows:** Fixed-size, non-overlapping intervals (e.g., every 1 minute)
 
-- **Sliding windows:** Fixed-size, overlapping intervals (e.g., 5-minute
-  window sliding every 1 minute)
+- **Sliding windows:** Fixed-size, overlapping intervals (e.g., 5-minute window sliding every 1 minute)
 
-- **Session windows:** Data-driven intervals closed after a gap of
-  inactivity
+- **Session windows:** Data-driven intervals closed after a gap of inactivity
 
-The specific windowing strategy is a property of the Context View and
-MUST be documented per view.
+The specific windowing strategy is a property of the Context View and MUST be documented per view.
 
 **Requirements:**
 
-- Each frame MUST declare its event-time window via the window field
-  (start, end)
+- Each frame MUST declare its event-time window via the window field (start, end)
 
 - Window boundaries MUST align with event-time, not processing-time
 
-- For a given (contextId, key), windows MUST NOT overlap in time for
-  snapshot frames (deltas MAY correct prior windows)
+- For tumbling and session windows, snapshot frames for a given (contextId, key) MUST NOT have overlapping windows (deltas MAY correct prior windows). Sliding windows overlap by construction: each event maps to several windows and each frame’s window field identifies the slice it covers, so consumers MUST NOT assume non-overlap for sliding-window views
 
 ### **4.4.4 Window Lifecycle**
 
 Windows progress through the following normative states:
 
-1.  **Open:** Window is defined but watermark has not yet reached
-    window.start
+1.  **Open:** Window is defined (by configuration, or by the first event that maps to it) but no events have been accumulated yet
 
-2.  **Accepting:** Watermark ≥ window.start and \< window.end; events
-    within the window are accumulated
+2.  **Accepting:** Events whose event-time falls in \[window.start, window.end) are accumulated as they arrive, regardless of the current watermark, until the watermark reaches window.end plus any configured grace period
 
-3.  **Closing:** Watermark ≥ window.end; no new events expected; frame
-    emission is imminent
+3.  **Closing:** Watermark ≥ window.end + grace; no further on-time events are expected; frame emission is imminent
 
 4.  **Emitted:** Frame published with this window
 
@@ -1972,15 +1459,11 @@ Windows progress through the following normative states:
 
 **Requirements:**
 
-- Implementations MUST NOT emit a frame for a window before the window
-  enters the **Closing** state (i.e., before watermark ≥ window.end)
+- Implementations MUST NOT emit a frame for a window before the window enters the **Closing** state (i.e., before watermark ≥ window.end + grace, where grace is an optional per-view closure delay that defaults to zero and MUST be documented when non-zero)
 
-- Implementations MAY emit additional frames (deltas) for the same
-  window after **Emitted** if late data arrives within a configured
-  lateness bound
+- Implementations MAY emit additional frames (deltas) for the same window after **Emitted** if late data arrives within a configured lateness bound
 
-- Late frames MUST increment version and MUST indicate their corrective
-  nature (e.g., via type=delta or extensions metadata)
+- Late frames MUST increment version and MUST indicate their corrective nature (e.g., via type=delta or extensions metadata)
 
 **Illustrative state diagram (informative):**
 
@@ -1992,79 +1475,55 @@ Windows progress through the following normative states:
 
 ### **4.4.5 Reactivity Policy**
 
-Upon detecting a change in a Source Signal, the Materializer MUST
-determine whether to recompute and emit a new frame. The decision MUST
-follow a declared per-view policy:
+Upon detecting a change in a Source Signal, the Materializer MUST determine whether to recompute and emit a new frame. The decision MUST follow a declared per-view policy:
 
-1.  **Immediate recompute:** Emit a new frame as soon as the change is
-    observed (minimizes staleness, maximizes version churn)
+1.  **Immediate recompute:** Emit a new frame as soon as the change is observed (minimizes staleness, maximizes version churn)
 
-2.  **Coalesce:** Delay emission for a small, bounded duration to absorb
-    multiple rapid changes into a single frame (reduces churn, adds
-    bounded latency)
+2.  **Coalesce:** Delay emission for a small, bounded duration to absorb multiple rapid changes into a single frame (reduces churn, adds bounded latency)
 
-3.  **Ignore:** Do not recompute if the change falls outside the view\'s
-    windows or does not match filter criteria
+3.  **Ignore:** Do not recompute if the change falls outside the view's windows or does not match filter criteria
 
 **Requirements:**
 
-- The reactivity policy MUST be fixed per Context View (not dynamic per
-  event)
+- The reactivity policy MUST be fixed per Context View (not dynamic per event)
 
-- If using coalescing, the coalescing duration MUST be bounded and
-  documented
+- If using coalescing, the coalescing duration MUST be bounded and documented
 
-- Implementations MUST emit telemetry indicating when coalescing occurs
-  (e.g., coalesce.triggered, coalesce.duration_ms)
+- Implementations MUST emit telemetry indicating when coalescing occurs (the coalesce.triggered event and the coalesce_duration_ms metric; see Annex A.2)
 
-**Coalescing semantics:** When coalescing, the Materializer MUST emit a
-frame that reflects all changes observed during the coalescing window.
-The resulting frame\'s inputs field MUST cover the full range of data,
-and the idempotencyKey MUST be stable (recomputing with the same
-coalesced inputs produces the same key).
+**Coalescing semantics:** When coalescing, the Materializer MUST emit a frame that reflects all changes observed during the coalescing window. The resulting frame's inputs field MUST cover the full range of data, and the idempotencyKey MUST be stable (recomputing with the same coalesced inputs produces the same key).
 
 ### **4.4.6 Late and Duplicate Data Handling**
 
-**Late data:** Events that arrive with event-time timestamps earlier
-than the current watermark for their key.
+**Late data:** Events that arrive with event-time timestamps earlier than the current watermark for their key.
 
-**Duplicate data:** Events with identical positions or content observed
-more than once.
+**Duplicate data:** Events with identical positions or content observed more than once.
 
 **Requirements:**
 
-- Implementations MUST define a per-view **lateness policy** that
-  specifies:
+- Implementations MUST define a per-view **lateness policy** that specifies:
 
-  - Maximum allowed lateness (e.g., \"accept events up to 1 minute
-    late\")
+  - Maximum allowed lateness (e.g., "accept events up to 1 minute late")
 
-  - Action when late data is accepted: emit corrective delta frame with
-    incremented version
+  - Action when late data is accepted: emit corrective delta frame with incremented version
 
-  - Action when late data exceeds the bound: drop and log, or route to a
-    separate late-data context
+  - Action when late data exceeds the bound: drop and log, or route to a separate late-data context
 
-- Implementations MUST detect duplicate inputs (via position or hash)
-  and SHOULD avoid redundant recomputation by matching idempotencyKey
+- Implementations MUST detect duplicate inputs (via position or hash) and SHOULD avoid redundant recomputation by matching idempotencyKey
 
-- Implementations MUST emit telemetry for late/duplicate handling (e.g.,
-  late_data.accepted, late_data.dropped, duplicate.detected)
+- Implementations MUST emit telemetry for late/duplicate handling (late_data.accepted, late_data.dropped, late_data.routed, duplicate.detected; see Annex A.2)
 
-**Corrective frames:** When late data triggers recomputation, the new
-frame MUST:
+**Corrective frames:** When late data triggers recomputation, the new frame MUST:
 
 - Have the same contextId, key, and window as the original
 
 - Have an incremented version
 
-- Indicate corrective nature (e.g., type=delta with metadata explaining
-  the correction)
+- Indicate corrective nature (e.g., type=delta with metadata explaining the correction)
 
 ### **4.4.7 Ordering Guarantee**
 
-**Requirement:** Delivery to a subscriber MUST preserve per-key ordering
-by (window.end, version).
+**Requirement:** Delivery to a subscriber MUST preserve per-key ordering by (window.end, version).
 
 **Specification:**
 
@@ -2072,103 +1531,71 @@ For any two frames F1 and F2 with the same (contextId, key):
 
 - If F1.window.end \< F2.window.end, then F1 MUST be delivered before F2
 
-- If F1.window.end == F2.window.end and F1.version \< F2.version, then
-  F1 MUST be delivered before F2
+- If F1.window.end == F2.window.end and F1.version \< F2.version, then F1 MUST be delivered before F2
 
-**Cross-key ordering:** Implementations MAY deliver frames for different
-keys in any order (no global ordering required).
+**Cross-key ordering:** Implementations MAY deliver frames for different keys in any order (no global ordering required).
 
 **Implications:**
 
-- Subscribers can rely on receiving frames in causal order for a given
-  key
+- Subscribers can rely on receiving frames in causal order for a given key
 
-- Snapshots and deltas interleave correctly (both share the version
-  sequence)
+- Snapshots and deltas interleave correctly (both share the version sequence)
 
 - Replay by version range produces the same order as original emission
 
-**Tolerance for duplicates:** The ordering guarantee applies to the
-logical sequence; duplicate deliveries (same idempotencyKey) MAY occur
-in any position. Consumers MUST deduplicate as specified in section
-4.6.3.
+**Tolerance for duplicates:** The ordering guarantee applies to the logical sequence; duplicate deliveries (same idempotencyKey) MAY occur in any position. Consumers MUST deduplicate as specified in section 4.6.3.
 
 ## **4.5 Determinism, Idempotency, and Replay**
 
-Deterministic materialization and idempotent delivery are foundational
-to RCM\'s explainability and cost control. This section specifies the
-requirements that enable safe replay, dual-run validation, and
-effect-once semantics despite at-least-once delivery.
+Deterministic materialization and idempotent delivery are foundational to RCM's explainability and cost control. This section specifies the requirements that enable safe replay, dual-run validation, and effect-once semantics despite at-least-once delivery.
 
 ### **4.5.1 Deterministic Plans**
 
-A Context View\'s plan MUST be **referentially transparent**: given
-identical inputs and parameters, evaluating the plan MUST produce
-identical output.
+A Context View's plan MUST be **referentially transparent**: given identical inputs and parameters, evaluating the plan MUST produce identical output.
 
-**Boundary of determinism**: RCM requires determinism in **view
-evaluation** (read path), not in **source generation** (write path).
-Processes that produce source signals---ML inference, external API
-calls, human decisions---may be non-deterministic. Once captured as
-source signals, however, view plans MUST compose them deterministically.
+**Boundary of determinism**: RCM requires determinism in **view evaluation** (read path), not in **source generation** (write path). Processes that produce source signals—ML inference, external API calls, human decisions—may be non-deterministic. Once captured as source signals, however, view plans MUST compose them deterministically.
 
-Example: An LLM with temperature=0.7 generates a summary
-(non-deterministic). This summary is stored as a source artifact with
-timestamp and hash. A view that joins this summary with user profile
-data MUST produce the same frame every time given the same summary
-artifact and profile data.
+Example: An LLM with temperature=0.7 generates a summary (non-deterministic). This summary is stored as a source artifact with timestamp and hash. A view that joins this summary with user profile data MUST produce the same frame every time given the same summary artifact and profile data.
 
 **Requirements:**
 
-- **Pure functions:** Plan operators MUST NOT depend on mutable global
-  state, wall-clock time (except as explicit input), random number
-  generators with uncontrolled seeds, or external I/O with
-  non-deterministic responses
+- **Pure functions:** Plan operators MUST NOT depend on mutable global state, wall-clock time (except as explicit input), random number generators with uncontrolled seeds, or external I/O with non-deterministic responses
 
-- **Stable operators:** The plan MUST specify versions of all operators,
-  libraries, and configuration. Changing any of these MUST produce a
-  different planHash
+- **Stable operators:** The plan MUST specify versions of all operators, libraries, and configuration. Changing any of these MUST produce a different planHash
 
-- **Canonicalization:** If the plan includes operators that can be
-  reordered (e.g., commutative aggregations), the plan representation
-  MUST canonicalize to a stable for
+- **Canonicalization:** If the plan includes operators that can be reordered (e.g., commutative aggregations), the plan representation MUST canonicalize to a stable form
 
 **\**
 
 **Non-determinism in source generation**
 
-Implementations MAY allow non-deterministic processes to produce source
-signals, provided:
+Implementations MAY allow non-deterministic processes to produce source signals, provided:
 
-### The non-deterministic process is external to view evaluation (e.g., runs before materialization)
+1.  The non-deterministic process is external to view evaluation (e.g., runs before materialization)
 
-### Results are captured as immutable source artifacts with content hashes
+2.  Results are captured as immutable source artifacts with content hashes
 
-### View plans consume these artifacts deterministically (same artifact → same frame)
+3.  View plans consume these artifacts deterministically (same artifact → same frame)
 
-### The limitation is documented in the conformance report
+4.  The limitation is documented in the conformance report
 
-### This pattern enables: LLM-generated insights, human-in-loop approvals, real-time API results---all flowing into RCM as source signals without violating deterministic replay of frames.
+This pattern enables: LLM-generated insights, human-in-loop approvals, real-time API results—all flowing into RCM as source signals without violating deterministic replay of frames.
 
 ### **4.5.2 Plan Hash**
 
-The planHash field MUST uniquely identify the effective transform
-applied to produce a frame.
+The planHash field MUST uniquely identify the effective transform applied to produce a frame.
 
 **Requirements:**
 
 - planHash MUST be a cryptographic hash (e.g., SHA-256) of:
 
-  - The compiled plan\'s operator graph (structure and parameters)
+  - The compiled plan's operator graph (structure and parameters)
 
   - Versions of all operators and libraries
 
-  - Relevant configuration (e.g., schema versions, feature flags that
-    affect computation)
+  - Relevant configuration (e.g., schema versions, feature flags that affect computation)
 
-- planHash MUST change if and only if the effective transform changes
-  (reordering of equivalent expressions SHOULD NOT change the hash if
-  canonicalized)
+- planHash MUST change if and only if the effective transform changes (reordering of equivalent expressions SHOULD NOT change the hash if canonicalized)
 
 - planHash MUST be recorded in every frame header
 
@@ -2178,23 +1605,19 @@ applied to produce a frame.
 
 - Detection of plan drift (unintended changes to view definitions)
 
-- Safe dual-run of plan changes (compare frames with different planHash
-  values before cutover)
+- Safe dual-run of plan changes (compare frames with different planHash values before cutover)
 
 **Illustrative algorithm (informative):**
 
 function computePlanHash(plan):
 
-canonical = canonicalize(plan.operators, plan.params, plan.versions,
-plan.config)
+canonical = canonicalize(plan.operators, plan.params, plan.versions, plan.config)
 
 return sha256(serialize(canonical))
 
 ### **4.5.3 Idempotency Key**
 
-The idempotencyKey MUST be a stable hash that uniquely identifies a unit
-of work, such that repeated execution of the same work produces the same
-key.
+The idempotencyKey MUST be a stable hash that uniquely identifies a unit of work, such that repeated execution of the same work produces the same key.
 
 **Requirements:**
 
@@ -2206,126 +1629,91 @@ key.
 
   - window (both start and end)
 
-  - Canonicalized summary of inputs (source IDs, position ranges,
-    content hashes)
+  - Canonicalized summary of inputs (source IDs, position ranges, content hashes)
 
   - planHash
 
-- The computation MUST be deterministic and order-independent where
-  applicable (e.g., if inputs can arrive in different orders, they MUST
-  be sorted before hashing)
+- The computation MUST be deterministic and order-independent where applicable (e.g., if inputs can arrive in different orders, they MUST be sorted before hashing)
 
-- Two frames with identical idempotencyKey values MUST have identical
-  frame bodies (ignoring non-semantic fields like frameId and createdAt)
+- Two frames with identical idempotencyKey values MUST have identical frame bodies (ignoring non-semantic fields like frameId and createdAt)
 
 **Idempotency semantics:**
 
-- **Publishers:** If the Materializer computes a frame and discovers
-  that an identical idempotencyKey already exists in the Frame Store, it
-  MAY skip publication and increment a duplicate.materialization metric.
-  The existing frame serves as the result.
+- **Publishers:** If the Materializer computes a frame and discovers that an identical idempotencyKey already exists in the Frame Store, it MAY skip publication, emit duplicate.detected (stage=materialization), and increment duplicate_dedup_count. The existing frame serves as the result.
 
-- **Subscribers:** If a consumer receives a frame with an idempotencyKey
-  it has already processed, it MUST skip re-processing the frame body
-  and MUST NOT produce duplicate side effects.
+- **Subscribers:** If a consumer receives a frame with an idempotencyKey it has already processed, it MUST skip re-processing the frame body and MUST NOT produce duplicate side effects.
 
 **Canonical inputs summary (normative):**
 
-The inputs summary MUST be deterministically ordered. Implementations
-MUST either:
+The inputs summary MUST be deterministically ordered. Implementations MUST either:
 
-1.  Sort inputs lexicographically by sourceId, then by from position, OR
+1.  Sort inputs lexicographically by sourceId, then by from position, then by to position, OR
 
-2.  Use a content-addressed structure (e.g., Merkle tree) that is
-    order-independent
+2.  Use a content-addressed structure (e.g., Merkle tree) that is order-independent
 
 **Illustrative algorithm (informative):**
 
 function makeIdempotencyKey(contextId, key, window, inputs, planHash):
 
-sortedInputs = sort(inputs, by: \[sourceId, from\])
+sortedInputs = sort(inputs, by: \[sourceId, from, to\])
 
 summary = sortedInputs.map(i =\> {i.sourceId, i.from, i.to, i.hash})
 
-canonical = {contextId, key, window.start, window.end, summary,
-planHash}
+canonical = {contextId, key, window.start, window.end, summary, planHash}
 
 return sha256(serialize(canonical))
 
 ### **4.5.4 Replay Requirements**
 
-Implementations MUST support replay: the ability to re-emit previously
-materialized frames by referencing their identity or time range.
+Implementations MUST support replay: the ability to re-emit previously materialized frames by referencing their identity or time range.
 
 **Replay by version:**
 
-- **Specification:** Given (contextId, key, version), the implementation
-  MUST return the frame that was originally emitted with that version
-  number
+- **Specification:** Given (contextId, key, version), the implementation MUST return the frame that was originally emitted with that version number
 
-- **Fidelity:** The replayed frame MUST have the same idempotencyKey and
-  frame body as the original
+- **Fidelity:** The replayed frame MUST have the same idempotencyKey and frame body as the original
 
-- **New frameId:** The replayed frame MAY have a different frameId
-  (since it\'s a new emission event) but MUST preserve all other header
-  fields except createdAt
+- **New frameId:** The replayed frame MAY have a different frameId (since it's a new emission event) but MUST preserve all other header fields except createdAt
 
 **Replay by time interval:**
 
-- **Specification:** Given (contextId, key, startTime, endTime), the
-  implementation MUST return all frames whose window.end falls within
-  \[startTime, endTime)
+- **Specification:** Given (contextId, key, startTime, endTime), the implementation MUST return all frames whose window.end falls within \[startTime, endTime)
 
-- **Ordering:** Frames MUST be returned in order by (window.end,
-  version)
+- **Ordering:** Frames MUST be returned in order by (window.end, version)
 
-- **Completeness:** All frames emitted within the specified interval
-  MUST be included, subject to TTL and retention policies
+- **Completeness:** All frames emitted within the specified interval MUST be included, subject to TTL and retention policies
 
 **Replay limitations:**
 
-- Frames that have exceeded their TTL and been deleted MAY NOT be
-  available for replay; implementations MUST document retention policies
+- Frames that have exceeded their TTL and been deleted MAY NOT be available for replay; implementations MUST document retention policies
 
-- If source data required for re-evaluation has been garbage-collected,
-  replay MUST use the stored frame rather than recomputing from sources
+- If source data required for re-evaluation has been garbage-collected, replay MUST use the stored frame rather than recomputing from sources
 
 **Telemetry:**
 
-Implementations MUST emit telemetry distinguishing original emissions
-from replays (e.g., frame.materialized vs. frame.replayed, or a
-replay=true flag in events).
+Implementations MUST emit telemetry distinguishing original emissions from replays (e.g., frame.materialized vs. frame.replayed, or a replay=true flag in events).
 
 ### **4.5.5 Golden Replay Vectors**
 
-Implementations claiming conformance MUST demonstrate determinism by
-executing **golden replay tests**: pre-recorded input vectors that
-specify sources, windows, and plans, with expected output frames.
+Implementations claiming conformance MUST demonstrate determinism by executing **golden replay tests**: pre-recorded input vectors that specify sources, windows, and plans, with expected output frames.
 
 **Test procedure:**
 
-1.  Load a golden vector: {contextId, key, window, inputs, plan,
-    expectedIdempotencyKey, expectedBody}
+1.  Load a golden vector: {contextId, key, window, inputs, plan, expectedIdempotencyKey, expectedBody}
 
 2.  Evaluate the plan over the inputs
 
-3.  Assert that the resulting frame\'s idempotencyKey matches
-    expectedIdempotencyKey
+3.  Assert that the resulting frame's idempotencyKey matches expectedIdempotencyKey
 
-4.  Assert that the resulting frame\'s body matches expectedBody (exact
-    match or semantic equivalence per documented rules)
+4.  Assert that the resulting frame's body matches expectedBody (exact match or semantic equivalence per documented rules)
 
-5.  Repeat evaluation (N ≥ 3 times) and assert identical results each
-    time
+5.  Repeat evaluation (N ≥ 3 times) and assert identical results each time
 
 Golden vectors for conformance testing are provided in Annex A.5.
 
 ### **4.5.6 Dual-Run and Plan Evolution**
 
-When evolving a view\'s plan (e.g., adding a join, changing an
-aggregation), implementations SHOULD support **dual-run**: evaluating
-both old and new plans over the same inputs to verify that the change
-produces expected differences.
+When evolving a view's plan (e.g., adding a join, changing an aggregation), implementations SHOULD support **dual-run**: evaluating both old and new plans over the same inputs to verify that the change produces expected differences.
 
 **Dual-run procedure (informative):**
 
@@ -2335,75 +1723,55 @@ produces expected differences.
 
 3.  Compare resulting frames:
 
-    - If bodies are identical, the change may be a refactoring with no
-      semantic impact
+    - If bodies are identical, the change may be a refactoring with no semantic impact
 
     - If bodies differ, inspect differences for correctness
 
-4.  Emit telemetry: plan.dual_run.diff with summary statistics (keys
-    tested, differences found, max divergence)
+4.  Emit telemetry: plan.dual_run.diff with summary statistics (keys tested, differences found, max divergence)
 
 5.  Cut over to planHashNew only after validation
 
-**Requirement:** Implementations MUST preserve the ability to compute
-both planHashOld and planHashNew during dual-run (e.g., by versioning
-view definitions and allowing concurrent evaluation).
+**Requirement:** Implementations MUST preserve the ability to compute both planHashOld and planHashNew during dual-run (e.g., by versioning view definitions and allowing concurrent evaluation).
 
-**4.5.7 Schema Evolution and Migration (Informative)**
+### **4.5.7 Schema Evolution and Migration (Informative)**
 
-When view schemas evolve, planHash changes, creating a new version
-lineage. Implementations SHOULD support graceful migration strategies:
+When view schemas evolve, planHash changes, creating a new version lineage. Implementations SHOULD support graceful migration strategies:
 
-- **Dual-run**: Evaluate both old and new plans temporarily; emit frames
-  with different contextId or tagged extensions.schemaVersion
+- **Dual-run**: Evaluate both old and new plans temporarily; emit frames with different contextId or tagged extensions.schemaVersion
 
-- **Gradual migration**: New consumers subscribe to new schema; old
-  consumers continue on old schema during transition
+- **Gradual migration**: New consumers subscribe to new schema; old consumers continue on old schema during transition
 
-- **Deprecation window**: After N days or when subscriber count drops to
-  zero, stop emitting old schema frames
+- **Deprecation window**: After N days or when subscriber count drops to zero, stop emitting old schema frames
 
-Frame replay: Frames materialized under old planHash remain replayable
-if source data and old plan are retained. Implementations MAY support
-cross-schema replay by re-evaluating with new plans over old source
-ranges, but this produces new idempotencyKey values (not bit-identical
-replay).
+Frame replay: Frames materialized under old planHash remain replayable if source data and old plan are retained. Implementations MAY support cross-schema replay by re-evaluating with new plans over old source ranges, but this produces new idempotencyKey values (not bit-identical replay).
 
 ## **4.6 Delivery Contract**
 
-This section specifies the guarantees that RCM subscriptions provide to
-consumers.
+This section specifies the guarantees that RCM subscriptions provide to consumers.
 
 ### **4.6.1 At-Least-Once Delivery**
 
-**Guarantee:** For every frame emitted by the Materializer, each
-subscriber MUST receive the frame at least once.
+**Guarantee:** For every frame emitted by the Materializer, each subscriber MUST receive the frame at least once.
 
 **Implications:**
 
-- Subscribers MAY receive duplicate deliveries of the same frame (same
-  frameId or idempotencyKey)
+- Subscribers MAY receive duplicate deliveries of the same frame (same frameId or idempotencyKey)
 
 - Subscribers MUST NOT assume exactly-once delivery
 
-- Subscribers MUST implement idempotent processing using idempotencyKey
-  for deduplication
+- Subscribers MUST implement idempotent processing using idempotencyKey for deduplication
 
 **Failure handling:**
 
-- If a subscriber is unavailable or fails to acknowledge, the
-  subscription system MUST retry delivery with exponential backoff
+- If a subscriber is unavailable or fails to acknowledge, the subscription system MUST retry delivery with exponential backoff
 
-- Retry attempts MUST be bounded (maximum retries or maximum time) to
-  avoid indefinite blocking
+- Retry attempts MUST be bounded (maximum retries or maximum time) to avoid indefinite blocking
 
-- After exhausting retries, the frame MUST be routed to a dead-letter
-  queue (DLQ) for remediation
+- After exhausting retries, the frame MUST be routed to a dead-letter queue (DLQ) for remediation
 
 ### **4.6.2 Per-Key Ordering**
 
-**Guarantee:** For frames with the same (contextId, key), delivery MUST
-preserve order by (window.end, version).
+**Guarantee:** For frames with the same (contextId, key), delivery MUST preserve order by (window.end, version).
 
 **Specification:**
 
@@ -2413,29 +1781,21 @@ Given two frames F1 and F2 where:
 
 - F1.key == F2.key
 
-- Either F1.window.end \< F2.window.end, OR F1.window.end ==
-  F2.window.end and F1.version \< F2.version
+- Either F1.window.end \< F2.window.end, OR F1.window.end == F2.window.end and F1.version \< F2.version
 
 Then F1 MUST be delivered to each subscriber before F2.
 
-**Cross-key independence:** Frames with different keys MAY be delivered
-in any order, including concurrently.
+**Cross-key independence:** Frames with different keys MAY be delivered in any order, including concurrently.
 
 **Ordering under retries:**
 
-If a frame F1 fails and is retried, the subscription system MUST NOT
-deliver subsequent frames (F2, F3, \...) for the same key until F1 is
-successfully acknowledged or moved to the DLQ.
+If a frame F1 fails and is retried, the subscription system MUST NOT deliver subsequent frames (F2, F3, ...) for the same key until F1 is successfully acknowledged or moved to the DLQ.
 
-**Head-of-line blocking:** Per-key ordering implies that a single stuck
-frame blocks all subsequent frames for that key. Implementations SHOULD
-provide mechanisms to detect and handle blocked keys (e.g., timeouts,
-separate retry queues, alerts).
+**Head-of-line blocking:** Per-key ordering implies that a single stuck frame blocks all subsequent frames for that key. Implementations SHOULD provide mechanisms to detect and handle blocked keys (e.g., timeouts, separate retry queues, alerts).
 
 ### **4.6.3 Idempotent Consumption**
 
-**Requirement:** Consumers MUST process frames idempotently, such that
-receiving the same frame multiple times produces the same effect once.
+**Requirement:** Consumers MUST process frames idempotently, such that receiving the same frame multiple times produces the same effect once.
 
 **Implementation pattern (informative):**
 
@@ -2459,19 +1819,11 @@ acknowledge(frame)
 
 **Deduplication window:**
 
-Consumers SHOULD maintain a deduplication window (e.g., last 10,000
-idempotencyKey values or last 24 hours) to efficiently detect
-duplicates. Implementations MAY use probabilistic structures (Bloom
-filters) with acceptable false-positive rates if documented.
+Consumers SHOULD maintain a deduplication window (e.g., last 10,000 idempotencyKey values or last 24 hours) to efficiently detect duplicates. Implementations MAY use probabilistic structures (Bloom filters) with acceptable false-positive rates if documented.
 
 **Stateless consumers:**
 
-Consumers that cannot maintain deduplication state (e.g., ephemeral
-functions) MUST ensure that their effects are naturally idempotent
-(e.g., writing to an idempotent store, using database upserts with
-unique constraints on idempotencyKey).
-
-###  
+Consumers that cannot maintain deduplication state (e.g., ephemeral functions) MUST ensure that their effects are naturally idempotent (e.g., writing to an idempotent store, using database upserts with unique constraints on idempotencyKey).
 
 ### **4.6.4 Retry and Dead-Letter Queue**
 
@@ -2479,11 +1831,9 @@ unique constraints on idempotencyKey).
 
 - Implementations MUST retry failed deliveries automatically
 
-- Retry intervals SHOULD use exponential backoff with jitter (e.g., 1s,
-  2s, 4s, 8s, \...)
+- Retry intervals SHOULD use exponential backoff with jitter (e.g., 1s, 2s, 4s, 8s, ...)
 
-- Maximum retry attempts MUST be configurable (recommended default: 10
-  retries over \~15 minutes)
+- Maximum retry attempts MUST be configurable (recommended default: 10 retries over ~15 minutes)
 
 **Dead-Letter Queue (DLQ):**
 
@@ -2501,128 +1851,99 @@ unique constraints on idempotencyKey).
 
   - Count of retry attempts
 
-- Implementations MUST provide a mechanism to inspect DLQ entries and
-  re-drive delivery after remediation
+- Implementations MUST provide a mechanism to inspect DLQ entries and re-drive delivery after remediation
 
 **Telemetry:**
 
-- Implementations MUST emit events for each retry attempt:
-  delivery.retry with labels {contextId, key, version, subscriberId,
-  attemptNumber, reason}
+- Implementations MUST emit events for each retry attempt: delivery.retry with labels {contextId, key, version, subscriberId, attemptNumber, reason}
 
-- Implementations MUST emit events for DLQ routing: delivery.dlq with
-  labels {contextId, key, version, subscriberId, reason}
+- Implementations MUST emit events for DLQ routing: delivery.dlq with labels {contextId, key, version, subscriberId, reason}
 
 ### **4.6.5 Subscription Discovery**
 
-**Requirement:** Implementations MUST provide a mechanism for consumers
-to discover available contexts and subscribe.
+**Requirement:** Implementations MUST provide a mechanism for consumers to discover available contexts and subscribe.
 
 **Discovery API (informative):**
 
-- **List contexts:** Return all available contextId values with metadata
-  (description, schema, typical keys)
+- **List contexts:** Return all available contextId values with metadata (description, schema, typical keys)
 
-- **Describe context:** Return schema, windowing policy, expected
-  emission rate, typical frame size
+- **Describe context:** Return schema, windowing policy, expected emission rate, typical frame size
 
 - **Subscribe:** Bind to (contextId, keyFilter, fromVersion?) where:
 
-  - keyFilter is an optional predicate (e.g., key LIKE \'tenant-123-%\')
-    to receive only relevant frames
+  - keyFilter is an optional predicate (e.g., key LIKE 'tenant-123-%') to receive only relevant frames
 
-  - fromVersion allows starting from a specific version (useful for
-    catch-up or replay)
+  - fromVersion allows starting from a specific version (useful for catch-up or replay)
 
 **Subscription lifecycle:**
 
 - Consumers SHOULD be able to pause, resume, and cancel subscriptions
 
-- Implementations SHOULD support multiple subscribers per context
-  without interference (fan-out)
+- Implementations SHOULD support multiple subscribers per context without interference (fan-out)
 
-- Implementations SHOULD provide telemetry on subscriber health (lag,
-  throughput, error rates)
+- Implementations SHOULD provide telemetry on subscriber health (lag, throughput, error rates)
 
 ### **4.6.6 Backpressure and Flow Control**
 
-**Requirement:** Implementations SHOULD support backpressure mechanisms
-to prevent overwhelming slow consumers.
+**Requirement:** Implementations SHOULD support backpressure mechanisms to prevent overwhelming slow consumers.
 
 **Reactive Streams alignment (informative):**
 
-If the implementation uses Reactive Streams or a similar protocol, it
-SHOULD follow the Publisher/Subscriber contract:
+If the implementation uses Reactive Streams or a similar protocol, it SHOULD follow the Publisher/Subscriber contract:
 
-- Consumers signal demand (e.g., \"I can handle 10 more frames\")
+- Consumers signal demand (e.g., "I can handle 10 more frames")
 
 - Publishers respect demand and do not push beyond capacity
 
-- Unbounded demand is discouraged; consumers SHOULD request in bounded
-  batches
+- Unbounded demand is discouraged; consumers SHOULD request in bounded batches
 
 **Alternative mechanisms:**
 
-- Consumers MAY use acknowledgment pacing (delay ack until ready for
-  next frame)
+- Consumers MAY use acknowledgment pacing (delay ack until ready for next frame)
 
 - Subscriptions MAY implement buffering with high-water marks and alerts
 
 **Telemetry:**
 
-- Implementations SHOULD emit metrics: subscription.backlog (frames
-  pending delivery), subscriber.lag_ms (time since frame emission to
-  delivery)
+- Implementations SHOULD emit metrics: subscription.backlog (frames pending delivery), subscriber.lag_ms (time since frame emission to delivery)
 
 ## **4.7 Extension Points**
 
-RCM defines **extension points**: well-defined hooks where
-implementations inject cross-cutting behaviors. The pattern specifies
-*where* these hooks attach and *what telemetry* they emit; the specific
-policies are **implementation-defined**.
+RCM defines **extension points**: well-defined hooks where implementations inject cross-cutting behaviors. The pattern specifies *where* these hooks attach and *what telemetry* they emit; the specific policies are **implementation-defined**.
 
 ### **4.7.1 Purpose and Scope**
 
-Extension points allow implementations to address operational
-concerns---admission control, resource management, security,
-observability---without coupling them to the core reactive semantics.
+Extension points allow implementations to address operational concerns—admission control, resource management, security, observability—without coupling them to the core reactive semantics.
 
 **Design principles:**
 
-- Extensions are **orthogonal** to composition, determinism, and
-  delivery guarantees
+- Extensions are **orthogonal** to composition, determinism, and delivery guarantees
 
-- Extensions inject at defined stages (before materialization, before
-  publish, at delivery)
+- Extensions inject at defined stages (before materialization, before publish, at delivery)
 
 - Extensions MUST emit telemetry documenting their decisions
 
-- Extensions MUST NOT alter frame content or violate ordering guarantees
-  (they may delay, deny, or observe, but not mutate)
+- Extensions MUST NOT alter frame content or violate ordering guarantees (they may delay, deny, or observe, but not mutate)
 
 ### **4.7.2 Stages and Hooks**
 
-Implementations claiming to support extension points SHOULD document
-which of the following hooks they provide:
+Implementations claiming to support extension points SHOULD document which of the following hooks they provide:
 
 **1. Pre-Materialization Hook (Before Evaluation)**
 
-Invoked after a source change is detected but before the Materializer
-evaluates the view plan.
+Invoked after a source change is detected but before the Materializer evaluates the view plan.
 
 **Typical uses:**
 
-- Policy checks (access control: \"Is this context allowed for this
-  key?\")
+- Policy checks (access control: "Is this context allowed for this key?")
 
-- Rate limiting (admission control: \"Has this tenant exceeded their
-  recomputation quota?\")
+- Rate limiting (admission control: "Has this tenant exceeded their recomputation quota?")
 
-- Concurrency control (capacity: \"Are we at maximum in-flight
-  materializations?\")
+- Concurrency control (capacity: "Are we at maximum in-flight materializations?")
 
-- Priority assignment (scheduling: \"What priority should this work
-  receive?\")
+- Priority assignment (scheduling: "What priority should this work receive?")
+
+- Budget lease (resource management: "Reserve 120ms of compute and 500 tokens for this materialization"), taken only after the gates above admit
 
 **Extension interface (informative):**
 
@@ -2630,69 +1951,49 @@ onBeforeMaterialize(contextId, key, sourceChange):
 
 decision = {admit: bool, reason: string, delay: duration?}
 
-emit(\"admission.decision\", {stage: \"pre-materialize\", contextId,
-key, decision})
+emit("admission.decision", {stage: "pre-materialize", contextId, key, decision})
 
 return decision
 
-**If denied:** The Materializer MUST NOT evaluate the plan. It SHOULD
-queue the work for retry if the denial is temporary (e.g., rate limit)
-or drop it permanently if policy forbids it.
+**If denied:** The Materializer MUST NOT evaluate the plan. It SHOULD queue the work for retry if the denial is temporary (e.g., rate limit) or drop it permanently if policy forbids it.
+
+Budget leases for the materialization itself (compute time, memory, tokens) belong to this hook, not to the pre-publish hook: a lease MUST be taken before the work it bounds, and only after admission gates have returned admit (gate-before-budget). Such a lease is settled by the post-publish hook (budget.commit) or released on failure or denial (budget.cancel).
 
 **2. Pre-Publish Hook (Before Frame Emission)**
 
-Invoked after the frame is computed but before it is written to the
-Frame Store and notified to subscribers.
+Invoked after the frame is computed but before it is written to the Frame Store and notified to subscribers.
 
 **Typical uses:**
 
-- Budget reservation (\"Reserve 120ms compute time and 5MB network\")
+- Security classification ("Tag this frame as 'internal' based on content")
 
-- Security classification (\"Tag this frame as \'internal\' based on
-  content\")
+- Redaction ("Remove PII fields per policy before storage")
 
-- Redaction (\"Remove PII fields per policy before storage\")
-
-- Human-in-the-loop approval (\"Request approval before exposing
-  high-risk frames\")
+- Human-in-the-loop approval ("Request approval before exposing high-risk frames")
 
 **Extension interface (informative):**
 
 onBeforePublish(frameHeaders, frameBody):
 
-lease = budgets.tryLease({timeMs: 120, moneyCents: 5, netBytes:
-frameSize})
-
-if !lease.granted:
-
-return {admit: false, reason: \"budget exhausted\"}
-
 classification = classify(frameBody)
 
 redactedBody = applyRedactions(frameBody, classification)
 
-emit(\"budget.lease\", {leaseId, units: {timeMs: 120, \...}})
+emit("security.classification", {contextId, key, classification})
 
-emit(\"security.classification\", {contextId, key, classification})
+emit("security.redaction", {contextId, key, pathsRedacted: \[...\]})
 
-emit(\"security.redaction\", {contextId, key, pathsRedacted: \[\...\]})
+return {admit: true, body: redactedBody, metadata: {classification}}
 
-return {admit: true, body: redactedBody, metadata: {classification,
-leaseId}}
-
-**If denied:** The frame MUST NOT be published. The extension SHOULD
-emit telemetry explaining the denial (e.g., admission.decision with
-stage=pre-publish, verdict=deny, reason=\"budget exceeded\").
+**If denied:** The frame MUST NOT be published. The extension SHOULD emit telemetry explaining the denial (e.g., admission.decision with hook=pre-publish, stage=approval, verdict=deny, reasonCode="approval_denied").
 
 **3. Post-Publish Hook (After Successful Emission)**
 
-Invoked after the frame is stored and notified to the subscription bus,
-before the Materializer moves to the next work item.
+Invoked after the frame is stored and notified to the subscription bus, before the Materializer moves to the next work item.
 
 **Typical uses:**
 
-- Budget settlement (commit actual usage: \"We used 95ms, not the
-  reserved 120ms\")
+- Budget settlement (commit actual usage: "We used 95ms, not the reserved 120ms"; or budget.cancel if publication failed)
 
 - Metrics collection (frame size, recomputation time, input cardinality)
 
@@ -2704,25 +2005,21 @@ onAfterPublish(frameId, actualUsage):
 
 budgets.commit(leaseId, actualUsage)
 
-emit(\"budget.commit\", {leaseId, actual: {timeMs: 95, \...}})
+emit("budget.commit", {leaseId, actual: {timeMs: 95, ...}})
 
-emit(\"frame.size_bytes\", frameSize)
+record("frame_size_bytes", frameSize)
 
 **4. Delivery Hook (At Subscription)**
 
-Invoked when delivering a frame to a subscriber, before the frame is
-sent.
+Invoked when delivering a frame to a subscriber, before the frame is sent.
 
 **Typical uses:**
 
-- Edge policy enforcement (gateway checks: \"Is this subscriber allowed
-  to see this classification?\")
+- Edge policy enforcement (gateway checks: "Is this subscriber allowed to see this classification?")
 
-- Budget accounting (charge for egress: \"This delivery costs 2MB
-  network\")
+- Egress budget lease (taken after the access check admits, committed after the subscriber acknowledges: "This delivery costs 2MB network")
 
-- Observability (latency tracking: \"Emit delivery.latency_ms for this
-  subscriber\")
+- Observability (latency tracking: "Emit delivery.latency_ms for this subscriber")
 
 **Extension interface (informative):**
 
@@ -2730,37 +2027,35 @@ onBeforeDeliver(frame, subscriberId):
 
 if !hasAccess(subscriberId, frame.extensions.classification):
 
-emit(\"delivery.denied\", {subscriberId, contextId, key, reason:
-\"access denied\"})
+emit("delivery.denied", {subscriberId, contextId, key, reason: "access denied"})
 
 return {admit: false}
 
-emit(\"delivery.attempt\", {subscriberId, contextId, key, version})
+emit("delivery.attempt", {subscriberId, contextId, key, version})
 
 return {admit: true}
 
 ### **4.7.3 Required Telemetry for Extensions**
 
-Implementations that support extension points MUST emit the following
-telemetry events to make extension behavior observable:
+Implementations that support extension points MUST emit the following telemetry events to make extension behavior observable:
 
 **admission.decision**
 
-- Labels: {stage, contextId, key, verdict, reasonCode}
+- Labels: {hook, stage, contextId, key, verdict, reasonCode}
 
-- stage ∈ {pre-materialize, pre-publish, delivery}
+- hook ∈ {pre-materialize, pre-publish, post-publish, delivery}: where the decision was made
 
-- verdict ∈ {admit, deny, defer}
+- stage: which check decided; implementation-defined, with RECOMMENDED values policy, gate, concurrency, priority, budget, approval
 
-- reasonCode: implementation-defined (e.g., rate_limit_exceeded,
-  policy_denied, budget_unavailable)
+- verdict ∈ {admit, delay, defer, deny}: delay means admitted after a bounded wait; defer means queued for later re-evaluation
+
+- reasonCode: implementation-defined (e.g., rate_limit_exceeded, policy_denied, budget_unavailable)
 
 **budget.lease / budget.commit / budget.cancel**
 
 - Labels: {contextId, key, leaseId, units}
 
-- units: object with dimensions (e.g., {timeMs, moneyCents, tokens,
-  netBytes, rows})
+- units: object with dimensions (e.g., {timeMs, moneyCents, tokens, netBytes, rows})
 
 - budget.lease: reservation made
 
@@ -2772,18 +2067,15 @@ telemetry events to make extension behavior observable:
 
 - Labels: {contextId, key, classification}
 
-- classification: implementation-defined taxonomy (e.g., public,
-  internal, confidential, restricted)
+- classification: implementation-defined taxonomy (e.g., public, internal, confidential, restricted)
 
 **security.redaction**
 
 - Labels: {contextId, key, pathsRedacted}
 
-- pathsRedacted: array of JSON pointers or field paths that were
-  masked/removed
+- pathsRedacted: array of JSON pointers or field paths that were masked/removed
 
-**human.approval.requested / human.approval.granted /
-human.approval.denied**
+**human.approval.requested / human.approval.granted / human.approval.denied**
 
 - Labels: {contextId, key, approvalId, ttl}
 
@@ -2793,12 +2085,9 @@ human.approval.denied**
 
 ### **4.7.4 Implementation-Defined Policies**
 
-RCM specifies the hooks and telemetry; the specific policies are
-implementation-defined. Common patterns are documented in Annex D
-(Informative), including:
+RCM specifies the hooks and telemetry; the specific policies are implementation-defined. Common patterns are documented in Annex D (Informative), including:
 
-- Multi-stage governance chains (e.g., Policy → Gate → Concurrency →
-  Priority → Budget)
+- Multi-stage governance chains (e.g., Policy → Gate → Concurrency → Priority → Budget)
 
 - Simple rate limiting (token bucket, leaky bucket)
 
@@ -2810,8 +2099,7 @@ implementation-defined. Common patterns are documented in Annex D
 
 - Fairness schedulers (weighted fair queueing with aging)
 
-Implementations SHOULD document their extension policies in the
-conformance report, including:
+Implementations SHOULD document their extension policies in the conformance report, including:
 
 - Which hooks are provided
 
@@ -2823,33 +2111,25 @@ conformance report, including:
 
 ### **4.7.5 Guarantees Preserved by Extensions**
 
-Extensions MUST NOT violate RCM\'s core guarantees:
+Extensions MUST NOT violate RCM's core guarantees:
 
-- **Determinism:** Extensions MAY delay or deny materialization but MUST
-  NOT alter the frame body or idempotencyKey (redaction is permitted if
-  applied before frame identity is finalized and documented as part of
-  the plan)
+- **Determinism:** Extensions MAY delay or deny materialization but MUST NOT alter the frame body or idempotencyKey (redaction is permitted if applied before frame identity is finalized and documented as part of the plan)
 
-- **Ordering:** Extensions MAY delay delivery but MUST NOT reorder
-  frames (per-key ordering by window.end, version must hold)
+- **Ordering:** Extensions MAY delay delivery but MUST NOT reorder frames (per-key ordering by window.end, version must hold)
 
-- **At-least-once delivery:** Extensions MAY retry or route to DLQ but
-  MUST ensure every admitted frame reaches subscribers or DLQ
+- **At-least-once delivery:** Extensions MAY retry or route to DLQ but MUST ensure every admitted frame reaches subscribers or DLQ
 
-- **Idempotency:** Extensions MAY deduplicate work but MUST preserve
-  idempotencyKey semantics
+- **Idempotency:** Extensions MAY deduplicate work but MUST preserve idempotencyKey semantics
 
 ## **4.8 Summary of Requirements**
 
-This section provides a consolidated checklist of normative requirements
-for RCM conformance.
+This section provides a consolidated checklist of normative requirements for RCM conformance.
 
 ### **4.8.1 Core Pattern (All Implementations)**
 
 **Roles and Components:**
 
-- [x] Source Signals with monotone positions and event-time timestamps
-  (§4.2.1)
+- [x] Source Signals with monotone positions and event-time timestamps (§4.2.1)
 
 - [x] Context Views as deterministic, composable plans (§4.2.2)
 
@@ -2861,13 +2141,11 @@ for RCM conformance.
 
 **Frame Envelope (§4.3):**
 
-- [x] Required header fields: frameId, contextId, key, version, type,
-  window, watermarkAt, inputs, planHash, idempotencyKey, ttl, createdAt
+- [x] Required header fields: frameId, contextId, key, version, type, window, watermarkAt, inputs, planHash, idempotencyKey, ttl, createdAt
 
 - [x] Immutability: frames MUST NOT mutate after publication
 
-- [x] Uniqueness: frameId globally unique; version monotone per
-  (contextId, key)
+- [x] Uniqueness: frameId globally unique; version monotone per (contextId, key)
 
 - [x] Provenance sufficiency: inputs enable replay
 
@@ -2915,11 +2193,9 @@ for RCM conformance.
 
 **If supporting extensions (§4.7):**
 
-- [x] Document which hooks are provided (pre-materialize, pre-publish,
-  post-publish, delivery)
+- [x] Document which hooks are provided (pre-materialize, pre-publish, post-publish, delivery)
 
-- [x] Emit required telemetry: admission.decision, budget.\*,
-  security.\*
+- [x] Emit required telemetry: admission.decision, budget.\*, security.\*
 
 - [x] Preserve core guarantees (determinism, ordering, at-least-once)
 
@@ -2935,6 +2211,8 @@ for RCM conformance.
 
 - [x] delivery.attempt, delivery.retry, delivery.dlq
 
+- [x] duplicate.detected; frame.replayed (or a replay flag) where replay is used; late_data.\* and coalesce.triggered where those policies are in effect
+
 - [x] Extension events if hooks are implemented
 
 **Required metrics:**
@@ -2945,9 +2223,11 @@ for RCM conformance.
 
 - [x] delivery_latency_ms (end-to-end delivery time)
 
-- [x] frame.size_bytes
+- [x] frame_size_bytes
 
-- [x] delivery.retry.count, delivery.dlq.count
+- [x] delivery_retry_count, delivery_dlq_count
+
+- [x] queue_depth, queue_wait_ms, duplicate_dedup_count
 
 ### **4.8.4 Conformance Verification**
 
@@ -2961,123 +2241,40 @@ for RCM conformance.
 
 4.  [x] Produce conformance report per Annex A.6
 
-**Next:** Chapter 5 positions RCM against adjacent patterns, helping
-architects decide when RCM applies and how it composes with existing
-systems.
-
-This completes Chapter 4 (Normative Semantics). Shall I proceed with
-Chapter 5 (Comparative Guide)?
-
-#  
+**Next:** Chapter 5 positions RCM against adjacent patterns, helping architects decide when RCM applies and how it composes with existing systems.
 
 # **5. Comparative Guide**
 
-This chapter positions RCM against well-known patterns in distributed
-systems, event-driven architectures, and UI state management. The goal
-is to help architects recognize when RCM applies, understand how it
-differs from (and complements) adjacent patterns, and avoid false
-equivalences.
+This chapter positions RCM against well-known patterns in distributed systems, event-driven architectures, and UI state management. The goal is to help architects recognize when RCM applies, understand how it differs from (and complements) adjacent patterns, and avoid false equivalences.
 
 ## **5.1 RCM vs. Adjacent Patterns**
 
-The following table provides a high-level comparison. Subsequent
-sections elaborate on the relationships and provide decision heuristics.
+The following table provides a high-level comparison. Subsequent sections elaborate on the relationships and provide decision heuristics.
 
-  ------------------ ------------------- -----------------------------------
-     **Pattern**     **Primary Purpose**         **How RCM Relates**
-
-  **Event Sourcing**  Persist all state   RCM often consumes event-sourced
-                         changes as         streams but treats frames as
-                     append-only events;   derived, versioned read models
-                      rebuild state via    rather than authoritative event
-                           replay        logs. Event Sourcing says \"the log
-                                          is truth\"; RCM says \"frames are
-                                         current composite knowledge derived
-                                                    from truth.\"
-
-       **CQRS**        Separate write      RCM frames are read models with
-                      models (commands)     governance and lineage. CQRS
-                      from read models       doesn\'t prescribe reactive
-                        (queries) for     updates, watermarks, or delivery
-                       scalability and      contracts; RCM provides those
-                           clarity                   semantics.
-
-    **Materialized    Precompute query    RCM is a methodized materialized
-        Views         results and keep      view pattern: it standardizes
-   (DB/Streaming)**  them incrementally   envelope format, time semantics,
-                      updated for read   lineage, versioning, delivery, and
-                         performance        governance so views become a
-                                          reusable memory plane, not just a
-                                               database optimization.
-
-      **Reactive        Non-blocking      RCM borrows flow control concepts
-      Streams**         backpressure          but adds memory lifecycle
-                        protocol for        (versioning, TTL, replay) and
-                     asynchronous stream    governance. Reactive Streams
-                         processing      standardizes demand signaling; RCM
-                                                standardizes context
-                                            materialization and delivery.
-
-   **Flux / Redux /    Unidirectional     Same backbone principle (events →
-     MVU / MVI**      state flow for UI  deterministic reduce → state). RCM
-                     (actions → reduce →       extends it to durable,
-                       state → render)     multi-consumer, governed memory
-                                               with time semantics and
-                                                cross-session replay.
-
-     **Blackboard     Shared workspace      RCM plays a similar \"shared
-      Systems**       where specialists    memory\" role but with explicit
-                     read/write partial   reactivity, versioning, lineage,
-                          solutions      and delivery contracts. Blackboard
-                        cooperatively      systems often lack standardized
-                                               governance and replay.
-
-     **Knowledge      Graph-structured       RCM can compose views over
-       Graphs**           knowledge       knowledge graph queries and emit
-                     representation with      frames referencing graph
-                       rich semantics     provenance. KGs are storage/query
-                       (RDF, Property        substrates; RCM governs the
-                           Graphs)          reactive lifecycle of derived
-                                                      contexts.
-
-    **Rule Engines    Efficient pattern    Rules can fire on frame updates
-   (Rete, Drools)**     matching and     (frames feed working memory); rule
-                      forward-chaining   outputs can trigger new views. RCM
-                        inference for    provides the memory substrate; rule
-                       business rules      engines provide the inference.
-
-   **Caching Layers    Fast key-value     RCM frames can be cached, but the
-       (Redis,        lookups to reduce  pattern isn\'t a cache. Caches lack
-     Memcached)**          load on          lineage, versioning, reactive
-                        authoritative       updates, and governance. RCM
-                           stores           standardizes *how* cacheable
-                                          artifacts form, not just *where*
-                                                  they\'re stored.
-  ------------------ ------------------- -----------------------------------
-
-###  
+|  |  |  |
+|:--:|:--:|:--:|
+| **Pattern** | **Primary Purpose** | **How RCM Relates** |
+| **Event Sourcing** | Persist all state changes as append-only events; rebuild state via replay | RCM often consumes event-sourced streams but treats frames as derived, versioned read models rather than authoritative event logs. Event Sourcing says "the log is truth"; RCM says "frames are current composite knowledge derived from truth." |
+| **CQRS** | Separate write models (commands) from read models (queries) for scalability and clarity | RCM frames are read models with governance and lineage. CQRS doesn't prescribe reactive updates, watermarks, or delivery contracts; RCM provides those semantics. |
+| **Materialized Views (DB/Streaming)** | Precompute query results and keep them incrementally updated for read performance | RCM is a methodized materialized view pattern: it standardizes envelope format, time semantics, lineage, versioning, delivery, and governance so views become a reusable memory plane, not just a database optimization. |
+| **Reactive Streams** | Non-blocking backpressure protocol for asynchronous stream processing | RCM borrows flow control concepts but adds memory lifecycle (versioning, TTL, replay) and governance. Reactive Streams standardizes demand signaling; RCM standardizes context materialization and delivery. |
+| **Flux / Redux / MVU / MVI** | Unidirectional state flow for UI (actions → reduce → state → render) | Same backbone principle (events → deterministic reduce → state). RCM extends it to durable, multi-consumer, governed memory with time semantics and cross-session replay. |
+| **Blackboard Systems** | Shared workspace where specialists read/write partial solutions cooperatively | RCM plays a similar "shared memory" role but with explicit reactivity, versioning, lineage, and delivery contracts. Blackboard systems often lack standardized governance and replay. |
+| **Knowledge Graphs** | Graph-structured knowledge representation with rich semantics (RDF, Property Graphs) | RCM can compose views over knowledge graph queries and emit frames referencing graph provenance. KGs are storage/query substrates; RCM governs the reactive lifecycle of derived contexts. |
+| **Rule Engines (Rete, Drools)** | Efficient pattern matching and forward-chaining inference for business rules | Rules can fire on frame updates (frames feed working memory); rule outputs can trigger new views. RCM provides the memory substrate; rule engines provide the inference. |
+| **Caching Layers (Redis, Memcached)** | Fast key-value lookups to reduce load on authoritative stores | RCM frames can be cached, but the pattern isn't a cache. Caches lack lineage, versioning, reactive updates, and governance. RCM standardizes *how* cacheable artifacts form, not just *where* they're stored. |
 
 ### **5.1.1 Event Sourcing**
 
-**What it is:** Event Sourcing persists every state change as an
-immutable event in an append-only log. Current state is derived by
-replaying events from the beginning (or from a snapshot). The event log
-is the authoritative source of truth.
+**What it is:** Event Sourcing persists every state change as an immutable event in an append-only log. Current state is derived by replaying events from the beginning (or from a snapshot). The event log is the authoritative source of truth.
 
 **Relationship to RCM:**
 
-- **Complementary:** RCM commonly consumes event-sourced streams as
-  Source Signals. The event log remains the write-side truth; RCM builds
-  governed read-side frames.
+- **Complementary:** RCM commonly consumes event-sourced streams as Source Signals. The event log remains the write-side truth; RCM builds governed read-side frames.
 
-- **Different concerns:** Event Sourcing focuses on *authoritative
-  history* (what happened, in what order). RCM focuses on *composite,
-  versioned context* (what we know now, reactively updated, with lineage
-  and governance).
+- **Different concerns:** Event Sourcing focuses on *authoritative history* (what happened, in what order). RCM focuses on *composite, versioned context* (what we know now, reactively updated, with lineage and governance).
 
-- **Co-existence pattern:** Use Event Sourcing for command handling and
-  durable ledger; use RCM to compose views over events and serve agents,
-  dashboards, analytics.
+- **Co-existence pattern:** Use Event Sourcing for command handling and durable ledger; use RCM to compose views over events and serve agents, dashboards, analytics.
 
 **Example architecture:**
 
@@ -3099,36 +2296,21 @@ Frames (versioned read models)
 
 Agents, Services, Dashboards
 
-**When to use Event Sourcing without RCM:** You need a complete audit
-trail and temporal queries (\"what was the state at time T?\") but
-don\'t need reactive multi-source composition or governed delivery.
+**When to use Event Sourcing without RCM:** You need a complete audit trail and temporal queries ("what was the state at time T?") but don't need reactive multi-source composition or governed delivery.
 
-**When to add RCM to Event Sourcing:** You have event-sourced data and
-need to serve real-time, composite contexts to many consumers with
-freshness SLOs, explainability, and cost control.
-
-###  
+**When to add RCM to Event Sourcing:** You have event-sourced data and need to serve real-time, composite contexts to many consumers with freshness SLOs, explainability, and cost control.
 
 ### **5.1.2 CQRS (Command-Query Responsibility Segregation)**
 
-**What it is:** CQRS separates the write model (commands that mutate
-state) from read models (queries optimized for specific access
-patterns). Commands and queries use different schemas and often
-different storage.
+**What it is:** CQRS separates the write model (commands that mutate state) from read models (queries optimized for specific access patterns). Commands and queries use different schemas and often different storage.
 
 **Relationship to RCM:**
 
-- **RCM implements the read side:** Frames are read models with RCM\'s
-  additional semantics (versioning, lineage, time, delivery).
+- **RCM implements the read side:** Frames are read models with RCM's additional semantics (versioning, lineage, time, delivery).
 
-- **CQRS is architectural principle; RCM is pattern:** CQRS says
-  \"separate writes and reads\"; RCM says \"here\'s how to build
-  reactive, governed read models.\"
+- **CQRS is architectural principle; RCM is pattern:** CQRS says "separate writes and reads"; RCM says "here's how to build reactive, governed read models."
 
-- **CQRS doesn\'t specify:** How read models update (RCM: reactively on
-  source change), how they version (RCM: monotone per key), how they\'re
-  delivered (RCM: at-least-once, per-key ordered), or how they\'re
-  governed (RCM: extension points).
+- **CQRS doesn't specify:** How read models update (RCM: reactively on source change), how they version (RCM: monotone per key), how they're delivered (RCM: at-least-once, per-key ordered), or how they're governed (RCM: extension points).
 
 **Co-existence pattern:**
 
@@ -3140,94 +2322,53 @@ Read Side (Queries):
 
 Event Store → RCM Views → Frames → Subscriptions → Consumers
 
-**When to use CQRS without RCM:** You need read/write separation but can
-serve queries with simple projections or direct database queries;
-reactive updates and multi-consumer fan-out aren\'t critical.
+**When to use CQRS without RCM:** You need read/write separation but can serve queries with simple projections or direct database queries; reactive updates and multi-consumer fan-out aren't critical.
 
-**When to add RCM to CQRS:** Your read side needs reactive freshness,
-multi-source joins, versioning for replay, and consistent delivery to
-many heterogeneous consumers (agents, dashboards, indices).
-
-###  
+**When to add RCM to CQRS:** Your read side needs reactive freshness, multi-source joins, versioning for replay, and consistent delivery to many heterogeneous consumers (agents, dashboards, indices).
 
 ### **5.1.3 Materialized Views (Databases and Streaming Engines)**
 
-**What it is:** A materialized view is a precomputed query result stored
-for fast access. Database MVs (PostgreSQL, Oracle) update via triggers
-or refresh schedules. Streaming MVs (Kafka Streams, Flink) update
-incrementally as input streams change.
+**What it is:** A materialized view is a precomputed query result stored for fast access. Database MVs (PostgreSQL, Oracle) update via triggers or refresh schedules. Streaming MVs (Kafka Streams, Flink) update incrementally as input streams change.
 
 **Relationship to RCM:**
 
-- **RCM generalizes and governs:** RCM is \"materialized views as a
-  first-class memory pattern\" with standardized envelope, time
-  semantics, lineage, versioning, delivery, and governance.
+- **RCM generalizes and governs:** RCM is "materialized views as a first-class memory pattern" with standardized envelope, time semantics, lineage, versioning, delivery, and governance.
 
-- **Database MVs lack:** Reactive cross-source composition, delivery
-  contracts, versioning for replay, governance hooks.
+- **Database MVs lack:** Reactive cross-source composition, delivery contracts, versioning for replay, governance hooks.
 
-- **Streaming MVs provide:** Incremental updates and time semantics
-  (watermarks, windows) but often lack standardized lineage envelopes,
-  multi-consumer delivery guarantees, and governance.
+- **Streaming MVs provide:** Incremental updates and time semantics (watermarks, windows) but often lack standardized lineage envelopes, multi-consumer delivery guarantees, and governance.
 
 **RCM adds value by:**
 
-- Standardizing the frame envelope so MVs are self-describing and
-  replayable
+- Standardizing the frame envelope so MVs are self-describing and replayable
 
-- Providing delivery contracts (at-least-once, per-key ordered) for
-  fan-out
+- Providing delivery contracts (at-least-once, per-key ordered) for fan-out
 
 - Adding extension points for policy, budgets, security
 
-- Enabling cross-platform interoperability (RCM frames from Flink can be
-  consumed by non-Flink subscribers)
+- Enabling cross-platform interoperability (RCM frames from Flink can be consumed by non-Flink subscribers)
 
-**When to use simple MVs:** You need fast reads within a single database
-or streaming job; context is simple (single source or basic join); no
-cross-team reuse or governance required.
+**When to use simple MVs:** You need fast reads within a single database or streaming job; context is simple (single source or basic join); no cross-team reuse or governance required.
 
-**When to adopt RCM:** You need to share materialized contexts across
-many consumers (agents, services, dashboards, analytics), provide
-lineage for compliance, control costs via budgets, and govern
-access/retention uniformly.
-
-###  
+**When to adopt RCM:** You need to share materialized contexts across many consumers (agents, services, dashboards, analytics), provide lineage for compliance, control costs via budgets, and govern access/retention uniformly.
 
 ### **5.1.4 Reactive Streams**
 
-**What it is:** Reactive Streams is a specification for asynchronous
-stream processing with non-blocking backpressure. It defines Publisher,
-Subscriber, Subscription, and Processor interfaces with demand
-signaling.
+**What it is:** Reactive Streams is a specification for asynchronous stream processing with non-blocking backpressure. It defines Publisher, Subscriber, Subscription, and Processor interfaces with demand signaling.
 
 **Relationship to RCM:**
 
-- **Complementary, orthogonal concerns:** Reactive Streams standardizes
-  *flow control* (how to avoid overwhelming consumers). RCM standardizes
-  *memory lifecycle* (how context forms, versions, persists, and
-  delivers).
+- **Complementary, orthogonal concerns:** Reactive Streams standardizes *flow control* (how to avoid overwhelming consumers). RCM standardizes *memory lifecycle* (how context forms, versions, persists, and delivers).
 
-- **RCM subscriptions can use Reactive Streams:** Implementations MAY
-  use Reactive Streams protocols for delivery (subscribers signal
-  demand; publishers respect it) but this is not required.
+- **RCM subscriptions can use Reactive Streams:** Implementations MAY use Reactive Streams protocols for delivery (subscribers signal demand; publishers respect it) but this is not required.
 
-- **Reactive Streams doesn\'t specify:** What\'s being delivered (RCM:
-  versioned frames with lineage), how it\'s computed (RCM: deterministic
-  plans, watermarks), how it\'s stored (RCM: immutable frame store with
-  TTL), or how it\'s governed (RCM: extension points).
+- **Reactive Streams doesn't specify:** What's being delivered (RCM: versioned frames with lineage), how it's computed (RCM: deterministic plans, watermarks), how it's stored (RCM: immutable frame store with TTL), or how it's governed (RCM: extension points).
 
-**Co-existence pattern:** Use Reactive Streams for the delivery
-transport; use RCM semantics for what\'s delivered and how it\'s
-materialized.
+**Co-existence pattern:** Use Reactive Streams for the delivery transport; use RCM semantics for what's delivered and how it's materialized.
 
-**When to use Reactive Streams without RCM:** You\'re building a
-low-level streaming library or pipeline that needs backpressure but
-doesn\'t need durable, versioned, governed context.
+**When to use Reactive Streams without RCM:** You're building a low-level streaming library or pipeline that needs backpressure but doesn't need durable, versioned, governed context.
 
-**When to combine:** You\'re building an RCM implementation and want
-best-practice flow control; adopt Reactive Streams for the subscription
-bus.
+**When to combine:** You're building an RCM implementation and want best-practice flow control; adopt Reactive Streams for the subscription bus.
 
 ### **5.1.5 Flux / Redux / MVU / MVI (UI State Management)**
 
@@ -3241,21 +2382,15 @@ bus.
 
 - **MVI (Model-View-Intent):** Intents → Model → View
 
-All share: events/actions flow into pure functions that produce new
-state; views render from state; no direct mutation.
+All share: events/actions flow into pure functions that produce new state; views render from state; no direct mutation.
 
 **Relationship to RCM:**
 
-- **Same conceptual backbone:** Events → deterministic reduce → state →
-  projection. RCM extends this to durable, multi-session, multi-consumer
-  memory.
+- **Same conceptual backbone:** Events → deterministic reduce → state → projection. RCM extends this to durable, multi-session, multi-consumer memory.
 
-- **UI patterns are local:** State lives in browser/app memory;
-  ephemeral across sessions; single consumer (the UI).
+- **UI patterns are local:** State lives in browser/app memory; ephemeral across sessions; single consumer (the UI).
 
-- **RCM is durable and shared:** Frames persist beyond sessions; many
-  consumers (agents, services, dashboards) subscribe; lineage and
-  governance apply.
+- **RCM is durable and shared:** Frames persist beyond sessions; many consumers (agents, services, dashboards) subscribe; lineage and governance apply.
 
 **Co-existence pattern:**
 
@@ -3269,65 +2404,39 @@ Subscribe to frames → Dispatch actions → Reducers → UI renders
 
 Local state for transient UI concerns (hover, focus, form draft)
 
-**When to use Redux/MVU without RCM:** You\'re building a single-page
-app with no backend persistence or cross-session memory; all state is
-local and ephemeral.
+**When to use Redux/MVU without RCM:** You're building a single-page app with no backend persistence or cross-session memory; all state is local and ephemeral.
 
-**When to add RCM:** You need durable context that survives sessions,
-serves multiple clients, and requires explainability (lineage, replay).
-RCM becomes the \"server-side Redux\" feeding many client-side Reduxes.
+**When to add RCM:** You need durable context that survives sessions, serves multiple clients, and requires explainability (lineage, replay). RCM becomes the "server-side Redux" feeding many client-side Reduxes.
 
 ### **5.1.6 Blackboard Systems**
 
-**What it is:** A blackboard architecture has a shared \"blackboard\"
-where independent specialists read partial information, contribute
-hypotheses or solutions, and iterate toward a goal. Common in AI
-planning and collaborative problem-solving.
+**What it is:** A blackboard architecture has a shared "blackboard" where independent specialists read partial information, contribute hypotheses or solutions, and iterate toward a goal. Common in AI planning and collaborative problem-solving.
 
 **Relationship to RCM:**
 
-- **Shared memory role:** Both provide a common substrate for knowledge.
-  Blackboard = workspace for collaborative reasoning; RCM = versioned,
-  reactive memory for distributed systems.
+- **Shared memory role:** Both provide a common substrate for knowledge. Blackboard = workspace for collaborative reasoning; RCM = versioned, reactive memory for distributed systems.
 
-- **RCM adds:** Explicit versioning, lineage, time semantics
-  (watermarks, windows), delivery guarantees, and governance. Blackboard
-  systems often lack these.
+- **RCM adds:** Explicit versioning, lineage, time semantics (watermarks, windows), delivery guarantees, and governance. Blackboard systems often lack these.
 
-- **Blackboard adds:** Opportunistic reasoning, conflict resolution
-  heuristics, goal-driven control. RCM is reactive (source changes
-  trigger updates), not goal-driven.
+- **Blackboard adds:** Opportunistic reasoning, conflict resolution heuristics, goal-driven control. RCM is reactive (source changes trigger updates), not goal-driven.
 
-**Co-existence pattern:** Use RCM frames as the blackboard\'s knowledge
-units. Specialists subscribe to frames, reason, and post new frames. The
-blackboard controller uses frame lineage to explain decisions.
+**Co-existence pattern:** Use RCM frames as the blackboard's knowledge units. Specialists subscribe to frames, reason, and post new frames. The blackboard controller uses frame lineage to explain decisions.
 
-**When to use Blackboard without RCM:** You\'re building an AI planning
-system within a single process; durability and distributed delivery
-aren\'t concerns.
+**When to use Blackboard without RCM:** You're building an AI planning system within a single process; durability and distributed delivery aren't concerns.
 
-**When to add RCM:** Your blackboard needs to persist across sessions,
-serve distributed specialists, provide audit trails, and control
-resource usage (budgets, quotas).
+**When to add RCM:** Your blackboard needs to persist across sessions, serve distributed specialists, provide audit trails, and control resource usage (budgets, quotas).
 
 ### **5.1.7 Knowledge Graphs**
 
-**What it is:** A graph-structured knowledge base (RDF, Property Graph)
-with rich semantics: entities, relationships, attributes, ontologies.
-Supports traversals, SPARQL/Cypher queries, inference.
+**What it is:** A graph-structured knowledge base (RDF, Property Graph) with rich semantics: entities, relationships, attributes, ontologies. Supports traversals, SPARQL/Cypher queries, inference.
 
 **Relationship to RCM:**
 
-- **Different layers:** Knowledge Graphs are a *storage and query
-  substrate*; RCM governs the *reactive lifecycle* of contexts derived
-  from (or feeding into) the graph.
+- **Different layers:** Knowledge Graphs are a *storage and query substrate*; RCM governs the *reactive lifecycle* of contexts derived from (or feeding into) the graph.
 
-- **RCM can compose over KGs:** A Context View queries the graph,
-  materializes frames with provenance pointing to graph nodes/edges, and
-  delivers to subscribers.
+- **RCM can compose over KGs:** A Context View queries the graph, materializes frames with provenance pointing to graph nodes/edges, and delivers to subscribers.
 
-- **Frames can feed KGs:** RCM frames (entities, facts, summaries) can
-  be indexed into a graph for discovery and traversal.
+- **Frames can feed KGs:** RCM frames (entities, facts, summaries) can be indexed into a graph for discovery and traversal.
 
 **Co-existence pattern:**
 
@@ -3345,35 +2454,21 @@ Frames (versioned slices with lineage to graph entities)
 
 Agents, Dashboards (subscribe for fresh graph-derived contexts)
 
-**When to use KG without RCM:** You need semantic search, inference, and
-traversals but don\'t need reactive updates or multi-consumer delivery
-with governance.
+**When to use KG without RCM:** You need semantic search, inference, and traversals but don't need reactive updates or multi-consumer delivery with governance.
 
-**When to add RCM:** You want fresh, versioned slices of graph knowledge
-delivered reactively to agents/services; you need lineage (which graph
-nodes contributed to this frame); you want cost control and access
-policies on graph-derived contexts.
-
-###  
+**When to add RCM:** You want fresh, versioned slices of graph knowledge delivered reactively to agents/services; you need lineage (which graph nodes contributed to this frame); you want cost control and access policies on graph-derived contexts.
 
 ### **5.1.8 Rule Engines (Rete, Drools, Production Systems)**
 
-**What it is:** Rule engines evaluate \"if-then\" rules over a working
-memory of facts. They optimize pattern matching (Rete algorithm) and
-fire rules when conditions match.
+**What it is:** Rule engines evaluate "if-then" rules over a working memory of facts. They optimize pattern matching (Rete algorithm) and fire rules when conditions match.
 
 **Relationship to RCM:**
 
-- **Frames as working memory:** RCM frames can feed a rule engine\'s
-  fact base. Frame updates trigger rule re-evaluation.
+- **Frames as working memory:** RCM frames can feed a rule engine's fact base. Frame updates trigger rule re-evaluation.
 
-- **Rules as view logic:** Simple rules (filters, thresholds) can be
-  expressed as RCM view plans. Complex rules (multi-hop inference) fit
-  better in a dedicated engine.
+- **Rules as view logic:** Simple rules (filters, thresholds) can be expressed as RCM view plans. Complex rules (multi-hop inference) fit better in a dedicated engine.
 
-- **Different strengths:** Rule engines excel at inference and complex
-  condition matching; RCM excels at reactive composition, versioning,
-  delivery, and governance.
+- **Different strengths:** Rule engines excel at inference and complex condition matching; RCM excels at reactive composition, versioning, delivery, and governance.
 
 **Co-existence pattern:**
 
@@ -3391,34 +2486,21 @@ Rules Fire (produce actions, alerts, decisions)
 
 Actions as new Source Signals → RCM recomputes affected views
 
-**When to use Rule Engine without RCM:** You have complex business logic
-with many interdependent rules; all facts fit in memory; single-process
-execution; no need for durable versioning or multi-consumer delivery.
+**When to use Rule Engine without RCM:** You have complex business logic with many interdependent rules; all facts fit in memory; single-process execution; no need for durable versioning or multi-consumer delivery.
 
-**When to add RCM:** You need to feed rules with fresh, versioned
-contexts from multiple sources; decisions must be auditable (replay
-which frames led to which rule firings); rule outputs need governed
-delivery to downstream systems.
+**When to add RCM:** You need to feed rules with fresh, versioned contexts from multiple sources; decisions must be auditable (replay which frames led to which rule firings); rule outputs need governed delivery to downstream systems.
 
 ### **5.1.9 Caching Layers (Redis, Memcached, CDN)**
 
-**What it is:** Key-value stores optimized for fast reads, often used to
-cache results of expensive queries or API calls. Data is ephemeral (can
-be evicted) and typically lacks structure beyond key-value.
+**What it is:** Key-value stores optimized for fast reads, often used to cache results of expensive queries or API calls. Data is ephemeral (can be evicted) and typically lacks structure beyond key-value.
 
 **Relationship to RCM:**
 
-- **Frames can be cached:** Implementations MAY cache frames in
-  Redis/Memcached for low-latency access, but caching is an
-  optimization, not the pattern.
+- **Frames can be cached:** Implementations MAY cache frames in Redis/Memcached for low-latency access, but caching is an optimization, not the pattern.
 
-- **RCM is not a cache:** Caches answer \"what did I fetch recently?\"
-  RCM answers \"what do I currently know, with lineage and versioning?\"
+- **RCM is not a cache:** Caches answer "what did I fetch recently?" RCM answers "what do I currently know, with lineage and versioning?"
 
-- **Caches lack:** Reactive updates (RCM recomputes on source change),
-  lineage (RCM records inputs and plan), versioning (RCM provides
-  monotone versions for replay), governance (RCM provides extension
-  points).
+- **Caches lack:** Reactive updates (RCM recomputes on source change), lineage (RCM records inputs and plan), versioning (RCM provides monotone versions for replay), governance (RCM provides extension points).
 
 **Co-existence pattern:**
 
@@ -3432,104 +2514,79 @@ Cache Layer (ephemeral, fast, key-value)
 
 Consumers (fast reads from cache; fallback to frame store on miss)
 
-**When to use Cache without RCM:** You need fast lookups of simple
-values (user sessions, rate-limit counters); no need for composition,
-lineage, or versioning.
+**When to use Cache without RCM:** You need fast lookups of simple values (user sessions, rate-limit counters); no need for composition, lineage, or versioning.
 
-**When to add RCM:** You need composite contexts that update reactively,
-carry lineage for compliance, version for replay, and deliver to many
-consumers with governance. Cache becomes a read-through layer atop RCM
-frames.
+**When to add RCM:** You need composite contexts that update reactively, carry lineage for compliance, version for replay, and deliver to many consumers with governance. Cache becomes a read-through layer atop RCM frames.
 
-**5.1.10 Major Vendor Platforms**
+### **5.1.10 Major Vendor Platforms**
 
 **What cloud platforms provide:**
 
-**Databricks**: Delta Lake with Change Data Feed, Structured Streaming,
-MLflow versioning, Unity Catalog governance
+**Databricks**: Delta Lake with Change Data Feed, Structured Streaming, MLflow versioning, Unity Catalog governance
 
-- **Gap vs RCM**: Primitives exist (CDC, streaming, versioning) but no
-  standard context substrate. Each team builds custom pipelines; no
-  portable frame envelope or lineage-by-default.
+- **Gap vs RCM**: Primitives exist (CDC, streaming, versioning) but no standard context substrate. Each team builds custom pipelines; no portable frame envelope or lineage-by-default.
 
-**Snowflake**: Streams (CDC), Tasks (triggered processing), Time Travel
-(historical queries), Tags (governance)
+**Snowflake**: Streams (CDC), Tasks (triggered processing), Time Travel (historical queries), Tags (governance)
 
-- **Gap vs RCM**: Similar primitives, different assembly. Time Travel
-  operates at table level, not frame level with provenance. No reactive
-  composition semantics.
+- **Gap vs RCM**: Similar primitives, different assembly. Time Travel operates at table level, not frame level with provenance. No reactive composition semantics.
 
 **\**
 
 **AWS**: EventBridge, Kinesis, DynamoDB Streams, Step Functions, Glue
 
-- **Gap vs RCM**: All the plumbing, zero opinions. You *can* build RCM
-  on AWS, but every team reinvents differently.
+- **Gap vs RCM**: All the plumbing, zero opinions. You *can* build RCM on AWS, but every team reinvents differently.
 
 **Azure**: Event Grid, Cosmos DB Change Feed, Durable Functions, Synapse
 
-- **Gap vs RCM**: Same as AWS---primitives without standardization.
+- **Gap vs RCM**: Same as AWS—primitives without standardization.
 
-**RCM\'s positioning**: RCM provides the **missing abstraction layer**
-above these vendor primitives. Like Kubernetes abstracted IaaS, RCM
-abstracts reactive context management. Implementations can run on any of
-these platforms while providing portable semantics.
+**RCM's positioning**: RCM provides the **missing abstraction layer** above these vendor primitives. Like Kubernetes abstracted IaaS, RCM abstracts reactive context management. Implementations can run on any of these platforms while providing portable semantics.
 
 ## **5.2 Decision Heuristics**
 
-This section provides rules of thumb for when to adopt RCM, when to use
-adjacent patterns, and when to combine them.
+This section provides rules of thumb for when to adopt RCM, when to use adjacent patterns, and when to combine them.
 
 ### **5.2.1 When to Adopt RCM**
 
 **Choose RCM when:**
 
-- ✅ You need **composite context** from multiple changing sources (not
-  just a single cache or query)
+- ✅ You need **composite context** from multiple changing sources (not just a single cache or query)
 
-- ✅ **Freshness matters** and you want reactive updates (not hourly
-  batch jobs)
+- ✅ **Freshness matters** and you want reactive updates (not hourly batch jobs)
 
-- ✅ **Explainability is required** (compliance, trust, debugging) via
-  lineage and replay
+- ✅ **Explainability is required** (compliance, trust, debugging) via lineage and replay
 
-- ✅ **Multiple consumers** (agents, services, dashboards, analytics)
-  need the same context
+- ✅ **Multiple consumers** (agents, services, dashboards, analytics) need the same context
 
-- ✅ **Cost control** is critical (recompute on change, not on traffic;
-  budgets and quotas)
+- ✅ **Cost control** is critical (recompute on change, not on traffic; budgets and quotas)
 
-- ✅ **Governance** (policy, retention, redaction, fairness) must apply
-  uniformly
+- ✅ **Governance** (policy, retention, redaction, fairness) must apply uniformly
 
 **Indicators RCM applies:**
 
-- Users or regulators ask \"why did the system recommend/decide X?\"
+- Users or regulators ask "why did the system recommend/decide X?"
 
-- You\'re building LLM agents that need rich, fresh context across
-  sessions
+- You're building LLM agents that need rich, fresh context across sessions
 
 - You have multiple teams duplicating similar joins and summaries
 
 - Context assembly latency and cost are growing with traffic
 
-- Compliance requires audit trails showing \"what we knew when\"
+- Compliance requires audit trails showing "what we knew when"
 
 ### **5.2.2 When RCM May Be Overkill**
 
-**Don\'t adopt RCM if:**
+**Don't adopt RCM if:**
 
 - ❌ Context is simple (single-source query; no joins or windows)
 
-- ❌ Freshness isn\'t critical (daily batch updates are fine)
+- ❌ Freshness isn't critical (daily batch updates are fine)
 
-- ❌ Only one consumer exists (no need for fan-out or subscription
-  abstraction)
+- ❌ Only one consumer exists (no need for fan-out or subscription abstraction)
 
-- ❌ Explainability isn\'t required (no audits, no compliance, no
-  user-facing explanations)
+- ❌ Explainability isn't required (no audits, no compliance, no user-facing explanations)
 
-- ❌ You\'re just caching API responses (use a cache; RCM is heavier)
+- ❌ You're just caching API responses (use a cache; RCM is heavier)
 
 **Alternatives to consider:**
 
@@ -3543,55 +2600,30 @@ adjacent patterns, and when to combine them.
 
 ### **5.2.3 Combining Patterns: Decision Matrix**
 
-  --------------- -------------- ------------ -----------------------------
-   **Your Need**      **Base     **Add RCM?**           **Why?**
-                    Pattern**                 
+|  |  |  |  |
+|:--:|:--:|:--:|:--:|
+| **Your Need** | **Base Pattern** | **Add RCM?** | **Why?** |
+| Authoritative event history | Event Sourcing | Yes | RCM builds governed read models atop the event log |
+| Read/write separation | CQRS | Yes | RCM implements the read side with reactive updates and delivery |
+| Fast precomputed queries | Materialized Views | Yes | RCM standardizes envelopes, lineage, delivery, governance |
+| Backpressure for streams | Reactive Streams | Optional | Use RS for transport; RCM for memory lifecycle |
+| UI state management | Redux/MVU | Optional | Keep UI state local; use RCM for durable, shared server-side context |
+| Collaborative reasoning | Blackboard | Yes | RCM frames become blackboard facts with versioning and lineage |
+| Semantic knowledge | Knowledge Graph | Yes | RCM delivers fresh graph slices reactively with provenance |
+| Complex business rules | Rule Engine | Yes | RCM frames feed working memory; rule outputs trigger new views |
+| Fast key-value lookups | Caching | No (but can co-exist) | Cache RCM frames for speed; RCM handles lifecycle |
 
-   Authoritative  Event Sourcing     Yes        RCM builds governed read
-   event history                                models atop the event log
+### **5.2.4 Audience-Specific Positioning**
 
-    Read/write         CQRS          Yes      RCM implements the read side
-    separation                                  with reactive updates and
-                                                        delivery
+RCM applies to multiple domains. Position appropriately for your audience:
 
-       Fast        Materialized      Yes       RCM standardizes envelopes,
-    precomputed       Views                   lineage, delivery, governance
-      queries                                 
+To AI/ML engineers: "RCM is production-grade memory for agents—fresh, explainable, governed."
 
-   Backpressure      Reactive      Optional   Use RS for transport; RCM for
-    for streams      Streams                        memory lifecycle
+To backend/data engineers: "RCM is Event Sourcing for reads—reactive materialized views with lineage and delivery contracts."
 
-     UI state       Redux/MVU      Optional   Keep UI state local; use RCM
-    management                                     for durable, shared
-                                                   server-side context
+To architects/CTOs: "RCM is the missing substrate between event logs and application state—the 'read side' of CQRS with operational guarantees."
 
-   Collaborative    Blackboard       Yes      RCM frames become blackboard
-     reasoning                                  facts with versioning and
-                                                         lineage
-
-     Semantic       Knowledge        Yes        RCM delivers fresh graph
-     knowledge        Graph                      slices reactively with
-                                                       provenance
-
-      Complex      Rule Engine       Yes         RCM frames feed working
-  business rules                              memory; rule outputs trigger
-                                                        new views
-
-  Fast key-value     Caching     No (but can   Cache RCM frames for speed;
-      lookups                     co-exist)       RCM handles lifecycle
-  --------------- -------------- ------------ -----------------------------
-
-## **5.2.4 Audience-Specific Positioning**
-
-## RCM applies to multiple domains. Position appropriately for your audience:
-
-## To AI/ML engineers: \"RCM is production-grade memory for agents---fresh, explainable, governed.\"
-
-## To backend/data engineers: \"RCM is Event Sourcing for reads---reactive materialized views with lineage and delivery contracts.\"
-
-## To architects/CTOs: \"RCM is the missing substrate between event logs and application state---the \'read side\' of CQRS with operational guarantees.\"
-
-## To platform teams: \"RCM standardizes what you\'re already building---governed, versioned contexts that serve dashboards, agents, analytics, and compliance from a single substrate.\"
+To platform teams: "RCM standardizes what you're already building—governed, versioned contexts that serve dashboards, agents, analytics, and compliance from a single substrate."
 
 **\**
 
@@ -3601,8 +2633,7 @@ This section shows how RCM composes with adjacent patterns in practice.
 
 ### **5.3.1 RCM + Event Sourcing (Ledger + Living Memory)**
 
-**Pattern:** Event Sourcing provides the authoritative ledger; RCM
-builds living, composite memory for operations.
+**Pattern:** Event Sourcing provides the authoritative ledger; RCM builds living, composite memory for operations.
 
 **Architecture:**
 
@@ -3630,12 +2661,11 @@ Agents, Dashboards, Search Indices, Analytics
 
 **Benefits:**
 
-- Event Store remains source of truth for \"what happened\"
+- Event Store remains source of truth for "what happened"
 
-- RCM provides \"what we know now\" with freshness SLOs
+- RCM provides "what we know now" with freshness SLOs
 
-- Agents and dashboards consume frames (fast, governed) not raw events
-  (slow, complex joins)
+- Agents and dashboards consume frames (fast, governed) not raw events (slow, complex joins)
 
 - Audits replay both: events for authority, frames for decisions
 
@@ -3643,18 +2673,15 @@ Agents, Dashboards, Search Indices, Analytics
 
 - Events: OrderPlaced, PaymentProcessed, ItemsShipped, OrderCancelled
 
-- RCM View: order_status = join(order_events, inventory,
-  shipping_status)
+- RCM View: order_status = join(order_events, inventory, shipping_status)
 
-- Frames: Versioned order context updated reactively; served to customer
-  support agents and dashboard widgets
+- Frames: Versioned order context updated reactively; served to customer support agents and dashboard widgets
 
 **\**
 
 ### **5.3.2 RCM + CQRS (Governed Read Side)**
 
-**Pattern:** CQRS separates writes from reads; RCM implements the read
-side with reactivity and governance.
+**Pattern:** CQRS separates writes from reads; RCM implements the read side with reactivity and governance.
 
 **Architecture:**
 
@@ -3664,21 +2691,17 @@ Commands → Command Handlers → Domain Model → Events → Event Store
 
 Read Side (RCM):
 
-Event Store → RCM Context Views → Frames → Subscriptions → Query
-Services
+Event Store → RCM Context Views → Frames → Subscriptions → Query Services
 
 **Benefits:**
 
-- Clear separation: writes optimize for consistency and validation;
-  reads optimize for query patterns
+- Clear separation: writes optimize for consistency and validation; reads optimize for query patterns
 
 - RCM read models update reactively (no polling or manual refresh)
 
-- Multiple read models (different views) serve different consumers from
-  the same events
+- Multiple read models (different views) serve different consumers from the same events
 
-- Governance (budgets, policies) applies uniformly across all read
-  models
+- Governance (budgets, policies) applies uniformly across all read models
 
 **Example:** Banking application
 
@@ -3686,21 +2709,15 @@ Services
 
 - RCM read side:
 
-  - View 1: account_balance (current balance, recent transactions) →
-    agents, mobile app
+  - View 1: account_balance (current balance, recent transactions) → agents, mobile app
 
-  - View 2: fraud_signals (anomaly scores, velocity checks) → fraud
-    detection service
+  - View 2: fraud_signals (anomaly scores, velocity checks) → fraud detection service
 
-  - View 3: reporting_snapshot (daily aggregates) → compliance
-    dashboards
-
-###  
+  - View 3: reporting_snapshot (daily aggregates) → compliance dashboards
 
 ### **5.3.3 RCM + Search/Vector Indices (Discoverable Memory)**
 
-**Pattern:** RCM frames feed search and vector indices; search results
-link back to frame IDs for provenance.
+**Pattern:** RCM frames feed search and vector indices; search results link back to frame IDs for provenance.
 
 **Architecture:**
 
@@ -3724,7 +2741,7 @@ Lookup Frame by ID (for full lineage, replay)
 
 **Benefits:**
 
-- Search provides discovery (\"find relevant contexts for query X\")
+- Search provides discovery ("find relevant contexts for query X")
 
 - RCM provides authoritative detail (frame body + lineage)
 
@@ -3740,13 +2757,11 @@ Lookup Frame by ID (for full lineage, replay)
 
 - Index: embeddings + keywords for semantic search
 
-- Agent workflow: search index → retrieve frame IDs → fetch full frames
-  for context assembly
+- Agent workflow: search index → retrieve frame IDs → fetch full frames for context assembly
 
 ### **5.3.4 RCM + Rule Engines (Explainable Inference)**
 
-**Pattern:** RCM frames populate the rule engine\'s working memory; rule
-firings produce new events that trigger view recomputation.
+**Pattern:** RCM frames populate the rule engine's working memory; rule firings produce new events that trigger view recomputation.
 
 **Architecture:**
 
@@ -3766,7 +2781,7 @@ Decisions as new Source Signals
 
 ↓
 
-RCM recomputes affected views (e.g., \"user_risk_assessment\")
+RCM recomputes affected views (e.g., "user_risk_assessment")
 
 ↓
 
@@ -3780,8 +2795,7 @@ Agents, Services (consume updated context)
 
 - Rules operate on fresh, versioned facts (RCM frames)
 
-- Rule firings are auditable (frames record which facts led to which
-  rules)
+- Rule firings are auditable (frames record which facts led to which rules)
 
 - Decisions feed back into context (closed loop)
 
@@ -3789,23 +2803,19 @@ Agents, Services (consume updated context)
 
 **Example:** Fraud detection
 
-- RCM View: transaction_context = user_profile ⨝ recent_txns ⨝
-  velocity_stats
+- RCM View: transaction_context = user_profile ⨝ recent_txns ⨝ velocity_stats
 
-- Rule Engine: evaluates fraud rules (velocity thresholds,
-  geo-anomalies, spending patterns)
+- Rule Engine: evaluates fraud rules (velocity thresholds, geo-anomalies, spending patterns)
 
 - Rule fires: produces fraud_alert event
 
 - RCM recomputes: user_risk_assessment view includes the alert
 
-- Frames: delivered to fraud analysts and automated block/review
-  workflows
+- Frames: delivered to fraud analysts and automated block/review workflows
 
 ### **5.3.5 RCM + Edge Protocols (MCP, A2A)**
 
-**Pattern:** RCM governs internal context lifecycle; edge protocols
-expose/consume context at boundaries.
+**Pattern:** RCM governs internal context lifecycle; edge protocols expose/consume context at boundaries.
 
 **Architecture:**
 
@@ -3815,16 +2825,13 @@ Sources → Views → Frames → Subscriptions → Agents, Services
 
 Edge (MCP Gateway):
 
-External LLM Apps ← MCP Context Requests ← RCM Frames (curated,
-redacted)
+External LLM Apps ← MCP Context Requests ← RCM Frames (curated, redacted)
 
-External LLM Apps → MCP Context Pushes → RCM Source Signals (stamped
-with policy)
+External LLM Apps → MCP Context Pushes → RCM Source Signals (stamped with policy)
 
 Edge (A2A Gateway):
 
-Partner Agents ← A2A Delegation Requests ← RCM Frames (with budget
-envelopes)
+Partner Agents ← A2A Delegation Requests ← RCM Frames (with budget envelopes)
 
 Partner Agents → A2A Results → RCM Source Signals (recorded for lineage)
 
@@ -3832,11 +2839,9 @@ Partner Agents → A2A Results → RCM Source Signals (recorded for lineage)
 
 - RCM provides consistent, governed internal context
 
-- MCP/A2A provide interoperability at edges without diluting internal
-  guarantees
+- MCP/A2A provide interoperability at edges without diluting internal guarantees
 
-- Frames crossing boundaries carry lineage; external systems can verify
-  integrity
+- Frames crossing boundaries carry lineage; external systems can verify integrity
 
 - Governance (rate limits, budgets, classification) enforces at gateways
 
@@ -3844,168 +2849,123 @@ Partner Agents → A2A Results → RCM Source Signals (recorded for lineage)
 
 - Internal agent: uses RCM frames for up-to-date user context
 
-- External partner agent (via A2A): requests context; gateway fetches
-  relevant frames, applies redaction, returns via A2A protocol
+- External partner agent (via A2A): requests context; gateway fetches relevant frames, applies redaction, returns via A2A protocol
 
 - Partner agent processes, returns results
 
-- Results ingested as new Source Signal; RCM recomputes views that
-  depend on partner outputs
+- Results ingested as new Source Signal; RCM recomputes views that depend on partner outputs
 
-- Full audit trail: frames record which partner agents contributed what
-  data
+- Full audit trail: frames record which partner agents contributed what data
 
 ## **5.4 Anti-Patterns and Common Confusions**
 
 This section warns against misunderstandings that lead teams astray.
 
-### **5.4.1 \"It\'s Just Caching\"**
+### **5.4.1 "It's Just Caching"**
 
-**Confusion:** \"RCM is a fancy cache. We already have Redis.\"
-
-**Correction:**
-
-- Caches store results of past fetches; RCM computes composite contexts
-  reactively
-
-- Caches lack lineage (no provenance); RCM frames cite inputs and
-  transforms
-
-- Caches don\'t version (no replay); RCM frames have monotone versions
-
-- Caches don\'t govern (no policies or budgets); RCM provides extension
-  points
-
-**When caching suffices:** You\'re caching simple, single-source queries
-with no need for freshness guarantees, explainability, or multi-consumer
-coordination.
-
-**When to adopt RCM:** Context is composite, must stay fresh, requires
-auditable lineage, and serves multiple consumers with governance.
-
-### **5.4.2 \"Just Use Materialized Views\"**
-
-**Confusion:** \"Our database has materialized views. Why do we need
-RCM?\"
+**Confusion:** "RCM is a fancy cache. We already have Redis."
 
 **Correction:**
 
-- Database MVs are single-system optimizations; RCM is a cross-system
-  pattern
+- Caches store results of past fetches; RCM computes composite contexts reactively
+
+- Caches lack lineage (no provenance); RCM frames cite inputs and transforms
+
+- Caches don't version (no replay); RCM frames have monotone versions
+
+- Caches don't govern (no policies or budgets); RCM provides extension points
+
+**When caching suffices:** You're caching simple, single-source queries with no need for freshness guarantees, explainability, or multi-consumer coordination.
+
+**When to adopt RCM:** Context is composite, must stay fresh, requires auditable lineage, and serves multiple consumers with governance.
+
+### **5.4.2 "Just Use Materialized Views"**
+
+**Confusion:** "Our database has materialized views. Why do we need RCM?"
+
+**Correction:**
+
+- Database MVs are single-system optimizations; RCM is a cross-system pattern
 
 - DB MVs lack standardized envelopes (no portable lineage or versioning)
 
-- DB MVs don\'t provide delivery contracts (at-least-once, per-key
-  ordered fan-out)
+- DB MVs don't provide delivery contracts (at-least-once, per-key ordered fan-out)
 
-- DB MVs don\'t integrate governance (no budgets, policies,
-  classification)
+- DB MVs don't integrate governance (no budgets, policies, classification)
 
-**When DB MVs suffice:** You\'re optimizing queries within one database;
-no cross-team reuse; no compliance/governance requirements.
+**When DB MVs suffice:** You're optimizing queries within one database; no cross-team reuse; no compliance/governance requirements.
 
-**When to adopt RCM:** You need to share materialized contexts across
-many consumers (agents, services, dashboards, analytics), provide
-lineage for compliance, and govern uniformly.
+**When to adopt RCM:** You need to share materialized contexts across many consumers (agents, services, dashboards, analytics), provide lineage for compliance, and govern uniformly.
 
-### **5.4.3 \"Our UI State Management Covers This\"**
+### **5.4.3 "Our UI State Management Covers This"**
 
-**Confusion:** \"We use Redux for state. That\'s the same thing.\"
+**Confusion:** "We use Redux for state. That's the same thing."
 
 **Correction:**
 
-- Redux is ephemeral, in-process UI state; RCM is durable,
-  cross-session, multi-consumer memory
+- Redux is ephemeral, in-process UI state; RCM is durable, cross-session, multi-consumer memory
 
-- Redux state lives in one browser/app; RCM frames are shared across
-  agents, services, dashboards
+- Redux state lives in one browser/app; RCM frames are shared across agents, services, dashboards
 
-- Redux doesn\'t handle time semantics (watermarks, windows); RCM does
+- Redux doesn't handle time semantics (watermarks, windows); RCM does
 
-- Redux doesn\'t provide governance, budgets, or retention policies; RCM
-  does
+- Redux doesn't provide governance, budgets, or retention policies; RCM does
 
-**When Redux suffices:** You\'re building a single-page app with no
-backend persistence; all state is local and transient.
+**When Redux suffices:** You're building a single-page app with no backend persistence; all state is local and transient.
 
-**When to adopt RCM:** You need durable context that survives sessions,
-serves multiple consumers, includes lineage for explainability, and
-requires governance.
+**When to adopt RCM:** You need durable context that survives sessions, serves multiple consumers, includes lineage for explainability, and requires governance.
 
-###  
+### **5.4.4 "We Log Everything—Good Enough"**
 
-### **5.4.4 \"We Log Everything---Good Enough\"**
-
-**Confusion:** \"We send all events to a log (Kafka, S3). Isn\'t that
-our memory?\"
+**Confusion:** "We send all events to a log (Kafka, S3). Isn't that our memory?"
 
 **Correction:**
 
 - Logs are raw inputs; RCM provides *composite, versioned contexts*
 
-- Logs don\'t define \"what the system knows now\"; they define \"what
-  happened\"
+- Logs don't define "what the system knows now"; they define "what happened"
 
-- Logs don\'t have delivery contracts (no at-least-once, per-key ordered
-  guarantees to downstream consumers)
+- Logs don't have delivery contracts (no at-least-once, per-key ordered guarantees to downstream consumers)
 
-- Logs don\'t include governance (no budgets, classification, redaction)
+- Logs don't include governance (no budgets, classification, redaction)
 
-**When logs suffice:** You\'re collecting data for future analysis; no
-need for real-time composition or multi-consumer delivery.
+**When logs suffice:** You're collecting data for future analysis; no need for real-time composition or multi-consumer delivery.
 
-**When to adopt RCM:** You need to compose logs into contexts
-reactively, serve them with freshness SLOs, version them for replay, and
-govern access/retention.
+**When to adopt RCM:** You need to compose logs into contexts reactively, serve them with freshness SLOs, version them for replay, and govern access/retention.
 
-### **5.4.5 \"Too Complex for Our Needs\"**
+### **5.4.5 "Too Complex for Our Needs"**
 
-**Confusion:** \"RCM sounds like overkill. We\'ll just build something
-simple.\"
+**Confusion:** "RCM sounds like overkill. We'll just build something simple."
 
 **Pitfalls:**
 
-- \"Simple\" solutions grow organically into fragile, undocumented
-  messes
+- "Simple" solutions grow organically into fragile, undocumented messes
 
-- Each team builds their own \"simple\" version; systems drift
+- Each team builds their own "simple" version; systems drift
 
 - No shared vocabulary leads to integration nightmares
 
 - Explainability and governance bolted on later are expensive retrofits
 
-**When simplicity is right:** You have one team, one use case, no
-compliance requirements, and no plans to scale consumers or sources.
+**When simplicity is right:** You have one team, one use case, no compliance requirements, and no plans to scale consumers or sources.
 
-**When RCM applies:** You anticipate growth (more teams, more consumers,
-more sources), need compliance/explainability, or want to avoid
-technical debt from ad-hoc memory plumbing.
+**When RCM applies:** You anticipate growth (more teams, more consumers, more sources), need compliance/explainability, or want to avoid technical debt from ad-hoc memory plumbing.
 
 ## **5.5 Edge Protocols and Pattern Fit**
 
-RCM operates internally; edge protocols enable interoperability with
-external systems. This section clarifies how they relate.
-
-###  
+RCM operates internally; edge protocols enable interoperability with external systems. This section clarifies how they relate.
 
 ### **5.5.1 Model Context Protocol (MCP)**
 
-**What it is:** An open, vendor-neutral protocol for exposing and
-consuming context and tools between LLM applications and external
-systems. MCP defines JSON-RPC messages for context requests, tool
-invocations, and resource discovery.
+**What it is:** An open, vendor-neutral protocol for exposing and consuming context and tools between LLM applications and external systems. MCP defines JSON-RPC messages for context requests, tool invocations, and resource discovery.
 
 **Relationship to RCM:**
 
-- **RCM is internal lifecycle; MCP is edge protocol:** RCM governs how
-  context forms, versions, persists internally. MCP governs how context
-  crosses boundaries to/from external LLM apps.
+- **RCM is internal lifecycle; MCP is edge protocol:** RCM governs how context forms, versions, persists internally. MCP governs how context crosses boundaries to/from external LLM apps.
 
-- **Use both:** Run RCM inside your system for governed, versioned
-  frames. Expose curated frames via MCP gateway at edges.
+- **Use both:** Run RCM inside your system for governed, versioned frames. Expose curated frames via MCP gateway at edges.
 
-- **Complementary concerns:** MCP standardizes request/response format;
-  RCM standardizes memory lifecycle and governance.
+- **Complementary concerns:** MCP standardizes request/response format; RCM standardizes memory lifecycle and governance.
 
 **Integration pattern:**
 
@@ -4015,11 +2975,9 @@ Sources → Views → Frames (versioned, governed)
 
 MCP Gateway:
 
-External LLM App → MCP Context Request → Gateway fetches relevant frames
-→ applies redaction → returns via MCP
+External LLM App → MCP Context Request → Gateway fetches relevant frames → applies redaction → returns via MCP
 
-External LLM App → MCP Tool Invocation → Gateway logs as Source Signal →
-RCM recomputes affected views
+External LLM App → MCP Tool Invocation → Gateway logs as Source Signal → RCM recomputes affected views
 
 **Benefits:**
 
@@ -4029,116 +2987,85 @@ RCM recomputes affected views
 
 - Lineage preserved: MCP responses can include frame IDs for provenance
 
-- RCM frames can ingest MCP contexts from external systems (with policy
-  stamps)
+- RCM frames can ingest MCP contexts from external systems (with policy stamps)
 
-**When to use MCP without RCM:** You\'re building a simple integration
-between two specific systems; no need for multi-consumer memory or
-governance.
+**When to use MCP without RCM:** You're building a simple integration between two specific systems; no need for multi-consumer memory or governance.
 
-**When to combine:** You have rich, governed internal context (RCM) and
-need to interoperate with external LLM apps (MCP at edges).
+**When to combine:** You have rich, governed internal context (RCM) and need to interoperate with external LLM apps (MCP at edges).
 
 **\**
 
-**RCM as MCP\'s Trustworthy Substrate**
+**RCM as MCP's Trustworthy Substrate**
 
-Strategic positioning: **\"MCP standardizes edge interoperability; RCM
-standardizes internal substrate integrity.\"**
+Strategic positioning: **"MCP standardizes edge interoperability; RCM standardizes internal substrate integrity."**
 
-MCP enables external LLM applications to request context. RCM ensures
-that context is:
+MCP enables external LLM applications to request context. RCM ensures that context is:
 
 - Fresh (reactive updates)
 
 - Explainable (provenance via inputs and planHash)
 
-- Governed (classification, redaction, budgets enforced before MCP
-  exposure)
+- Governed (classification, redaction, budgets enforced before MCP exposure)
 
-Together: MCP defines *how* to ask for context across boundaries; RCM
-defines *how* to build trustworthy context worth exposing.
+Together: MCP defines *how* to ask for context across boundaries; RCM defines *how* to build trustworthy context worth exposing.
 
-Collaboration opportunity: Implementations exposing RCM frames via MCP
-gateways create verifiable, auditable cross-system context exchange---a
-foundation for federated AI systems.
+Collaboration opportunity: Implementations exposing RCM frames via MCP gateways create verifiable, auditable cross-system context exchange—a foundation for federated AI systems.
 
 ### **5.5.2 Agent-to-Agent (A2A) Protocols**
 
-**What it is:** Emerging standards for multi-agent collaboration: how
-agents discover capabilities, delegate tasks, negotiate terms, and
-exchange results. Historical precedent: FIPA-ACL (Agent Communication
-Language) defined structured messages and performatives for agent
-communication.
+**What it is:** Emerging standards for multi-agent collaboration: how agents discover capabilities, delegate tasks, negotiate terms, and exchange results. Historical precedent: FIPA-ACL (Agent Communication Language) defined structured messages and performatives for agent communication.
 
 **Relationship to RCM:**
 
-- **RCM provides working memory; A2A provides delegation protocol:**
-  Agents use RCM frames as their internal context; they use A2A messages
-  to request help from other agents.
+- **RCM provides working memory; A2A provides delegation protocol:** Agents use RCM frames as their internal context; they use A2A messages to request help from other agents.
 
-- **Frames in A2A payloads:** Delegation requests can reference frame
-  IDs for provenance; results can be recorded as new frames with
-  lineage.
+- **Frames in A2A payloads:** Delegation requests can reference frame IDs for provenance; results can be recorded as new frames with lineage.
 
-- **Governance travels with delegation:** A2A messages can carry budget
-  envelopes (how much the delegating agent is willing to spend) and
-  capability contracts.
+- **Governance travels with delegation:** A2A messages can carry budget envelopes (how much the delegating agent is willing to spend) and capability contracts.
 
 **Integration pattern:**
 
 Agent A (Internal RCM):
 
-Uses RCM frame \"user_context_v42\" to assess situation
+Uses RCM frame "user_context_v42" to assess situation
 
 Determines delegation is needed
 
-Agent A → A2A Delegation Request → Agent B (external or federated
-domain)
+Agent A → A2A Delegation Request → Agent B (external or federated domain)
 
-Payload: {task, budget_envelope, context_reference: \"frameId_xyz\"}
+Payload: {task, budget_envelope, context_reference: "frameId_xyz"}
 
 Agent B executes task using its own RCM context
 
 Agent B → A2A Result Response → Agent A
 
-Result: {outcome, cost_consumed, provenance: \"based on frameId_xyz\"}
+Result: {outcome, cost_consumed, provenance: "based on frameId_xyz"}
 
-Agent A\'s RCM:
+Agent A's RCM:
 
 Records result as new Source Signal
 
 Recomputes affected views
 
-New frames include lineage: \"derived from user_context_v42 + Agent B
-delegation result\"
+New frames include lineage: "derived from user_context_v42 + Agent B delegation result"
 
 **Benefits:**
 
-- **Explainable delegation chains:** Frames record which agent
-  delegations contributed to decisions
+- **Explainable delegation chains:** Frames record which agent delegations contributed to decisions
 
 - **Cost control:** Budget envelopes prevent runaway multi-agent spend
 
-- **Cross-agent provenance:** Frame references enable auditing (\"Agent
-  B\'s recommendation used our frame X\")
+- **Cross-agent provenance:** Frame references enable auditing ("Agent B's recommendation used our frame X")
 
-- **Uniform governance:** RCM policies apply to both internal work and
-  delegation responses
+- **Uniform governance:** RCM policies apply to both internal work and delegation responses
 
-**When to use A2A without RCM:** You\'re building a simple two-agent
-handoff with stateless interactions; no need for versioned, governed
-memory or complex context.
+**When to use A2A without RCM:** You're building a simple two-agent handoff with stateless interactions; no need for versioned, governed memory or complex context.
 
-**When to combine:** You have multi-agent systems where agents maintain
-rich internal contexts (RCM), delegate specialized tasks to partners
-(A2A), and need complete audit trails showing who contributed what
-knowledge.
+**When to combine:** You have multi-agent systems where agents maintain rich internal contexts (RCM), delegate specialized tasks to partners (A2A), and need complete audit trails showing who contributed what knowledge.
 
 ### **5.5.3 RCM as Foundation for Edge Interoperability**
 
-**Key insight:** RCM provides the *internal substrate* that makes edge
-protocols effective and trustworthy.
+**Key insight:** RCM provides the *internal substrate* that makes edge protocols effective and trustworthy.
 
 **Without RCM (ad-hoc approach):**
 
@@ -4158,11 +3085,9 @@ protocols effective and trustworthy.
 
 - Lineage travels with frames (even across organizational boundaries)
 
-- Governance enforces uniformly (budgets, classification, redaction at
-  gateways)
+- Governance enforces uniformly (budgets, classification, redaction at gateways)
 
-- Internal improvements (better views, optimized coalescing)
-  automatically benefit all edge integrations
+- Internal improvements (better views, optimized coalescing) automatically benefit all edge integrations
 
 - Consumers can verify frame integrity via hashes and provenance
 
@@ -4222,26 +3147,21 @@ protocols effective and trustworthy.
 
 └─────────────┘
 
-**Design maxim:** \"Keep RCM semantics inside; speak edge protocols at
-boundaries; enforce governance at gateways.\"
+**Design maxim:** "Keep RCM semantics inside; speak edge protocols at boundaries; enforce governance at gateways."
 
 **Gateway responsibilities:**
 
-1.  **Protocol translation:** Convert between RCM frames and edge
-    protocol formats (MCP context payloads, A2A messages, REST JSON)
+1.  **Protocol translation:** Convert between RCM frames and edge protocol formats (MCP context payloads, A2A messages, REST JSON)
 
-2.  **Policy enforcement:** Check classification, access control,
-    allowed use cases
+2.  **Policy enforcement:** Check classification, access control, allowed use cases
 
 3.  **Redaction:** Apply field-level masking before egress
 
 4.  **Budget tracking:** Charge for frame access; enforce quotas
 
-5.  **Rate limiting:** Protect internal systems from external traffic
-    spikes
+5.  **Rate limiting:** Protect internal systems from external traffic spikes
 
-6.  **Provenance preservation:** Include frame IDs and lineage summaries
-    in responses
+6.  **Provenance preservation:** Include frame IDs and lineage summaries in responses
 
 7.  **Integrity:** Optionally sign frames for verification
 
@@ -4253,8 +3173,7 @@ External LLM requests context via MCP:
 
 2\. Gateway authenticates and authorizes requester
 
-3\. Gateway translates MCP query to RCM frame lookup (contextId, key,
-version?)
+3\. Gateway translates MCP query to RCM frame lookup (contextId, key, version?)
 
 4\. Gateway fetches relevant frames from internal RCM
 
@@ -4262,13 +3181,11 @@ version?)
 
 6\. Gateway records budget charge (egress bytes, frame count)
 
-7\. Gateway constructs MCP response with curated frame content + frame
-IDs
+7\. Gateway constructs MCP response with curated frame content + frame IDs
 
 8\. Gateway returns to external LLM
 
-External LLM can later reference frame IDs in its responses for
-provenance
+External LLM can later reference frame IDs in its responses for provenance
 
 ## **5.6 Quick Selector (Rule of Thumb)**
 
@@ -4286,11 +3203,9 @@ This decision tree helps architects choose patterns quickly.
 
 - **No** → Continue to Question 2
 
-**Question 2: Do you need reactive, composite contexts from multiple
-sources?**
+**Question 2: Do you need reactive, composite contexts from multiple sources?**
 
-- **No** (single source, simple query) → Use direct database queries or
-  **simple caching**
+- **No** (single source, simple query) → Use direct database queries or **simple caching**
 
 - **Yes** → Continue to Question 3
 
@@ -4300,23 +3215,19 @@ sources?**
 
 - **Yes** → Continue to Question 4
 
-**Question 4: Do multiple heterogeneous consumers need the same
-contexts?**
+**Question 4: Do multiple heterogeneous consumers need the same contexts?**
 
-- **No** (single consumer, e.g., one dashboard) → Point solution may
-  suffice
+- **No** (single consumer, e.g., one dashboard) → Point solution may suffice
 
 - **Yes** → Continue to Question 5
 
-**Question 5: Are freshness SLOs critical (contexts must stay current
-reactively)?**
+**Question 5: Are freshness SLOs critical (contexts must stay current reactively)?**
 
 - **No** (batch updates acceptable) → **ETL pipelines** may suffice
 
 - **Yes** → **RCM applies**; continue to Question 6
 
-**Question 6: Do you need governance (budgets, policies, classification,
-retention)?**
+**Question 6: Do you need governance (budgets, policies, classification, retention)?**
 
 - **No** → RCM Core semantics (§§4.2-4.6) may be sufficient
 
@@ -4324,41 +3235,20 @@ retention)?**
 
 ### **Situational Selectors**
 
-**If your primary problem is\...**
+**If your primary problem is...**
 
-  ---------------- --------------------- --------------------------------
-    **Problem**      **First Choice**           **Add RCM If\...**
-
-   Fast key-value   **Caching** (Redis,    Cached values need lineage,
-      lookups           Memcached)         versioning, reactive updates
-
-  Complex business    **Rule Engine**       Rules need fresh composite
-       rules          (Drools, etc.)      contexts; decisions need audit
-                                                      trails
-
-  Semantic search   **Knowledge Graph**  Need reactive updates to indexed
-                    or **Vector Index**      content with provenance
-
-      UI state       **Redux/MVU** for     Need durable, cross-session,
-     management         local state            multi-consumer state
-
-     Read/write          **CQRS**          Read models need reactivity,
-     separation                               versioning, governance
-
-   Authoritative    **Event Sourcing**    Need governed read models for
-       ledger                                   multiple consumers
-
-   Agent context          **RCM**               (Primary use case)
-      for LLMs                           
-
-    Multi-agent      **A2A protocol**    Agents need rich internal memory
-   collaboration                               with explainability
-
-       Stream        **Kafka Streams /     Need standardized envelopes,
-     processing           Flink**         delivery contracts, governance
-  ---------------- --------------------- --------------------------------
-
-###  
+|  |  |  |
+|:--:|:--:|:--:|
+| **Problem** | **First Choice** | **Add RCM If...** |
+| Fast key-value lookups | **Caching** (Redis, Memcached) | Cached values need lineage, versioning, reactive updates |
+| Complex business rules | **Rule Engine** (Drools, etc.) | Rules need fresh composite contexts; decisions need audit trails |
+| Semantic search | **Knowledge Graph** or **Vector Index** | Need reactive updates to indexed content with provenance |
+| UI state management | **Redux/MVU** for local state | Need durable, cross-session, multi-consumer state |
+| Read/write separation | **CQRS** | Read models need reactivity, versioning, governance |
+| Authoritative ledger | **Event Sourcing** | Need governed read models for multiple consumers |
+| Agent context for LLMs | **RCM** | (Primary use case) |
+| Multi-agent collaboration | **A2A protocol** | Agents need rich internal memory with explainability |
+| Stream processing | **Kafka Streams / Flink** | Need standardized envelopes, delivery contracts, governance |
 
 ### **Quick Pattern Compatibility Check**
 
@@ -4382,13 +3272,11 @@ retention)?**
 
 - ✅ **MCP/A2A:** Yes, expose frames via edge protocols
 
-- ⚠️ **Simple Caching:** Can co-exist (cache frames) but RCM is not a
-  cache replacement
+- ⚠️ **Simple Caching:** Can co-exist (cache frames) but RCM is not a cache replacement
 
-## **5.7 Summary: RCM\'s Place in the Ecosystem**
+## **5.7 Summary: RCM's Place in the Ecosystem**
 
-RCM does not replace adjacent patterns; it **complements and composes**
-with them.
+RCM does not replace adjacent patterns; it **complements and composes** with them.
 
 ### **What RCM Is**
 
@@ -4406,11 +3294,9 @@ with them.
 
 **RCM sits between:**
 
-- **Upstream (inputs):** Event Sourcing, CQRS write models, databases,
-  APIs, knowledge graphs
+- **Upstream (inputs):** Event Sourcing, CQRS write models, databases, APIs, knowledge graphs
 
-- **Downstream (outputs):** Agents, services, dashboards, analytics,
-  search indices
+- **Downstream (outputs):** Agents, services, dashboards, analytics, search indices
 
 **RCM works alongside:**
 
@@ -4440,7 +3326,7 @@ with them.
 
 - ❌ A replacement for Event Sourcing, CQRS, or streaming engines
 
-- ❌ A product or framework (it\'s a pattern)
+- ❌ A product or framework (it's a pattern)
 
 ### **The Value Proposition**
 
@@ -4460,9 +3346,7 @@ with them.
 
 **The litmus test:**
 
-*\"Do we need to answer \'what does the system know about X right now,
-why, and since when?\' for multiple consumers, with freshness SLOs and
-audit trails?\"*
+*"Do we need to answer 'what does the system know about X right now, why, and since when?' for multiple consumers, with freshness SLOs and audit trails?"*
 
 - **Yes** → RCM likely applies
 
@@ -4472,20 +3356,15 @@ audit trails?\"*
 
 **Best practices for RCM adoption:**
 
-1.  **Start internal:** Implement RCM for core contexts (agent memory,
-    operational dashboards)
+1.  **Start internal:** Implement RCM for core contexts (agent memory, operational dashboards)
 
-2.  **Layer governance:** Add extension points as operational needs
-    emerge (budgets, policies)
+2.  **Layer governance:** Add extension points as operational needs emerge (budgets, policies)
 
-3.  **Expose selectively:** Use edge gateways (MCP, A2A) for controlled
-    external access
+3.  **Expose selectively:** Use edge gateways (MCP, A2A) for controlled external access
 
-4.  **Compose incrementally:** Integrate with existing Event Sourcing,
-    CQRS, search, rules
+4.  **Compose incrementally:** Integrate with existing Event Sourcing, CQRS, search, rules
 
-5.  **Measure value:** Track freshness SLOs, cost reduction, audit
-    coverage, consumer satisfaction
+5.  **Measure value:** Track freshness SLOs, cost reduction, audit coverage, consumer satisfaction
 
 **Common adoption path:**
 
@@ -4541,8 +3420,7 @@ Phase 4: Optimization (Ongoing)
 
 - **RCM** is to **context lifecycle**
 
-It defines how composite knowledge forms, versions, persists, and
-flows---with time, lineage, and governance as first-class concerns.
+It defines how composite knowledge forms, versions, persists, and flows—with time, lineage, and governance as first-class concerns.
 
 **When architects understand this positioning, they can:**
 
@@ -4556,73 +3434,51 @@ flows---with time, lineage, and governance as first-class concerns.
 
 **The pattern succeeds when teams say:**
 
-*\"We used to rebuild context per-request with no lineage. Now we
-compose once, deliver to many, replay for audits, and control
-costs---all with the same substrate.\"*
+*"We used to rebuild context per-request with no lineage. Now we compose once, deliver to many, replay for audits, and control costs—all with the same substrate."*
 
 # **6. Conclusion**
 
 ## **6.1 What RCM Standardizes**
 
-Reactive Composite Memory (RCM) standardizes the **lifecycle and
-governance of composite context** in intelligent systems. It defines:
+Reactive Composite Memory (RCM) standardizes the **lifecycle and governance of composite context** in intelligent systems. It defines:
 
 **Core semantics:**
 
-- **Portable materialization envelope** (§4.3): Every frame carries
-  identity, version, time window, provenance, determinism keys, and
-  lifecycle metadata in a standardized header
+- **Portable materialization envelope** (§4.3): Every frame carries identity, version, time window, provenance, determinism keys, and lifecycle metadata in a standardized header
 
-- **Time and ordering** (§4.4): Event-time semantics with watermarks,
-  window closure rules, late-data handling, and per-key delivery
-  ordering
+- **Time and ordering** (§4.4): Event-time semantics with watermarks, window closure rules, late-data handling, and per-key delivery ordering
 
-- **Determinism and replay** (§4.5): Plans are referentially
-  transparent; frames have stable idempotency keys; replay by version or
-  time interval is required
+- **Determinism and replay** (§4.5): Plans are referentially transparent; frames have stable idempotency keys; replay by version or time interval is required
 
-- **Delivery contract** (§4.6): At-least-once delivery with per-key
-  ordering, retry semantics, dead-letter queues, and idempotent
-  consumption
+- **Delivery contract** (§4.6): At-least-once delivery with per-key ordering, retry semantics, dead-letter queues, and idempotent consumption
 
-- **Extension points** (§4.7): Well-defined hooks for admission control,
-  resource management, security, and observability with required
-  telemetry
+- **Extension points** (§4.7): Well-defined hooks for admission control, resource management, security, and observability with required telemetry
 
 **What this enables:**
 
-- **Interoperability:** Multiple implementations can claim conformance
-  and produce/consume compatible frames
+- **Interoperability:** Multiple implementations can claim conformance and produce/consume compatible frames
 
-- **Explainability:** Every frame cites its sources, transform, and time
-  bounds---auditable by construction
+- **Explainability:** Every frame cites its sources, transform, and time bounds—auditable by construction
 
-- **Reusability:** One set of frames serves agents, services,
-  dashboards, analytics without duplication
+- **Reusability:** One set of frames serves agents, services, dashboards, analytics without duplication
 
-- **Cost control:** Recomputation happens on change (data velocity) not
-  traffic (request volume); budgets bound spend
+- **Cost control:** Recomputation happens on change (data velocity) not traffic (request volume); budgets bound spend
 
-- **Governance:** Policies (access, retention, classification) apply
-  uniformly via extension points
+- **Governance:** Policies (access, retention, classification) apply uniformly via extension points
 
 **What RCM does not standardize:**
 
 - ❌ Implementation technology (Kafka, Flink, custom runtimes all valid)
 
-- ❌ View definition languages (SQL, dataflow DSLs, code---all
-  acceptable if deterministic)
+- ❌ View definition languages (SQL, dataflow DSLs, code—all acceptable if deterministic)
 
-- ❌ Specific governance policies (rate limits, budget
-  models---implementation-defined)
+- ❌ Specific governance policies (rate limits, budget models—implementation-defined)
 
-- ❌ Storage backends (SQL, NoSQL, object stores---choice is yours)
+- ❌ Storage backends (SQL, NoSQL, object stores—choice is yours)
 
 - ❌ Programming languages or frameworks
 
-**The pattern is portable:** You can implement RCM on any stack that
-provides streams, deterministic computation, storage, and delivery
-primitives.
+**The pattern is portable:** You can implement RCM on any stack that provides streams, deterministic computation, storage, and delivery primitives.
 
 ## **6.2 Conformance Summary**
 
@@ -4632,18 +3488,13 @@ primitives.
 
 2.  [x] Pass the test vectors specified in Annex A.5
 
-3.  [x] Emit the required telemetry events and metrics defined in Annex
-    A.2
+3.  [x] Emit the required telemetry events and metrics defined in Annex A.2
 
-4.  [x] Produce a conformance report in the format specified in Annex
-    A.6
+4.  [x] Produce a conformance report in the format specified in Annex A.6
 
 **Conformance class:**
 
-RCM defines **one conformance class** covering reactive composition,
-versioned frames, time semantics, deterministic materialization, and
-idempotent delivery. Extension points (§4.7) are **optional but
-recommended**; if provided, they must emit required telemetry.
+RCM defines **one conformance class** covering reactive composition, versioned frames, time semantics, deterministic materialization, and idempotent delivery. Extension points (§4.7) are **optional but recommended**; if provided, they must emit required telemetry.
 
 **Verification:**
 
@@ -4653,11 +3504,9 @@ Conformance is demonstrated by:
 
 - Passing all required test vectors (Annex A.5)
 
-- Meeting declared SLO targets for freshness, delivery latency, and
-  stability
+- Meeting declared SLO targets for freshness, delivery latency, and stability
 
-- Documenting telemetry mappings (if event/metric names differ from
-  spec)
+- Documenting telemetry mappings (if event/metric names differ from spec)
 
 **Conformance report:**
 
@@ -4677,15 +3526,11 @@ The report (JSON format per Annex A.6) includes:
 
 - Extension points documentation (if implemented)
 
-**Public conformance reports** build trust and enable buyers to compare
-implementations objectively.
+**Public conformance reports** build trust and enable buyers to compare implementations objectively.
 
 ## **6.3 Adoption Path**
 
-Adopting RCM does not require a big-bang rewrite. The pattern supports
-**incremental adoption** alongside existing systems.
-
-###  
+Adopting RCM does not require a big-bang rewrite. The pattern supports **incremental adoption** alongside existing systems.
 
 ### **6.3.1 Pilot Phase (Weeks 1-4)**
 
@@ -4693,8 +3538,7 @@ Adopting RCM does not require a big-bang rewrite. The pattern supports
 
 **Steps:**
 
-1.  **Identify 1-2 high-value contexts** that are painful today (e.g.,
-    support agent context, incident hub, personalization tier)
+1.  **Identify 1-2 high-value contexts** that are painful today (e.g., support agent context, incident hub, personalization tier)
 
 2.  **Define Context Views** declaratively (sources, joins, windows)
 
@@ -4708,11 +3552,9 @@ Adopting RCM does not require a big-bang rewrite. The pattern supports
 
 4.  **Emit frames with complete envelopes** (headers per §4.3)
 
-5.  **Switch one consumer** to subscribe (agent, dashboard panel, or
-    service)
+5.  **Switch one consumer** to subscribe (agent, dashboard panel, or service)
 
-6.  **Shadow existing system** (emit frames but don\'t cut over critical
-    paths yet)
+6.  **Shadow existing system** (emit frames but don't cut over critical paths yet)
 
 **Success criteria:**
 
@@ -4724,8 +3566,7 @@ Adopting RCM does not require a big-bang rewrite. The pattern supports
 
 - Lineage is present (inputs, planHash visible)
 
-**Deliverable:** Working prototype serving 1 consumer with 1-2 views;
-measurable freshness.
+**Deliverable:** Working prototype serving 1 consumer with 1-2 views; measurable freshness.
 
 ### **6.3.2 Production Hardening (Weeks 5-8)**
 
@@ -4743,8 +3584,7 @@ measurable freshness.
 
 5.  **Implement brownout mode** (widen coalescing under backlog)
 
-6.  **Add extension hooks** (policy checks, basic rate gates, budget
-    tracking if needed)
+6.  **Add extension hooks** (policy checks, basic rate gates, budget tracking if needed)
 
 7.  **Build replay harness** with 1-2 golden vectors
 
@@ -4758,8 +3598,7 @@ measurable freshness.
 
 - Telemetry dashboards show freshness, latency, cost
 
-**Deliverable:** Production-grade RCM serving 1 consumer with governance
-basics.
+**Deliverable:** Production-grade RCM serving 1 consumer with governance basics.
 
 ### **6.3.3 Expansion (Weeks 9-16)**
 
@@ -4767,14 +3606,11 @@ basics.
 
 **Steps:**
 
-1.  **Add 2-3 more consumers** to the same frames (dashboard, analytics,
-    search indexer)
+1.  **Add 2-3 more consumers** to the same frames (dashboard, analytics, search indexer)
 
-2.  **Define 3-5 additional views** (hierarchical: build on existing
-    views)
+2.  **Define 3-5 additional views** (hierarchical: build on existing views)
 
-3.  **Cut over critical consumers** (agents, operational dashboards)
-    from ad-hoc assembly to RCM subscriptions
+3.  **Cut over critical consumers** (agents, operational dashboards) from ad-hoc assembly to RCM subscriptions
 
 4.  **Feed search/vector indices** from frames (with redaction)
 
@@ -4786,11 +3622,9 @@ basics.
 
     - Knowledge Graph: RCM composes over graph queries
 
-6.  **Document extension patterns** (governance chains, budget models)
-    for your org
+6.  **Document extension patterns** (governance chains, budget models) for your org
 
-7.  **Run dual-run tests** for plan changes (compare planHash, validate
-    diffs)
+7.  **Run dual-run tests** for plan changes (compare planHash, validate diffs)
 
 **Success criteria:**
 
@@ -4802,10 +3636,7 @@ basics.
 
 - Auditors can replay frames for compliance checks
 
-**Deliverable:** RCM serving 5+ consumers across 5+ views; measurable
-cost savings and audit coverage.
-
-###  
+**Deliverable:** RCM serving 5+ consumers across 5+ views; measurable cost savings and audit coverage.
 
 ### **6.3.4 Ecosystem Maturity (Weeks 16+)**
 
@@ -4813,11 +3644,9 @@ cost savings and audit coverage.
 
 **Steps:**
 
-1.  **Federate across domains** (if multi-team): Each domain runs RCM;
-    gateways enforce policy at boundaries
+1.  **Federate across domains** (if multi-team): Each domain runs RCM; gateways enforce policy at boundaries
 
-2.  **Expose at edges** (MCP, A2A, REST): Controlled external access via
-    gateways with redaction and budgets
+2.  **Expose at edges** (MCP, A2A, REST): Controlled external access via gateways with redaction and budgets
 
 3.  **Optimize continuously:**
 
@@ -4827,11 +3656,9 @@ cost savings and audit coverage.
 
     - Implement adaptive TTLs (heat-based retention)
 
-4.  **Contribute conformance vectors** to open test suite (if adopting
-    community spec)
+4.  **Contribute conformance vectors** to open test suite (if adopting community spec)
 
-5.  **Mentor other teams** in RCM adoption (share learnings,
-    anti-patterns)
+5.  **Mentor other teams** in RCM adoption (share learnings, anti-patterns)
 
 6.  **Measure business impact:**
 
@@ -4851,29 +3678,21 @@ cost savings and audit coverage.
 
 - Conformance report published (internal or public)
 
-**Deliverable:** Mature RCM ecosystem with federated domains, edge
-interop, and organizational buy-in.
-
-###  
+**Deliverable:** Mature RCM ecosystem with federated domains, edge interop, and organizational buy-in.
 
 ### **6.3.5 Adoption Anti-Patterns to Avoid**
 
-**Don\'t:**
+**Don't:**
 
-- ❌ **Boil the ocean:** Start with 20 views; overwhelm the team; fail
-  to deliver value
+- ❌ **Boil the ocean:** Start with 20 views; overwhelm the team; fail to deliver value
 
-- ❌ **Skip governance:** Ignore extension points; face cost surprises
-  and policy violations later
+- ❌ **Skip governance:** Ignore extension points; face cost surprises and policy violations later
 
-- ❌ **Ignore SLOs:** Run without freshness targets; discover staleness
-  in production
+- ❌ **Ignore SLOs:** Run without freshness targets; discover staleness in production
 
-- ❌ **Neglect replay:** Skip golden vectors; lose confidence in
-  determinism when it matters
+- ❌ **Neglect replay:** Skip golden vectors; lose confidence in determinism when it matters
 
-- ❌ **Force retrofit:** Mandate RCM for all contexts immediately;
-  create resentment and technical debt
+- ❌ **Force retrofit:** Mandate RCM for all contexts immediately; create resentment and technical debt
 
 **Do:**
 
@@ -4881,19 +3700,15 @@ interop, and organizational buy-in.
 
 - ✅ **Measure always:** Freshness, cost, adoption metrics from day one
 
-- ✅ **Layer governance:** Start with Core (§§4.2-4.6), add extensions
-  (§4.7) as needs emerge
+- ✅ **Layer governance:** Start with Core (§§4.2-4.6), add extensions (§4.7) as needs emerge
 
-- ✅ **Build trust:** Demonstrate replay works; show lineage to
-  stakeholders; meet SLOs consistently
+- ✅ **Build trust:** Demonstrate replay works; show lineage to stakeholders; meet SLOs consistently
 
-- ✅ **Adopt voluntarily:** Let teams choose RCM when it solves their
-  pain; don\'t mandate top-down
+- ✅ **Adopt voluntarily:** Let teams choose RCM when it solves their pain; don't mandate top-down
 
 ## **6.4 Interoperability and Ecosystem**
 
-RCM\'s value multiplies when multiple implementations exist and
-interoperate.
+RCM's value multiplies when multiple implementations exist and interoperate.
 
 ### **6.4.1 Conformance Enables Choice**
 
@@ -4903,8 +3718,7 @@ interoperate.
 
 - Switch vendors without re-architecting (frames are portable)
 
-- Mix implementations (e.g., Kafka-based for one domain, custom runtime
-  for another)
+- Mix implementations (e.g., Kafka-based for one domain, custom runtime for another)
 
 **For implementers:**
 
@@ -4914,37 +3728,27 @@ interoperate.
 
 - Contribute to shared test suite (reduce conformance burden)
 
-###  
-
 ### **6.4.2 Open Specification Development**
 
-This specification is developed as a **Community Specification** under
-open governance:
+This specification is developed as a **Community Specification** under open governance:
 
-- **Repository:** github.com/critical-insight-ai/rcm-spec (hypothetical;
-  adjust to actual repo)
+- **Repository:** github.com/critical-insight-ai/rcm-spec
 
 - **License:** CC-BY-4.0 (spec text), Apache-2.0 (test code)
 
-- **Participation:** Open to all via GitHub issues, pull requests,
-  discussions
+- **Participation:** Open to all via GitHub issues, pull requests, discussions
 
-- **Governance:** Maintainer(s) review contributions; rough consensus
-  for changes; versioned releases
+- **Governance:** Maintainer(s) review contributions; rough consensus for changes; versioned releases
 
 **How to participate:**
 
-1.  **Feedback:** Open issues for clarifications, ambiguities,
-    suggestions
+1.  **Feedback:** Open issues for clarifications, ambiguities, suggestions
 
-2.  **Test vectors:** Contribute golden replay vectors (Annex A.5)
-    covering edge cases
+2.  **Test vectors:** Contribute golden replay vectors (Annex A.5) covering edge cases
 
-3.  **Crosswalks:** Document mappings to other patterns, frameworks
-    (expand Annex B)
+3.  **Crosswalks:** Document mappings to other patterns, frameworks (expand Annex B)
 
-4.  **Implementations:** Build conformant systems; publish conformance
-    reports
+4.  **Implementations:** Build conformant systems; publish conformance reports
 
 5.  **Adoption stories:** Share scenarios, metrics, lessons learned
 
@@ -4954,12 +3758,11 @@ open governance:
 
 - Specification published
 
-- Conformance test kit available (Annex A defines requirements;
-  implementation needed)
+- Conformance test kit: requirements defined in Annex A; no harness published yet
 
-- Reference implementations in progress (CognOS, Kafka-based)
+- First implementation: CognOS (Critical Insight Inc.), in development; assessed against Chapter 4 and Annex A in October 2026
 
-**Near-term goals (6-12 months):**
+**Next milestones:**
 
 - 3+ independent implementations claim conformance
 
@@ -4967,13 +3770,11 @@ open governance:
 
 - Community test vectors cover 90% of edge cases
 
-- Crosswalks to major AI frameworks (LangChain, Semantic Kernel,
-  LlamaIndex)
+- Crosswalks to major AI frameworks (LangChain, Semantic Kernel, LlamaIndex)
 
-**Long-term vision (12-24 months):**
+**Longer-term vision:**
 
-- RCM adopted in enterprise AI platforms (Databricks, Snowflake, AWS,
-  Azure, GCP)
+- RCM adopted in enterprise AI platforms (Databricks, Snowflake, AWS, Azure, GCP)
 
 - Standards bodies (OASIS, CNCF, Linux Foundation) recognize RCM
 
@@ -4981,46 +3782,31 @@ open governance:
 
 - Academic papers cite RCM for AI memory architectures
 
-###  
-
 ### **6.4.4 Compatibility with Existing Standards**
 
 RCM is designed to **complement** (not compete with) existing standards:
 
-- **W3C PROV:** RCM frames can carry PROV-DM provenance in extensions;
-  inputs field is PROV-compatible
+- **W3C PROV:** RCM frames can carry PROV-DM provenance in extensions; inputs field is PROV-compatible
 
-- **Reactive Streams:** RCM subscriptions can use Reactive Streams
-  transport for backpressure
+- **Reactive Streams:** RCM subscriptions can use Reactive Streams transport for backpressure
 
-- **OpenTelemetry:** RCM telemetry (Annex A.2) maps cleanly to OTel
-  events and metrics
+- **OpenTelemetry:** RCM telemetry (Annex A.2) maps cleanly to OTel events and metrics
 
-- **CloudEvents:** RCM frames can be wrapped in CloudEvents envelopes
-  for transport interop
+- **CloudEvents:** RCM frames can be wrapped in CloudEvents envelopes for transport interop
 
-- **JSON Schema / Avro / Protobuf:** Frame bodies and headers can use
-  any schema; implementations document their choice
+- **JSON Schema / Avro / Protobuf:** Frame bodies and headers can use any schema; implementations document their choice
 
-**Design principle:** RCM specifies *semantics*, not *encodings*.
-Implementations choose serialization formats that fit their ecosystems.
+**Design principle:** RCM specifies *semantics*, not *encodings*. Implementations choose serialization formats that fit their ecosystems.
 
-**6.4.5 Strategic Collaborations**
+### **6.4.5 Strategic Collaborations**
 
-RCM\'s value multiplies through alignment with complementary standards:
+RCM's value multiplies through alignment with complementary standards:
 
-- **Model Context Protocol (MCP)**: Anthropic\'s protocol for
-  LLM-application context exchange. RCM provides the governed internal
-  substrate that makes MCP edges trustworthy. Opportunity: Joint
-  narrative positioning RCM as \"what makes MCP safe for production.\"
+- **Model Context Protocol (MCP)**: Anthropic's protocol for LLM-application context exchange. RCM provides the governed internal substrate that makes MCP edges trustworthy. Opportunity: Joint narrative positioning RCM as "what makes MCP safe for production."
 
-- **Event Sourcing / CQRS communities**: RCM is \"Event Sourcing for
-  reads\"---the governed read side with reactive semantics. Opportunity:
-  Co-present at DDD/CQRS conferences; publish crosswalk guides.
+- **Event Sourcing / CQRS communities**: RCM is "Event Sourcing for reads"—the governed read side with reactive semantics. Opportunity: Co-present at DDD/CQRS conferences; publish crosswalk guides.
 
-- **Streaming platforms (Confluent, Apache Flink)**: RCM standardizes
-  what streaming engines enable. Opportunity: Reference implementations
-  on these platforms; conformance badging.
+- **Streaming platforms (Confluent, Apache Flink)**: RCM standardizes what streaming engines enable. Opportunity: Reference implementations on these platforms; conformance badging.
 
 **\**
 
@@ -5052,7 +3838,7 @@ RCM\'s value multiplies through alignment with complementary standards:
 
 2.  Propose refinements via pull requests
 
-3.  Contribute real-world scenarios to Chapter 10 (if accepted)
+3.  Contribute real-world adoption scenarios and examples to the repository
 
 ### **6.5.2 For Implementers**
 
@@ -5078,8 +3864,7 @@ RCM\'s value multiplies through alignment with complementary standards:
 
 **Integrate with ecosystem:**
 
-1.  Build bridges to adjacent patterns (Event Sourcing, CQRS, search,
-    rules)
+1.  Build bridges to adjacent patterns (Event Sourcing, CQRS, search, rules)
 
 2.  Implement edge protocol gateways (MCP, A2A)
 
@@ -5089,19 +3874,15 @@ RCM\'s value multiplies through alignment with complementary standards:
 
 **Extend the theory:**
 
-1.  Formalize temporal correctness proofs for window closure and
-    late-data handling
+1.  Formalize temporal correctness proofs for window closure and late-data handling
 
-2.  Explore adaptive algorithms (watermark advancement, coalescing, TTL
-    optimization)
+2.  Explore adaptive algorithms (watermark advancement, coalescing, TTL optimization)
 
-3.  Model fairness and starvation bounds for weighted fair queueing with
-    aging
+3.  Model fairness and starvation bounds for weighted fair queueing with aging
 
-4.  Develop cost models for RCM vs. per-request assembly (amortization
-    analysis)
+4.  Develop cost models for RCM vs. per-request assembly (amortization analysis)
 
-5.  Study memory consolidation (cognitive analogies from Chapter 8)
+5.  Study memory consolidation (cognitive analogies in Appendix II)
 
 **Publish findings:**
 
@@ -5111,12 +3892,9 @@ RCM\'s value multiplies through alignment with complementary standards:
 
 3.  Propose spec extensions via academic-to-industry feedback loops
 
-###  
-
 ### **6.5.4 For Standards Bodies**
 
-**If RCM gains traction and multiple implementations exist, we invite
-standards organizations to:**
+**If RCM gains traction and multiple implementations exist, we invite standards organizations to:**
 
 - Adopt RCM as a work item (OASIS TC, CNCF project, etc.)
 
@@ -5126,32 +3904,25 @@ standards organizations to:**
 
 - Co-develop conformance badging programs
 
-**Current status:** Community Specification (open governance, no formal
-SDO affiliation yet).
+**Current status:** Community Specification (open governance, no formal SDO affiliation yet).
 
-**Path to standardization:** Demonstrate 3+ independent implementations,
-public conformance reports, and cross-vendor interoperability; then
-approach OASIS or CNCF.
+**Path to standardization:** Demonstrate 3+ independent implementations, public conformance reports, and cross-vendor interoperability; then approach OASIS or CNCF.
 
 ## **6.6 Acknowledgments**
 
-This specification draws on decades of distributed systems research and
-practice:
+This specification draws on decades of distributed systems research and practice:
 
 **Stream processing and time semantics:**
 
-- Tyler Akidau and the Dataflow Model team (Google/Apache Beam) for
-  watermarks, windows, and event-time semantics
+- Tyler Akidau and the Dataflow Model team (Google/Apache Beam) for watermarks, windows, and event-time semantics
 
-- The Apache Flink, Kafka Streams, and Pulsar communities for streaming
-  best practices
+- The Apache Flink, Kafka Streams, and Pulsar communities for streaming best practices
 
 **Reactive architectures:**
 
 - The Reactive Streams working group for backpressure protocols
 
-- Evan Czaplicki (Elm), Dan Abramov (Redux), and André Staltz (Cycle.js)
-  for unidirectional flow patterns
+- Evan Czaplicki (Elm), Dan Abramov (Redux), and André Staltz (Cycle.js) for unidirectional flow patterns
 
 **Event-driven patterns:**
 
@@ -5187,55 +3958,39 @@ practice:
 
 - Early adopters and implementers who tested these ideas in production
 
-- Reviewers who provided feedback on drafts (to be named as they
-  contribute)
+- Reviewers who provided feedback on drafts (to be named as they contribute)
 
-- The open-source and open-standards communities for making portable
-  patterns possible
+- The open-source and open-standards communities for making portable patterns possible
 
 ## **6.7 Closing Thoughts**
 
-Reactive Composite Memory is not a revolutionary idea---it\'s a
-**methodical synthesis** of proven patterns (materialized views,
-event-time processing, unidirectional flow, provenance) applied to the
-urgent problem of context management in intelligent systems.
+Reactive Composite Memory is not a revolutionary idea—it's a **methodical synthesis** of proven patterns (materialized views, event-time processing, unidirectional flow, provenance) applied to the urgent problem of context management in intelligent systems.
 
 **The pattern succeeds when:**
 
-- Teams stop rebuilding context per-request and start composing
-  reactively
+- Teams stop rebuilding context per-request and start composing reactively
 
-- Decisions become auditable because frames carry lineage by
-  construction
+- Decisions become auditable because frames carry lineage by construction
 
-- Costs become predictable because recomputation follows change, not
-  traffic
+- Costs become predictable because recomputation follows change, not traffic
 
-- Governance becomes uniform because extension points apply policies
-  consistently
+- Governance becomes uniform because extension points apply policies consistently
 
-- Interoperability becomes real because frames are portable across
-  implementations
+- Interoperability becomes real because frames are portable across implementations
 
 **The pattern fails when:**
 
 - Adopted for the wrong reasons (chasing trends, not solving pain)
 
-- Over-engineered (implementing all of Chapter 4 when caching would
-  suffice)
+- Over-engineered (implementing all of Chapter 4 when caching would suffice)
 
-- Under-governed (skipping extension points, facing cost surprises
-  later)
+- Under-governed (skipping extension points, facing cost surprises later)
 
-- Isolated (not integrating with existing Event Sourcing, CQRS, search,
-  rules)
+- Isolated (not integrating with existing Event Sourcing, CQRS, search, rules)
 
 **Our hope:**
 
-That RCM becomes a **shared vocabulary** for architects, a **reusable
-substrate** for implementers, and a **trustworthy foundation** for
-intelligent systems that remember reliably, explain credibly, and scale
-economically.
+That RCM becomes a **shared vocabulary** for architects, a **reusable substrate** for implementers, and a **trustworthy foundation** for intelligent systems that remember reliably, explain credibly, and scale economically.
 
 **Your move:**
 
@@ -5249,17 +4004,13 @@ Welcome to Reactive Composite Memory.
 
 ### **A.1.1 Purpose and Scope**
 
-This annex defines the test procedures, required telemetry, SLO
-measurement rules, and reporting format necessary to demonstrate RCM
-conformance. All implementations claiming RCM conformance MUST execute
-these tests and produce results in the specified format.
+This annex defines the test procedures, required telemetry, SLO measurement rules, and reporting format necessary to demonstrate RCM conformance. All implementations claiming RCM conformance MUST execute these tests and produce results in the specified format.
 
 ### **A.1.2 Test Environment Requirements**
 
 **Isolation:**
 
-- Tests MUST run in an isolated environment (dedicated test cluster or
-  containers)
+- Tests MUST run in an isolated environment (dedicated test cluster or containers)
 
 - Tests MUST NOT interfere with production workloads
 
@@ -5269,28 +4020,21 @@ these tests and produce results in the specified format.
 
 **Documentation:**
 
-- Environment specifications MUST be documented: node count, CPU/memory
-  per node, network topology, storage type
+- Environment specifications MUST be documented: node count, CPU/memory per node, network topology, storage type
 
-- Software versions MUST be recorded: runtime, libraries, operating
-  system
+- Software versions MUST be recorded: runtime, libraries, operating system
 
 - Test execution date and duration MUST be recorded
 
 **Repeatability:**
 
-- Tests MUST be repeatable: running the same test twice produces the
-  same results (within measurement tolerance for timing metrics)
+- Tests MUST be repeatable: running the same test twice produces the same results (within measurement tolerance for timing metrics)
 
-- Non-determinism sources (wall-clock, random) MUST be controlled or
-  eliminated
-
-###  
+- Non-determinism sources (wall-clock, random) MUST be controlled or eliminated
 
 ### **A.1.3 Required Test Suites**
 
-Implementations MUST execute the following test suites and report
-pass/fail for each:
+Implementations MUST execute the following test suites and report pass/fail for each:
 
 **Suite 1: Determinism and Idempotency**
 
@@ -5330,10 +4074,7 @@ pass/fail for each:
 
 ### **A.2.1 Event Semantics**
 
-Implementations MUST emit structured events documenting key lifecycle
-transitions. Event names shown here are **normative for semantics**;
-exact spelling MAY vary if the mapping is documented in the conformance
-report.
+Implementations MUST emit structured events documenting key lifecycle transitions. Event names shown here are **normative for semantics**; exact spelling MAY vary if the mapping is documented in the conformance report.
 
 **Event naming convention:**
 
@@ -5345,13 +4086,13 @@ report.
 
 **Delivery:**
 
-- Events MUST be emitted to a durable, queryable log (stdout, structured
-  logging system, telemetry backend)
+- Events MUST be emitted to a durable, queryable log (stdout, structured logging system, telemetry backend)
 
-- Events MUST be timestamped (RFC 3339 or Unix timestamp with
-  millisecond precision)
+- Events MUST be timestamped (RFC 3339 or Unix timestamp with millisecond precision)
 
 - Events MUST NOT contain PII in labels or free-text fields
+
+- Keys SHOULD be opaque identifiers; where a key is itself personal data, implementations MUST pseudonymize it in telemetry
 
 ### **A.2.2 Required Events (Core)**
 
@@ -5367,7 +4108,7 @@ Labels:
 
 - version (integer): Frame version
 
-- type (enum: \"snapshot\" \| \"delta\"): Frame type
+- type (enum: "snapshot" \| "delta"): Frame type
 
 - window.start (RFC 3339): Event-time window start
 
@@ -5399,8 +4140,7 @@ Labels:
 
 - watermark (RFC 3339): Watermark that triggered closure
 
-- policy (string): Window policy name (e.g., \"tumbling-1m\",
-  \"session-5m-gap\")
+- policy (string): Window policy name (e.g., "tumbling-1m", "session-5m-gap")
 
 **delivery.attempt**
 
@@ -5442,8 +4182,7 @@ Labels:
 
 **delivery.dlq**
 
-Emitted when a frame is routed to the dead-letter queue after exhausting
-retries.
+Emitted when a frame is routed to the dead-letter queue after exhausting retries.
 
 Labels:
 
@@ -5473,28 +4212,73 @@ Labels:
 
 - idempotencyKey (string)
 
-- stage (enum: \"materialization\" \| \"delivery\"): Where duplicate was
-  detected
+- stage (enum: "materialization" \| "delivery"): Where duplicate was detected
 
-### **A.2.3 Required Events (Extensions, if implemented)**
+**frame.replayed**
 
-**admission.decision**
-
-Emitted when an extension hook makes an admit/deny/defer decision.
+Emitted when a previously materialized frame is re-emitted by replay (section 4.5.4). Implementations MAY instead add a replay=true label to frame.materialized; either form satisfies the requirement.
 
 Labels:
-
-- stage (enum: \"pre-materialize\" \| \"pre-publish\" \| \"delivery\"):
-  Hook location
 
 - contextId (string)
 
 - key (string)
 
-- verdict (enum: \"admit\" \| \"deny\" \| \"defer\"): Decision outcome
+- version (integer)
 
-- reasonCode (string): Implementation-defined reason (e.g.,
-  \"rate_limit_exceeded\", \"policy_denied\", \"budget_unavailable\")
+- frameId (string): Identifier of the replayed emission
+
+- originalFrameId (string, optional): Identifier of the original emission
+
+- replayId (string, optional): Correlates all frames of one replay request
+
+**late_data.accepted / late_data.dropped / late_data.routed**
+
+Emitted when late data is handled per the view’s lateness policy (section 4.4.6). Required for each outcome the declared policy can produce.
+
+Labels:
+
+- contextId (string)
+
+- key (string)
+
+- latenessMs (integer): watermark minus event-time at evaluation
+
+- policy (string): Declared lateness policy name
+
+**coalesce.triggered**
+
+Emitted when a coalescing reactivity policy absorbs multiple source changes into one frame (section 4.4.5). Required only for views whose reactivity policy is coalesce.
+
+Labels:
+
+- contextId (string)
+
+- key (string)
+
+- changesAbsorbed (integer)
+
+- coalesceDurationMs (integer)
+
+### **A.2.3 Required Events (Extensions, if implemented)**
+
+**admission.decision**
+
+Emitted when an extension hook makes an admit/delay/defer/deny decision.
+
+Labels:
+
+- hook (enum: "pre-materialize" \| "pre-publish" \| "post-publish" \| "delivery"): Hook location
+
+- stage (string): Which check decided; RECOMMENDED values: policy, gate, concurrency, priority, budget, approval
+
+- contextId (string)
+
+- key (string)
+
+- verdict (enum: "admit" \| "delay" \| "defer" \| "deny"): Decision outcome
+
+- reasonCode (string): Implementation-defined reason (e.g., "rate_limit_exceeded", "policy_denied", "budget_unavailable")
 
 **budget.lease**
 
@@ -5522,8 +4306,7 @@ Labels:
 
 **budget.commit**
 
-Emitted when actual budget usage is recorded after successful
-completion.
+Emitted when actual budget usage is recorded after successful completion.
 
 Labels:
 
@@ -5541,8 +4324,7 @@ Labels:
 
 **budget.cancel**
 
-Emitted when a lease is released without completion (failure, denial,
-timeout).
+Emitted when a lease is released without completion (failure, denial, timeout).
 
 Labels:
 
@@ -5562,8 +4344,7 @@ Labels:
 
 - frameId (string)
 
-- classification (string): Implementation-defined taxonomy (e.g.,
-  \"public\", \"internal\", \"confidential\", \"restricted\")
+- classification (string): Implementation-defined taxonomy (e.g., "public", "internal", "confidential", "restricted")
 
 **security.redaction**
 
@@ -5577,8 +4358,7 @@ Labels:
 
 - frameId (string)
 
-- pathsRedacted (array of strings): JSON pointers or field paths that
-  were masked/removed
+- pathsRedacted (array of strings): JSON pointers or field paths that were masked/removed
 
 - redactionCount (integer): Number of fields redacted
 
@@ -5616,26 +4396,39 @@ Labels:
 
 - reason (string, optional): Explanation for decision
 
-###  
+**delivery.denied**
+
+Emitted when the delivery hook (section 4.7.2) refuses to deliver a frame to a subscriber. The frame remains available to other subscribers and is not routed to the DLQ.
+
+Labels:
+
+- contextId (string)
+
+- key (string)
+
+- version (integer)
+
+- subscriberId (string)
+
+- reasonCode (string)
 
 ### **A.2.4 Required Metrics (Core)**
 
-Implementations MUST maintain the following metrics. Metric names are
-**normative for semantics**; exact spelling MAY vary if documented.
+Implementations MUST maintain the following metrics. Metric names are **normative for semantics**; exact spelling MAY vary if documented.
 
 **Naming conventions:**
 
 - Use snake_case with units as suffixes: metric_name_unit
 
+- Metric labels MUST be low-cardinality: frame identifiers, keys, and idempotency keys MUST NOT appear as metric labels (they MAY appear as fields of events)
+
 - Common units: ms (milliseconds), bytes, count, ratio (0-1)
 
-- Use histogram for latency and size distributions; gauge for current
-  state; counter for cumulative counts
+- Use histogram for latency and size distributions; gauge for current state; counter for cumulative counts
 
 **Metric Types:**
 
-- **Histogram:** Records distribution of values (e.g., latency); MUST
-  support percentile queries (p50, p95, p99)
+- **Histogram:** Records distribution of values (e.g., latency); MUST support percentile queries (p50, p95, p99)
 
 - **Gauge:** Records current value (e.g., queue depth)
 
@@ -5645,17 +4438,15 @@ Implementations MUST maintain the following metrics. Metric names are
 
 **watermark_lag_ms** (histogram)
 
-Lag between current watermark and maximum observed event-time, per
-(contextId, key).
+Lag between current watermark and maximum observed event-time, per (contextId, key) or per partition.
 
 Calculation: emit_watermark - max(event_time_seen_in_window)
 
-Labels: contextId, key
+Labels: contextId (and partition, if watermarks are per partition)
 
 **recompute_latency_ms** (histogram)
 
-Time to evaluate view plan and produce frame body, measured from plan
-invocation to completion.
+Time to evaluate view plan and produce frame body, measured from plan invocation to completion.
 
 Labels: contextId
 
@@ -5685,15 +4476,6 @@ Time a frame spends in delivery queue before being sent to subscriber.
 
 Labels: subscriberId, priority (if priority scheduling implemented)
 
-**concurrency_utilization** (gauge)
-
-Ratio of in-flight materializations to maximum concurrency limit,
-sampled periodically.
-
-Calculation: active_materializations / max_concurrency
-
-Labels: none (global) or contextId (per-view)
-
 **delivery_retry_count** (counter)
 
 Cumulative count of delivery retries.
@@ -5712,7 +4494,17 @@ Cumulative count of duplicate work detected and skipped.
 
 Labels: contextId, stage (materialization\|delivery)
 
-###  
+**late_data_count** (counter)
+
+Cumulative count of late events handled, by outcome. Required for views whose lateness policy can produce late data.
+
+Labels: contextId, outcome (accepted\|dropped\|routed)
+
+**coalesce_duration_ms** (histogram)
+
+Time between the first and last change absorbed into one coalesced frame. Required only for views whose reactivity policy is coalesce.
+
+Labels: contextId
 
 ### **A.2.5 Required Metrics (Extensions, if implemented)**
 
@@ -5720,7 +4512,7 @@ Labels: contextId, stage (materialization\|delivery)
 
 Count of admission decisions by verdict.
 
-Labels: stage, verdict, reasonCode
+Labels: hook, stage, verdict, reasonCode
 
 **budget_lease_count** (counter)
 
@@ -5734,13 +4526,11 @@ Count of budget commits (successful work).
 
 Labels: contextId, unit
 
-**budget_timeMs_committed** / **budget_moneyCents_committed** /
-**budget_tokens_committed** / **budget_netBytes_committed** /
-**budget_rows_committed** (counter)
+**budget_timeMs_committed** / **budget_moneyCents_committed** / **budget_tokens_committed** / **budget_netBytes_committed** / **budget_rows_committed** (counter)
 
 Cumulative budget units consumed.
 
-Labels: contextId, key (optional, for per-key attribution)
+Labels: contextId
 
 **security_redaction_count** (counter)
 
@@ -5752,42 +4542,41 @@ Labels: contextId, classification
 
 Count of policy denials.
 
-Labels: stage, reasonCode
+Labels: hook, stage, reasonCode
 
-##  
+**concurrency_utilization** (gauge)
+
+Ratio of in-flight materializations to maximum concurrency limit, sampled periodically. Required only if concurrency limiting is implemented.
+
+Calculation: active_materializations / max_concurrency
+
+Labels: none (global) or contextId (per-view)
 
 ## **A.3 Measurement Rules and SLO Accounting**
 
 ### **A.3.1 Measurement Windows**
 
-**Requirement:** Implementations MUST compute SLO metrics over sliding
-windows.
+**Requirement:** Implementations MUST compute SLO metrics over sliding windows.
 
 **Window parameters:**
 
-- **Window length:** MUST be declared in the conformance report
-  (recommended: 60 minutes)
+- **Window length:** MUST be declared in the conformance report (recommended: 60 minutes)
 
 - **Step width:** MUST be ≤ 1 minute (how often windows advance)
 
-- **Example:** 60-minute window advancing every 1 minute produces 60
-  overlapping windows per hour
+- **Example:** 60-minute window advancing every 1 minute produces 60 overlapping windows per hour
 
-**Purpose:** Sliding windows smooth out transient spikes and provide
-statistically meaningful SLO evaluation.
+**Purpose:** Sliding windows smooth out transient spikes and provide statistically meaningful SLO evaluation.
 
 ### **A.3.2 Percentile Estimation**
 
-**Requirement:** Implementations MUST estimate percentiles (p50, p95,
-p99) using a deterministic algorithm.
+**Requirement:** Implementations MUST estimate percentiles (p50, p95, p99) using a deterministic algorithm.
 
 **Acceptable methods:**
 
-- **CKMS (Cormode-Korn-Muthukrishnan-Srivastava):** Quantile sketch with
-  error bounds
+- **CKMS (Cormode-Korn-Muthukrishnan-Srivastava):** Quantile sketch with error bounds
 
-- **HDR Histogram:** Fixed-precision histogram with configurable
-  resolution
+- **HDR Histogram:** Fixed-precision histogram with configurable resolution
 
 - **T-Digest:** Mergeable quantile sketch
 
@@ -5795,21 +4584,17 @@ p99) using a deterministic algorithm.
 
 - Reservoir sampling (non-deterministic without fixed seed)
 
-- Exact sorting (doesn\'t scale)
+- Exact sorting (doesn't scale)
 
 **Error tolerance:**
 
-- p95/p99 estimates MUST be within ±2% of true value (validated via
-  synthetic workloads with known distributions)
-
-###  
+- p95/p99 estimates MUST be within ±2% of true value (validated via synthetic workloads with known distributions)
 
 ### **A.3.3 Freshness SLO Calculation**
 
 **Metric:** watermark_lag_ms per (contextId, key)
 
-**SLO statement:** \"p95 of watermark_lag_ms MUST be ≤ TARGET in ≥ X% of
-measurement windows\"
+**SLO statement:** "p95 of watermark_lag_ms MUST be ≤ TARGET in ≥ X% of measurement windows"
 
 **Calculation procedure:**
 
@@ -5825,8 +4610,7 @@ measurement windows\"
 
 2.  Over all windows in the test period:
 
-    - Compute: attainment_ratio = count(window_meets_slo=true) /
-      total_windows
+    - Compute: attainment_ratio = count(window_meets_slo=true) / total_windows
 
     - SLO is met if: attainment_ratio \>= X
 
@@ -5840,8 +4624,7 @@ measurement windows\"
 
 - Target: p95 watermark_lag_ms ≤ 2000ms
 
-- Test period: 8 hours (480 windows of 60 minutes, stepping every 1
-  minute)
+- Test period: 8 hours (480 windows of 60 minutes, stepping every 1 minute)
 
 - Result: 462 windows meet target
 
@@ -5851,13 +4634,9 @@ measurement windows\"
 
 **Metric:** delivery_latency_ms per (contextId, subscriberId)
 
-**SLO statement:** \"p95 of delivery_latency_ms MUST be ≤ TARGET in ≥
-95% of measurement windows\"
+**SLO statement:** "p95 of delivery_latency_ms MUST be ≤ TARGET in ≥ 95% of measurement windows"
 
-**Calculation procedure:** Same as freshness (§A.3.3), applied to
-delivery_latency_ms samples.
-
-###  
+**Calculation procedure:** Same as freshness (§A.3.3), applied to delivery_latency_ms samples.
 
 ### **A.3.5 Stability SLO Calculation**
 
@@ -5869,11 +4648,9 @@ delivery_latency_ms samples.
 
 **SLO statements:**
 
-- \"Retry rate MUST be ≤ TARGET per 10,000 deliveries in ≥ 99% of
-  windows\"
+- "Retry rate MUST be ≤ TARGET per 10,000 deliveries in ≥ 99% of windows"
 
-- \"DLQ rate MUST be ≤ TARGET per 10,000 deliveries in ≥ 99% of
-  windows\"
+- "DLQ rate MUST be ≤ TARGET per 10,000 deliveries in ≥ 99% of windows"
 
 **Calculation procedure:**
 
@@ -5897,13 +4674,11 @@ delivery_latency_ms samples.
 
 ### **A.3.6 Fairness SLO Calculation (Extensions, if implemented)**
 
-**Requirement:** Implementations claiming fairness MUST demonstrate
-weighted share allocation.
+**Requirement:** Implementations claiming fairness MUST demonstrate weighted share allocation.
 
 **Setup:**
 
-- Configure N tenants/priorities with declared weights: {w1, w2, \...,
-  wN}
+- Configure N tenants/priorities with declared weights: {w1, w2, ..., wN}
 
 - Saturate system with equal upstream demand from all tenants
 
@@ -5917,20 +4692,17 @@ weighted share allocation.
 
     - Compute: total_delivered = Σ delivered\[i\]
 
-    - Compute observed share: observed\[i\] = delivered\[i\] /
-      total_delivered
+    - Compute observed share: observed\[i\] = delivered\[i\] / total_delivered
 
     - Compute expected share: expected\[i\] = w\[i\] / Σ w\[j\]
 
-    - Compute deviation: deviation\[i\] = \|observed\[i\] -
-      expected\[i\]\|
+    - Compute deviation: deviation\[i\] = \|observed\[i\] - expected\[i\]\|
 
     - Record: max_deviation = max(deviation\[i\])
 
 2.  Over all windows:
 
-    - SLO is met if: max_deviation \<= declared_bound in ≥ 95% of
-      windows
+    - SLO is met if: max_deviation \<= declared_bound in ≥ 95% of windows
 
 **Declared bound:**
 
@@ -5942,13 +4714,11 @@ weighted share allocation.
 
 - Long-queued work MUST progress (no permanent starvation)
 
-- Test: Introduce one tenant with weight 0.01 among tenants with weight
-  1.0
+- Test: Introduce one tenant with weight 0.01 among tenants with weight 1.0
 
 - Measure: time until minority tenant receives first frame
 
-- Requirement: MUST receive frame within 10x average frame emission
-  interval
+- Requirement: MUST receive frame within 10x average frame emission interval
 
 ### **A.3.7 Budget SLO Calculation (Extensions, if implemented)**
 
@@ -5960,14 +4730,11 @@ weighted share allocation.
 
 **Requirements:**
 
-1.  **No double-spend:** For each leaseId, exactly one of budget.commit
-    or budget.cancel MUST be observed within lease TTL
+1.  **No double-spend:** For each leaseId, exactly one of budget.commit or budget.cancel MUST be observed within lease TTL
 
-2.  **Leak detection:** Sum of committed + cancelled MUST equal lease
-    count (within ±1% tolerance for timing skew)
+2.  **Leak detection:** Sum of committed + cancelled MUST equal lease count (within ±1% tolerance for timing skew)
 
-3.  **Attribution accuracy:** Per-context budget totals MUST be accurate
-    within ±5%
+3.  **Attribution accuracy:** Per-context budget totals MUST be accurate within ±5%
 
 **Test procedure:**
 
@@ -5977,8 +4744,7 @@ weighted share allocation.
 
 3.  Group by leaseId; verify one-and-only-one commit or cancel per lease
 
-4.  Sum committed units per context; compare to expected (calculated
-    from frame sizes, plan costs)
+4.  Sum committed units per context; compare to expected (calculated from frame sizes, plan costs)
 
 5.  Report any leaks (leases with no commit or cancel) as failures
 
@@ -5986,8 +4752,7 @@ weighted share allocation.
 
 ### **A.4.1 Core SLOs (All Implementations)**
 
-Implementations MUST declare SLO targets for the following and
-demonstrate attainment per §A.3.
+Implementations MUST declare SLO targets for the following and demonstrate attainment per §A.3.
 
 **Freshness:**
 
@@ -5995,8 +4760,7 @@ demonstrate attainment per §A.3.
 
 - Targets: p95 and p99 in milliseconds
 
-- Attainment: p95 target met in ≥95% of windows; p99 target met in ≥90%
-  of windows
+- Attainment: p95 target met in ≥95% of windows; p99 target met in ≥90% of windows
 
 **Delivery Latency:**
 
@@ -6020,8 +4784,6 @@ demonstrate attainment per §A.3.
 
 - Test: OR-1, OR-2 (§A.5.6, §A.5.7) MUST pass
 
-###  
-
 ### **A.4.2 Extension SLOs (If Implemented)**
 
 **Fairness (if weighted scheduling implemented):**
@@ -6034,8 +4796,7 @@ demonstrate attainment per §A.3.
 
 **Budget (if budget tracking implemented):**
 
-- Requirement: Zero double-spends; ≤1% lease leaks; ≤5% attribution
-  error
+- Requirement: Zero double-spends; ≤1% lease leaks; ≤5% attribution error
 
 - Test: EX-2 (§A.5.11) MUST pass
 
@@ -6047,8 +4808,7 @@ demonstrate attainment per §A.3.
 
 ### **A.4.3 Reference SLO Profiles (Optional Badges)**
 
-Implementations MAY claim optional reference profiles if they meet all
-profile requirements in the declared environment.
+Implementations MAY claim optional reference profiles if they meet all profile requirements in the declared environment.
 
 **Profile R0 (Batch-Friendly):**
 
@@ -6086,13 +4846,11 @@ profile requirements in the declared environment.
 
 - Use case: Real-time decision systems, high-frequency trading
 
-**Note:** Profiles are aspirational; implementations claim profiles only
-if all requirements are met in representative workloads.
+**Note:** Profiles are aspirational; implementations claim profiles only if all requirements are met in representative workloads.
 
 ## **A.5 Required Test Vectors**
 
-This section specifies the test vectors that implementations MUST pass
-to claim conformance.
+This section specifies the test vectors that implementations MUST pass to claim conformance.
 
 ### **A.5.1 DV-1: Deterministic View Evaluation**
 
@@ -6134,24 +4892,19 @@ to claim conformance.
 
 - Unstable serialization
 
-- planHash doesn\'t capture all dependencies
-
-###  
+- planHash doesn't capture all dependencies
 
 ### **A.5.2 ID-1: Idempotent Delivery**
 
-**Purpose:** Verify that duplicate deliveries produce effect-once
-semantics.
+**Purpose:** Verify that duplicate deliveries produce effect-once semantics.
 
 **Setup:**
 
 - Emit one frame to a test subscriber
 
-- Inject duplicate deliveries: deliver the same frame M=5 times (same
-  frameId, same idempotencyKey)
+- Inject duplicate deliveries: deliver the same frame M=5 times (same frameId, same idempotencyKey)
 
-- Subscriber counts effects (e.g., writes to a database, increments a
-  counter)
+- Subscriber counts effects (e.g., writes to a database, increments a counter)
 
 **Procedure:**
 
@@ -6159,10 +4912,9 @@ semantics.
 
 2.  Subscriber processes and applies effect (effect count = 1)
 
-3.  Subscriber receives frame again (duplicate #1)
+3.  Subscriber receives frame again (duplicate \#1)
 
-4.  Subscriber deduplicates via idempotencyKey; no new effect (effect
-    count still = 1)
+4.  Subscriber deduplicates via idempotencyKey; no new effect (effect count still = 1)
 
 5.  Repeat for M-1 more duplicates
 
@@ -6174,14 +4926,13 @@ semantics.
 
 **Failure modes:**
 
-- Subscriber doesn\'t deduplicate (effect count = M)
+- Subscriber doesn't deduplicate (effect count = M)
 
 - Subscriber crashes on duplicate (errors logged)
 
 ### **A.5.3 TM-1: Watermark Monotonicity**
 
-**Purpose:** Verify that watermarks never decrease for a given
-(contextId, key).
+**Purpose:** Verify that watermarks never decrease for a given (contextId, key).
 
 **Setup:**
 
@@ -6197,7 +4948,7 @@ semantics.
 
 2.  After each event, record current watermark for the key
 
-3.  Build sequence: \[wm_0, wm_1, \..., wm_100\]
+3.  Build sequence: \[wm_0, wm_1, ..., wm_100\]
 
 **Pass Criteria:**
 
@@ -6229,8 +4980,7 @@ semantics.
 
 2.  Advance watermark to 59s → no frame emitted (window not closed)
 
-3.  Advance watermark to 60s → frame for \[0-60s) MUST emit (window
-    closed)
+3.  Advance watermark to 60s → frame for \[0-60s) MUST emit (window closed)
 
 4.  Repeat for subsequent windows
 
@@ -6242,12 +4992,9 @@ semantics.
 
 **Failure modes:**
 
-- Frame emitted before watermark passes window end (processing-time
-  emission)
+- Frame emitted before watermark passes window end (processing-time emission)
 
 - Window never closes (watermark stuck)
-
-###  
 
 ### **A.5.5 TM-3: Late Data Handling**
 
@@ -6273,8 +5020,7 @@ semantics.
 
 3.  Materializer recomputes window \[0-60s) with late data included
 
-4.  Materializer emits corrective frame v2 (same contextId, key, window;
-    incremented version; type=delta)
+4.  Materializer emits corrective frame v2 (same contextId, key, window; incremented version; type=delta)
 
 **Pass Criteria:**
 
@@ -6334,8 +5080,7 @@ semantics.
 
 ### **A.5.7 OR-2: Per-Key Isolation**
 
-**Purpose:** Verify that frames for different keys can be delivered
-concurrently without order constraints.
+**Purpose:** Verify that frames for different keys can be delivered concurrently without order constraints.
 
 **Setup:**
 
@@ -6363,12 +5108,9 @@ concurrently without order constraints.
 
 - B2 delivered before B1 (per-key ordering violated)
 
-###  
-
 ### **A.5.8 RP-1: Replay by Version**
 
-**Purpose:** Verify that frames can be replayed by (contextId, key,
-version) with identical idempotencyKey.
+**Purpose:** Verify that frames can be replayed by (contextId, key, version) with identical idempotencyKey.
 
 **Setup:**
 
@@ -6376,27 +5118,25 @@ version) with identical idempotencyKey.
 
 - Record: original_idempotencyKey, original_body
 
-- Wait for TTL to pass (frame remains in store for test; or use long
-  TTL)
+- Use a TTL long enough that the frame remains in the store for the duration of the test
 
 **Procedure:**
 
 1.  Request replay: replay(contextId=C, key=K, version=10)
 
-2.  Receive replayed frame F1\'
+2.  Receive replayed frame F1'
 
-3.  Compare: F1\'.idempotencyKey vs original_idempotencyKey
+3.  Compare: F1'.idempotencyKey vs original_idempotencyKey
 
-4.  Compare: F1\'.body vs original_body
+4.  Compare: F1'.body vs original_body
 
 **Pass Criteria:**
 
-- F1\'.idempotencyKey == original_idempotencyKey
+- F1'.idempotencyKey == original_idempotencyKey
 
-- F1\'.body == original_body (byte-identical or semantically equivalent
-  per documented rules)
+- F1'.body == original_body (byte-identical or semantically equivalent per documented rules)
 
-- F1\'.frameId MAY differ (new emission event)
+- F1'.frameId MAY differ (new emission event)
 
 **Failure modes:**
 
@@ -6408,8 +5148,7 @@ version) with identical idempotencyKey.
 
 ### **A.5.9 RP-2: Replay by Time Interval**
 
-**Purpose:** Verify that frames can be replayed by time range with
-correct ordering.
+**Purpose:** Verify that frames can be replayed by time range with correct ordering.
 
 **Setup:**
 
@@ -6427,8 +5166,7 @@ correct ordering.
 
 **Procedure:**
 
-1.  Request replay: replay(contextId=C, key=K, startTime=60s,
-    endTime=240s)
+1.  Request replay: replay(contextId=C, key=K, startTime=60s, endTime=240s)
 
 2.  Expect: F2, F3, F4 (windows ending in \[60s, 240s))
 
@@ -6452,13 +5190,11 @@ correct ordering.
 
 ### **A.5.10 EX-1: Admission Decision Telemetry**
 
-**Purpose:** Verify that extension hooks emit required telemetry for
-admission decisions.
+**Purpose:** Verify that extension hooks emit required telemetry for admission decisions.
 
 **Setup:**
 
-- Implement pre-materialize hook with policy that denies 25% of requests
-  (e.g., rate limit)
+- Implement pre-materialize hook with policy that denies 25% of requests (e.g., rate limit)
 
 - Configure hook to emit admission.decision events
 
@@ -6478,19 +5214,15 @@ admission decisions.
 
 - All 100 requests generate admission.decision events
 
-- Events include required labels: stage, contextId, key, verdict,
-  reasonCode
+- Events include required labels: stage, contextId, key, verdict, reasonCode
 
-- verdict values are valid: \"admit\", \"deny\", or \"defer\"
+- verdict values are valid: "admit", "deny", or "defer"
 
-- Denied requests have meaningful reasonCode (e.g.,
-  \"rate_limit_exceeded\")
+- Denied requests have meaningful reasonCode (e.g., "rate_limit_exceeded")
 
-- Approximately 75 admitted, 25 denied (within statistical variance
-  ±10%)
+- Approximately 75 admitted, 25 denied (within statistical variance ±10%)
 
-- No materialization proceeds for denied requests (verify no
-  frame.materialized events for denied keys)
+- No materialization proceeds for denied requests (verify no frame.materialized events for denied keys)
 
 **Failure modes:**
 
@@ -6500,12 +5232,11 @@ admission decisions.
 
 - Denied requests still produce frames (hook not enforced)
 
-- reasonCode is empty or meaningless (e.g., \"error\" with no detail)
+- reasonCode is empty or meaningless (e.g., "error" with no detail)
 
 ### **A.5.11 EX-2: Budget Lease and Commit**
 
-**Purpose:** Verify budget lease/commit/cancel semantics with no
-double-spend.
+**Purpose:** Verify budget lease/commit/cancel semantics with no double-spend.
 
 **Setup:**
 
@@ -6533,13 +5264,11 @@ double-spend.
 
 - Each leaseId has exactly one budget.lease event
 
-- Each leaseId has exactly one of: budget.commit OR budget.cancel (never
-  both)
+- Each leaseId has exactly one of: budget.commit OR budget.cancel (never both)
 
 - No orphaned leases (lease with neither commit nor cancel within TTL)
 
-- Total committed units = sum of actual usage from successful
-  materializations
+- Total committed units = sum of actual usage from successful materializations
 
 - Leak rate: ≤1% of leases unaccounted
 
@@ -6553,24 +5282,19 @@ double-spend.
 
 - Commit after cancel (state machine violation)
 
-- Committed units don\'t match actual work
-
-###  
+- Committed units don't match actual work
 
 ### **A.5.12 EX-3: Redaction Application**
 
-**Purpose:** Verify that redaction is applied per classification policy
-before frame publication.
+**Purpose:** Verify that redaction is applied per classification policy before frame publication.
 
 **Setup:**
 
-- Define classification policy: frames marked \"confidential\" MUST
-  redact fields \[\"\$.user.email\", \"\$.user.ssn\"\]
+- Define classification policy: frames marked "confidential" MUST redact fields \["\$.user.email", "\$.user.ssn"\]
 
 - Create test view that produces frames with sensitive fields
 
-- Configure 10 frames: 5 classified \"internal\" (no redaction), 5
-  classified \"confidential\" (redaction required)
+- Configure 10 frames: 5 classified "internal" (no redaction), 5 classified "confidential" (redaction required)
 
 **Procedure:**
 
@@ -6580,25 +5304,23 @@ before frame publication.
 
     - Check extensions.classification field
 
-    - If classification=\"confidential\", verify security.redaction
-      event emitted
+    - If classification="confidential", verify security.redaction event emitted
 
     - Fetch frame body from store
 
     - Verify redacted fields are masked/removed
 
-3.  For \"internal\" frames, verify no redaction applied
+3.  For "internal" frames, verify no redaction applied
 
 **Pass Criteria:**
 
-- 100% of \"confidential\" frames have redaction applied (5/5)
+- 100% of "confidential" frames have redaction applied (5/5)
 
-- 0% of \"internal\" frames have redaction applied (0/5)
+- 0% of "internal" frames have redaction applied (0/5)
 
 - security.redaction events emitted for all confidential frames
 
-- Redacted fields are absent or replaced with mask value (e.g.,
-  \"\[REDACTED\]\", null)
+- Redacted fields are absent or replaced with mask value (e.g., "\[REDACTED\]", null)
 
 - Original values NOT present in stored frame bodies
 
@@ -6612,14 +5334,11 @@ before frame publication.
 
 - All frames redacted (policy not applied selectively)
 
-##  
-
 ## **A.6 Conformance Report Format**
 
 ### **A.6.1 Report Structure**
 
-Implementations MUST produce a conformance report in **JSON format**
-with the structure defined below.
+Implementations MUST produce a conformance report in **JSON format** with the structure defined below.
 
 **File naming:** rcm-conformance-{implementation-name}-{version}.json
 
@@ -6627,83 +5346,83 @@ with the structure defined below.
 
 {
 
-\"rcmVersion\": \"string (e.g., \'1.0\')\",
+"rcmVersion": "string (e.g., '1.0')",
 
-\"reportVersion\": \"string (e.g., \'1.0\')\",
+"reportVersion": "string (e.g., '1.0')",
 
-\"generatedAt\": \"RFC 3339 timestamp\",
+"generatedAt": "RFC 3339 timestamp",
 
-\"implementation\": {
+"implementation": {
 
-\"name\": \"string\",
+"name": "string",
 
-\"version\": \"semver\",
+"version": "semver",
 
-\"vendor\": \"string\",
+"vendor": "string",
 
-\"contactEmail\": \"email\",
+"contactEmail": "email",
 
-\"websiteUrl\": \"url\",
+"websiteUrl": "url",
 
-\"repositoryUrl\": \"url (optional)\",
+"repositoryUrl": "url (optional)",
 
-\"conformanceClass\": \"RCM\"
-
-},
-
-\"environment\": {
-
-\"region\": \"string (e.g., \'us-west-2\', \'on-premises\')\",
-
-\"nodeCount\": \"integer\",
-
-\"nodeSpec\": \"string (e.g., \'4 vCPU, 16GB RAM\')\",
-
-\"storageType\": \"string (e.g., \'SSD\', \'S3\')\",
-
-\"networkTopology\": \"string (e.g., \'single-AZ\', \'multi-AZ\')\",
-
-\"notes\": \"string (optional)\"
+"conformanceClass": "RCM"
 
 },
 
-\"declaredSLOs\": {
+"environment": {
 
-\"windowMinutes\": \"integer (e.g., 60)\",
+"region": "string (e.g., 'us-west-2', 'on-premises')",
 
-\"stepMinutes\": \"integer (e.g., 1)\",
+"nodeCount": "integer",
 
-\"freshnessMsP95\": \"integer\",
+"nodeSpec": "string (e.g., '4 vCPU, 16GB RAM')",
 
-\"freshnessMsP99\": \"integer\",
+"storageType": "string (e.g., 'SSD', 'S3')",
 
-\"deliveryMsP95\": \"integer\",
+"networkTopology": "string (e.g., 'single-AZ', 'multi-AZ')",
 
-\"dlqRatePer10k\": \"float\",
-
-\"fairnessDeviation\": \"float (optional, if fairness implemented)\",
-
-\"profilesClaimed\": \[\"array of strings (e.g., \[\'R1\'\])\"\]
+"notes": "string (optional)"
 
 },
 
-\"testResults\": {
+"declaredSLOs": {
 
-\"executionDate\": \"RFC 3339 timestamp\",
+"windowMinutes": "integer (e.g., 60)",
 
-\"durationMinutes\": \"integer\",
+"stepMinutes": "integer (e.g., 1)",
 
-\"tests\": \[
+"freshnessMsP95": "integer",
+
+"freshnessMsP99": "integer",
+
+"deliveryMsP95": "integer",
+
+"dlqRatePer10k": "float",
+
+"fairnessDeviation": "float (optional, if fairness implemented)",
+
+"profilesClaimed": \["array of strings (e.g., \['R1'\])"\]
+
+},
+
+"testResults": {
+
+"executionDate": "RFC 3339 timestamp",
+
+"durationMinutes": "integer",
+
+"tests": \[
 
 {
 
-\"id\": \"string (e.g., \'DV-1\')\",
+"id": "string (e.g., 'DV-1')",
 
-\"name\": \"string (e.g., \'Deterministic View Evaluation\')\",
+"name": "string (e.g., 'Deterministic View Evaluation')",
 
-\"pass\": \"boolean\",
+"pass": "boolean",
 
-\"notes\": \"string (optional details, error messages)\"
+"notes": "string (optional details, error messages)"
 
 }
 
@@ -6711,79 +5430,77 @@ with the structure defined below.
 
 },
 
-\"sloResults\": {
+"sloResults": {
 
-\"freshness\": {
+"freshness": {
 
-\"p95Ms\": \"integer (measured)\",
+"p95Ms": "integer (measured)",
 
-\"p99Ms\": \"integer (measured)\",
+"p99Ms": "integer (measured)",
 
-\"attainedWindowsP95\": \"float (0-1, e.g., 0.97)\",
+"attainedWindowsP95": "float (0-1, e.g., 0.97)",
 
-\"attainedWindowsP99\": \"float (0-1)\"
-
-},
-
-\"delivery\": {
-
-\"p95Ms\": \"integer\",
-
-\"attainedWindowsP95\": \"float\"
+"attainedWindowsP99": "float (0-1)"
 
 },
 
-\"dlqRatePer10k\": \"float\",
+"delivery": {
 
-\"fairnessDeviation\": \"float (optional)\"
+"p95Ms": "integer",
 
-},
-
-\"telemetry\": {
-
-\"eventsSchemaVersion\": \"string (e.g., \'1.0\')\",
-
-\"metricsSchemaVersion\": \"string (e.g., \'1.0\')\",
-
-\"mappings\": {
-
-\"eventNameMappings\": {
-
-\"frame.materialized\": \"implementation-specific-name (if different)\"
+"attainedWindowsP95": "float"
 
 },
 
-\"metricNameMappings\": {
+"dlqRatePer10k": "float",
 
-\"watermark_lag_ms\": \"implementation-specific-name (if different)\"
+"fairnessDeviation": "float (optional)"
+
+},
+
+"telemetry": {
+
+"eventsSchemaVersion": "string (e.g., '1.0')",
+
+"metricsSchemaVersion": "string (e.g., '1.0')",
+
+"mappings": {
+
+"eventNameMappings": {
+
+"frame.materialized": "implementation-specific-name (if different)"
+
+},
+
+"metricNameMappings": {
+
+"watermark_lag_ms": "implementation-specific-name (if different)"
 
 }
 
 },
 
-\"exportFormat\": \"string (e.g., \'OpenTelemetry\', \'Prometheus\',
-\'CloudWatch\')\"
+"exportFormat": "string (e.g., 'OpenTelemetry', 'Prometheus', 'CloudWatch')"
 
 },
 
-\"extensionPoints\": {
+"extensionPoints": {
 
-\"implemented\": \"boolean\",
+"implemented": "boolean",
 
-\"hooksProvided\": \[\"array of strings (e.g., \[\'pre-materialize\',
-\'pre-publish\'\])\"\],
+"hooksProvided": \["array of strings (e.g., \['pre-materialize', 'pre-publish'\])"\],
 
-\"policies\": \"string (description of governance policies)\",
+"policies": "string (description of governance policies)",
 
-\"documentationUrl\": \"url (optional)\"
+"documentationUrl": "url (optional)"
 
 },
 
-\"artifacts\": {
+"artifacts": {
 
-\"rawDataUrl\": \"url (optional, link to detailed test data)\",
+"rawDataUrl": "url (optional, link to detailed test data)",
 
-\"dashboardUrl\": \"url (optional, link to telemetry dashboard)\"
+"dashboardUrl": "url (optional, link to telemetry dashboard)"
 
 }
 
@@ -6807,8 +5524,6 @@ The following fields are **REQUIRED** in all conformance reports:
 
 - telemetry.eventsSchemaVersion, telemetry.metricsSchemaVersion
 
-###  
-
 ### **A.6.3 Optional Fields**
 
 The following fields are **OPTIONAL** but recommended:
@@ -6827,8 +5542,7 @@ The following fields are **OPTIONAL** but recommended:
 
 ### **A.6.4 Report Validation**
 
-Implementations SHOULD validate conformance reports against the JSON
-schema before publication.
+Implementations SHOULD validate conformance reports against the JSON schema before publication.
 
 **Schema validation requirements:**
 
@@ -6836,7 +5550,7 @@ schema before publication.
 
 - Types match (integers, floats, booleans, strings, arrays, objects)
 
-- Enum values valid (e.g., conformanceClass must be \"RCM\")
+- Enum values valid (e.g., conformanceClass must be "RCM")
 
 - SLO attainment ratios in range \[0, 1\]
 
@@ -6854,8 +5568,7 @@ schema before publication.
 
 ### **A.7.1 Producer Checks**
 
-Implementations MUST verify the following properties for all frames
-produced:
+Implementations MUST verify the following properties for all frames produced:
 
 **Envelope completeness:**
 
@@ -6901,23 +5614,19 @@ produced:
 
 ### **A.7.2 Subscriber Checks**
 
-Implementations MUST verify the following properties for all
-subscriptions:
+Implementations MUST verify the following properties for all subscriptions:
 
 **Ordering guarantee:**
 
-- Per-key order preserved: frames for same (contextId, key) delivered by
-  (window.end, version)
+- Per-key order preserved: frames for same (contextId, key) delivered by (window.end, version)
 
 - Test: OR-1, OR-2 (§A.5.6, §A.5.7)
 
 **At-least-once delivery:**
 
-- Every emitted frame delivered to every subscriber (may have
-  duplicates)
+- Every emitted frame delivered to every subscriber (may have duplicates)
 
-- Test: inject 100 frames; verify all 100 reach subscriber (allow
-  duplicates)
+- Test: inject 100 frames; verify all 100 reach subscriber (allow duplicates)
 
 **Idempotent consumption:**
 
@@ -6931,8 +5640,7 @@ subscriptions:
 
 - Terminal failures routed to DLQ with full context
 
-- Test: inject transient failures; verify retries succeed; inject
-  permanent failures; verify DLQ routing
+- Test: inject transient failures; verify retries succeed; inject permanent failures; verify DLQ routing
 
 **Validation procedure:**
 
@@ -6952,27 +5660,23 @@ Implementations MAY use different names for events and metrics if:
 
 1.  The semantic meaning is preserved
 
-2.  The mapping is documented in telemetry.mappings section of
-    conformance report
+2.  The mapping is documented in telemetry.mappings section of conformance report
 
-3.  The alternative names are clearly equivalent (e.g., frame.published
-    ≈ frame.materialized)
+3.  The alternative names are clearly equivalent (e.g., frame.published ≈ frame.materialized)
 
 **Example mapping:**
 
-\"eventNameMappings\": {
+"eventNameMappings": {
 
-\"frame.materialized\": \"frame_emitted\",
+"frame.materialized": "frame_emitted",
 
-\"delivery.attempt\": \"subscriber.receive_attempt\"
+"delivery.attempt": "subscriber.receive_attempt"
 
 }
 
 ### **A.8.2 Environment Variability**
 
-Conformance is valid **for the declared environment**. Materially
-different deployments (different hardware, network, storage) MUST re-run
-tests or clearly document deviations.
+Conformance is valid **for the declared environment**. Materially different deployments (different hardware, network, storage) MUST re-run tests or clearly document deviations.
 
 **Material changes that require re-testing:**
 
@@ -6988,56 +5692,51 @@ tests or clearly document deviations.
 
 - Minor version bumps (patches, bug fixes) within same runtime
 
-- Configuration tuning (buffer sizes, timeouts) that don\'t affect
-  semantics
+- Configuration tuning (buffer sizes, timeouts) that don't affect semantics
 
 - Telemetry backend changes (Prometheus → CloudWatch)
 
 ### **A.8.3 Test Data Portability**
 
-Implementations SHOULD contribute golden test vectors (inputs, expected
-outputs) to a shared repository for community use.
+Implementations SHOULD contribute golden test vectors (inputs, expected outputs) to a shared repository for community use.
 
 **Test vector format:**
 
 {
 
-\"vectorId\": \"DV-1-basic-join\",
+"vectorId": "DV-1-basic-join",
 
-\"testCase\": \"DV-1\",
+"testCase": "DV-1",
 
-\"description\": \"Basic deterministic join over two sources\",
+"description": "Basic deterministic join over two sources",
 
-\"inputs\": {
+"inputs": {
 
-\"source1\": \[ /\* array of events \*/ \],
+"source1": \[ /\* array of events \*/ \],
 
-\"source2\": \[ /\* array of events \*/ \]
+"source2": \[ /\* array of events \*/ \]
 
 },
 
-\"viewSpec\": { /\* declarative view definition \*/ },
+"viewSpec": { /\* declarative view definition \*/ },
 
-\"window\": {\"start\": \"\...\", \"end\": \"\...\"},
+"window": {"start": "...", "end": "..."},
 
-\"expectedIdempotencyKey\": \"sha256:abc123\...\",
+"expectedIdempotencyKey": "sha256:abc123...",
 
-\"expectedBodyHash\": \"sha256:def456\...\"
+"expectedBodyHash": "sha256:def456..."
 
 }
 
 **Contributing vectors:**
 
-1.  Create vectors for edge cases (late data, empty windows,
-    cross-source joins)
+1.  Create vectors for edge cases (late data, empty windows, cross-source joins)
 
-2.  Include both positive cases (should pass) and negative cases (should
-    fail or handle gracefully)
+2.  Include both positive cases (should pass) and negative cases (should fail or handle gracefully)
 
 3.  Submit via pull request to conformance test suite repository
 
-4.  Vectors reviewed by maintainers; accepted vectors become part of
-    canonical suite
+4.  Vectors reviewed by maintainers; accepted vectors become part of canonical suite
 
 ### **A.8.4 Version Compatibility**
 
@@ -7053,34 +5752,25 @@ outputs) to a shared repository for community use.
 
 **Implementation compatibility:**
 
-- Implementations conformant to v1.0 MUST remain conformant to v1.x
-  (minor updates)
+- Implementations conformant to v1.0 MUST remain conformant to v1.x (minor updates)
 
-- Implementations MAY adopt v2.0 features but MUST continue supporting
-  v1.0 semantics for backward compatibility
+- Implementations MAY adopt v2.0 features but MUST continue supporting v1.0 semantics for backward compatibility
 
 - Conformance reports SHOULD specify highest spec version claimed
 
 **Interoperability:**
 
-- Frames produced by v1.0 implementation MUST be consumable by v1.x
-  implementations
+- Frames produced by v1.0 implementation MUST be consumable by v1.x implementations
 
-- Frame envelope extensions (implementation-specific fields) MUST be
-  ignored by consumers that don\'t understand them
+- Frame envelope extensions (implementation-specific fields) MUST be ignored by consumers that don't understand them
 
-- Cross-version replay: v1.x implementation SHOULD be able to replay
-  frames produced by v1.0 implementation if within TTL
-
-#  
+- Cross-version replay: v1.x implementation SHOULD be able to replay frames produced by v1.0 implementation if within TTL
 
 # **Annex B (Informative): References and Crosswalks**
 
 ## **B.1 Normative References**
 
-The following documents are **normatively referenced** in this
-specification. Implementations claiming conformance MUST adhere to the
-semantics defined in these references where cited.
+The following documents are **normatively referenced** in this specification. Implementations claiming conformance MUST adhere to the semantics defined in these references where cited. Reactive Streams and W3C PROV-DM are listed here because sections 4.6 and 4.3 define compatibility with them; conformance does not require implementing either.
 
 **RFC 2119:** Key words for use in RFCs to Indicate Requirement Levels\
 https://www.rfc-editor.org/rfc/rfc2119\
@@ -7111,31 +5801,24 @@ https://www.w3.org/TR/prov-dm/\
 Status: W3C Recommendation\
 Cited in: §4.3 (provenance concepts), Annex C (glossary)
 
-##  
-
 ## **B.2 Informative References**
 
-The following documents provide context and background but are **not
-normatively required** for conformance.
+The following documents provide context and background but are **not normatively required** for conformance.
 
 ### **B.2.1 Stream Processing and Time Semantics**
 
-**The Dataflow Model: A Practical Approach to Balancing Correctness,
-Latency, and Cost in Massive-Scale, Unbounded, Out-of-Order Data
-Processing\**
+**The Dataflow Model: A Practical Approach to Balancing Correctness, Latency, and Cost in Massive-Scale, Unbounded, Out-of-Order Data Processing\**
 Tyler Akidau, Robert Bradshaw, Craig Chambers, et al.\
 VLDB 2015\
 https://research.google/pubs/pub43864/\
-Key concepts: Event-time vs processing-time, watermarks, windowing,
-triggers
+Key concepts: Event-time vs processing-time, watermarks, windowing, triggers
 
-**Streaming Systems: The What, Where, When, and How of Large-Scale Data
-Processing\**
+**Streaming Systems: The What, Where, When, and How of Large-Scale Data Processing\**
 Tyler Akidau, Slava Chernyak, Reuven Lax\
-O\'Reilly Media, 2018\
+O'Reilly Media, 2018\
 ISBN: 978-1491983874
 
-**Streaming 101 / 102** (O\'Reilly Radar articles)\
+**Streaming 101 / 102** (O'Reilly Radar articles)\
 Tyler Akidau, 2015\
 https://www.oreilly.com/radar/the-world-beyond-batch-streaming-101/\
 https://www.oreilly.com/radar/the-world-beyond-batch-streaming-102/
@@ -7159,8 +5842,6 @@ Pat Helland\
 CIDR 2015\
 http://cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf
 
-###  
-
 ### **B.2.3 Reactive Architectures and UI Patterns**
 
 **The Elm Architecture\**
@@ -7171,8 +5852,7 @@ Model-View-Update pattern for UI state
 **Redux Documentation\**
 Dan Abramov and the Redux team\
 https://redux.js.org/understanding/thinking-in-redux/three-principles\
-Three principles: Single source of truth, State is read-only, Changes
-are made with pure functions
+Three principles: Single source of truth, State is read-only, Changes are made with pure functions
 
 **Unidirectional User Interface Architectures\**
 André Staltz, 2015\
@@ -7205,17 +5885,14 @@ Endel Tulving, 1972\
 Organization of Memory\
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4320042/
 
-###  
-
 ### **B.2.5 Knowledge Representation**
 
 **A Framework for Representing Knowledge\**
 Marvin Minsky, 1974\
 MIT AI Lab Memo 306\
-https://courses.media.mit.edu/2004spring/mas966/Minsky%201974%20Framework%20for%20Knowledge.pdf
+https://dspace.mit.edu/handle/1721.1/6089
 
-**The Blackboard Model of Problem Solving and the Evolution of
-Blackboard Architectures\**
+**The Blackboard Model of Problem Solving and the Evolution of Blackboard Architectures\**
 H. Penny Nii, 1986\
 AI Magazine, Volume 7, Number 2\
 https://aaai.org/ojs/index.php/aimagazine/article/view/537
@@ -7230,7 +5907,7 @@ https://dl.acm.org/doi/10.1145/3447772
 **Model Context Protocol (MCP)\**
 Anthropic, 2024\
 https://modelcontextprotocol.io/\
-https://spec.modelcontextprotocol.io/\
+https://modelcontextprotocol.io/specification/latest\
 Open protocol for LLM-application context exchange
 
 **FIPA Agent Communication Language (ACL)\**
@@ -7254,179 +5931,92 @@ Counter, Gauge, Histogram, Summary
 
 ## **B.3 Crosswalk: RCM Terms to Adjacent Patterns**
 
-This table maps RCM concepts to equivalent or analogous concepts in
-related patterns and systems.
+This table maps RCM concepts to equivalent or analogous concepts in related patterns and systems.
 
-  ------------------------ -------------- ----------------------- ---------------------- -------------------- -------------------------- ----------------- ---------------
-      **RCM Concept**         **Event            **CQRS**          **Materialized Views  **Reactive Streams**     **Elm/MVU/Redux**       **Blackboard**     **Knowledge
-                             Sourcing**                              (DB/Streaming)**                                                                         Graphs**
-
-     **Source Signal**       Event log;    Command side produces  Change streams/CDC as    Publisher emits     Actions/Intents/Messages  Knowledge sources  Triples/edges
-                            every state           changes                 inputs                items                                     post hypotheses   flowing into
-                               change                                                                                                                           graph
-                              recorded                                                                                                                     
-
-      **Context View**       Projection      Read side (query       View definition /      Processing stage       update(model, msg)        Specialists     SPARQL/Cypher
-                             built from           models)          streaming transform                                 function           reading/writing      queries
-                               events                                                                                                          board       
-
-         **Frame**            Snapshot      Read model instance     Materialized view      Element/sequence    Model state after reduce  Blackboard state  Versioned graph
-                            derived from   (persisted/versioned)     table / snapshot            item                                        at a time          slice
-                               event                                                                                                                       
-                             projection                                                                                                                    
-
-      **Materializer**       Projection     Read model builder       View maintenance     Processor/Operator   Reducer/Update function      Blackboard     Query executor
-                              executor                                    engine                                                            controller     
-
-      **Subscription**       Projected        Read side feeds     Change notifications;    Subscriber with     View re-render on state   Knowledge sources   Downstream
-                             stream to           UIs/APIs          view update streams       backpressure               change           react to changes   consumers of
-                             consumers                                                                                                                      graph deltas
-
-   **Time & Watermarks**    Out-of-order       Not specified       Windowing/watermarks  Backpressure & async N/A (UI time is immediate)        N/A           Temporal
-                               replay                               in stream engines      sequencing only                                                  validity via
-                              handling                                                                                                                       reification
-
-       **Governance**        Orthogonal     Orthogonal concern      Orthogonal concern    Orthogonal concern      Orthogonal concern     Rarely formalized Access control
-                              concern                                                                                                                       & provenance
-                                                                                                                                                               layers
-
-   **Lineage/Provenance**   Event IDs &      Not standardized        Not standardized       Not specified           Not specified        Not standardized  RDF provenance
-                             positions                                                                                                                     graphs (PROV-O)
-  ------------------------ -------------- ----------------------- ---------------------- -------------------- -------------------------- ----------------- ---------------
+|  |  |  |  |  |  |  |  |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| **RCM Concept** | **Event Sourcing** | **CQRS** | **Materialized Views (DB/Streaming)** | **Reactive Streams** | **Elm/MVU/Redux** | **Blackboard** | **Knowledge Graphs** |
+| **Source Signal** | Event log; every state change recorded | Command side produces changes | Change streams/CDC as inputs | Publisher emits items | Actions/Intents/Messages | Knowledge sources post hypotheses | Triples/edges flowing into graph |
+| **Context View** | Projection built from events | Read side (query models) | View definition / streaming transform | Processing stage | update(model, msg) function | Specialists reading/writing board | SPARQL/Cypher queries |
+| **Frame** | Snapshot derived from event projection | Read model instance (persisted/versioned) | Materialized view table / snapshot | Element/sequence item | Model state after reduce | Blackboard state at a time | Versioned graph slice |
+| **Materializer** | Projection executor | Read model builder | View maintenance engine | Processor/Operator | Reducer/Update function | Blackboard controller | Query executor |
+| **Subscription** | Projected stream to consumers | Read side feeds UIs/APIs | Change notifications; view update streams | Subscriber with backpressure | View re-render on state change | Knowledge sources react to changes | Downstream consumers of graph deltas |
+| **Time & Watermarks** | Out-of-order replay handling | Not specified | Windowing/watermarks in stream engines | Backpressure & async sequencing only | N/A (UI time is immediate) | N/A | Temporal validity via reification |
+| **Governance** | Orthogonal concern | Orthogonal concern | Orthogonal concern | Orthogonal concern | Orthogonal concern | Rarely formalized | Access control & provenance layers |
+| **Lineage/Provenance** | Event IDs & positions | Not standardized | Not standardized | Not specified | Not specified | Not standardized | RDF provenance graphs (PROV-O) |
 
 **Key observations:**
 
-- **Event Sourcing:** RCM often consumes ES logs; frames are derived
-  read models, not authoritative events
+- **Event Sourcing:** RCM often consumes ES logs; frames are derived read models, not authoritative events
 
-- **CQRS:** RCM implements governed read side; CQRS is principle, RCM is
-  pattern
+- **CQRS:** RCM implements governed read side; CQRS is principle, RCM is pattern
 
-- **Materialized Views:** RCM standardizes what DB/streaming MVs do
-  ad-hoc (envelope, lineage, delivery)
+- **Materialized Views:** RCM standardizes what DB/streaming MVs do ad-hoc (envelope, lineage, delivery)
 
-- **Reactive Streams:** Flow control (backpressure) is complementary;
-  RCM adds memory lifecycle
+- **Reactive Streams:** Flow control (backpressure) is complementary; RCM adds memory lifecycle
 
-- **UI Patterns:** Same unidirectional backbone; RCM extends to durable,
-  multi-consumer, governed memory
+- **UI Patterns:** Same unidirectional backbone; RCM extends to durable, multi-consumer, governed memory
 
-- **Blackboard:** Similar shared-memory role; RCM adds versioning,
-  lineage, delivery contracts
+- **Blackboard:** Similar shared-memory role; RCM adds versioning, lineage, delivery contracts
 
-- **Knowledge Graphs:** Different layer; KGs are storage substrate; RCM
-  governs reactive context lifecycle
+- **Knowledge Graphs:** Different layer; KGs are storage substrate; RCM governs reactive context lifecycle
 
 ## **B.4 Crosswalk: RCM vs. AI Frameworks**
 
 This table positions RCM relative to popular AI/LLM frameworks.
 
-  ---------------------- -------------------- ------------------- ------------------- -------------
-      **Capability**        **LangChain**     **Semantic Kernel**       **MCP**          **RCM**
-
-    **Short-term chat     ConversationMemory   Long-term memory   Not specified (edge   Hot-tier
-         memory**          helpers persist    via Kernel Memory /   protocol only)    frames (short
-                             recent turns        vector stores                            TTL);
-                                                                                        reactive
-                                                                                         updates
-
-      **Retrieval /        Retrievers wrap       Vector store      Protocol to fetch    RCM feeds
-        Indexing**         search; link to       abstractions;      resources/tools   indices with
-                              originals        Kernel Memory for                        governed
-                                                      RAG                                frames
-                                                                                       (lineage +
-                                                                                          TTL)
-
-    **Orchestration**      Chains/agents &         Agents &          Client/server        Agent
-                         LangGraph; long-term     connectors;       roles; message      workflows
-                            memory agents     orchestrates skills  schema/versioning  subscribe to
-                                                                                         frames;
-                                                                                       governance
-                                                                                         orders
-                                                                                        admission
-
-   **Interoperability**    Framework-level      Framework-level      Open protocol       Pattern
-                           (Python/JS APIs)       (.NET APIs)       (JSON-RPC) for     (internal);
-                                                                  cross-tool context   exposes via
-                                                                                       MCP/A2A at
-                                                                                          edges
-
-      **Governance**      Application-level    Application-level     Not specified      Extension
-                           (callbacks, rate        (filters,                             points
-                               limits)            connectors)                           (policy,
-                                                                                        budgets,
-                                                                                        security)
-                                                                                       built into
-                                                                                         pattern
-
-       **Lineage**        Via callbacks and     Via connectors       Not specified    Frames carry
-                               metadata         (non-standard)                         provenance
-                            (non-standard)                                              (inputs,
-                                                                                      planHash) by
-                                                                                         design
-
-       **Position**         Framework for        Framework for     Edge protocol for   Pattern for
-                          building LLM apps    building LLM apps   context exchange      context
-                                                                                        lifecycle
-                                                                                        (internal
-                                                                                       substrate)
-  ---------------------- -------------------- ------------------- ------------------- -------------
+|  |  |  |  |  |
+|:--:|:--:|:--:|:--:|:--:|
+| **Capability** | **LangChain** | **Semantic Kernel** | **MCP** | **RCM** |
+| **Short-term chat memory** | ConversationMemory helpers persist recent turns | Long-term memory via Kernel Memory / vector stores | Not specified (edge protocol only) | Hot-tier frames (short TTL); reactive updates |
+| **Retrieval / Indexing** | Retrievers wrap search; link to originals | Vector store abstractions; Kernel Memory for RAG | Protocol to fetch resources/tools | RCM feeds indices with governed frames (lineage + TTL) |
+| **Orchestration** | Chains/agents & LangGraph; long-term memory agents | Agents & connectors; orchestrates skills | Client/server roles; message schema/versioning | Agent workflows subscribe to frames; governance orders admission |
+| **Interoperability** | Framework-level (Python/JS APIs) | Framework-level (.NET APIs) | Open protocol (JSON-RPC) for cross-tool context | Pattern (internal); exposes via MCP/A2A at edges |
+| **Governance** | Application-level (callbacks, rate limits) | Application-level (filters, connectors) | Not specified | Extension points (policy, budgets, security) built into pattern |
+| **Lineage** | Via callbacks and metadata (non-standard) | Via connectors (non-standard) | Not specified | Frames carry provenance (inputs, planHash) by design |
+| **Position** | Framework for building LLM apps | Framework for building LLM apps | Edge protocol for context exchange | Pattern for context lifecycle (internal substrate) |
 
 **Integration patterns:**
 
-- **LangChain + RCM:** LangChain retrieves context from RCM frames (via
-  API or subscription); LangChain chain outputs feed back as RCM source
-  signals
+- **LangChain + RCM:** LangChain retrieves context from RCM frames (via API or subscription); LangChain chain outputs feed back as RCM source signals
 
-- **Semantic Kernel + RCM:** SK memory connectors read/write RCM frames;
-  SK agents subscribe to frame updates for fresh context
+- **Semantic Kernel + RCM:** SK memory connectors read/write RCM frames; SK agents subscribe to frame updates for fresh context
 
-- **MCP + RCM:** RCM exposes curated frames via MCP gateway at edges;
-  MCP contexts from external systems ingested as RCM source signals
+- **MCP + RCM:** RCM exposes curated frames via MCP gateway at edges; MCP contexts from external systems ingested as RCM source signals
 
-- **All three + RCM:** Use frameworks for agent logic and tool
-  orchestration; use RCM for governed, versioned, auditable context
-  substrate
+- **All three + RCM:** Use frameworks for agent logic and tool orchestration; use RCM for governed, versioned, auditable context substrate
 
 **Why RCM complements (not competes):**
 
 - Frameworks provide developer ergonomics and tool ecosystems
 
-- RCM provides production semantics (versioning, lineage, governance,
-  delivery)
+- RCM provides production semantics (versioning, lineage, governance, delivery)
 
-- Frameworks can consume RCM frames for trustworthy, cost-controlled
-  context
+- Frameworks can consume RCM frames for trustworthy, cost-controlled context
 
-- RCM can ingest framework outputs (agent decisions, tool results) as
-  source signals
+- RCM can ingest framework outputs (agent decisions, tool results) as source signals
 
 ## **B.5 Bibliography**
 
 **Books:**
 
-- Kleppmann, Martin. *Designing Data-Intensive Applications*. O\'Reilly
-  Media, 2017.
+- Kleppmann, Martin. *Designing Data-Intensive Applications*. O'Reilly Media, 2017.
 
 - Evans, Eric. *Domain-Driven Design*. Addison-Wesley, 2003.
 
-- Vernon, Vaughn. *Implementing Domain-Driven Design*. Addison-Wesley,
-  2013.
+- Vernon, Vaughn. *Implementing Domain-Driven Design*. Addison-Wesley, 2013.
 
-- Akidau, Tyler; Chernyak, Slava; Lax, Reuven. *Streaming Systems*.
-  O\'Reilly Media, 2018.
+- Akidau, Tyler; Chernyak, Slava; Lax, Reuven. *Streaming Systems*. O'Reilly Media, 2018.
 
 **Papers:**
 
-- Akidau et al. \"The Dataflow Model.\" VLDB 2015.
+- Akidau et al. "The Dataflow Model." VLDB 2015.
 
-- Helland, Pat. \"Immutability Changes Everything.\" CIDR 2015.
+- Helland, Pat. "Immutability Changes Everything." CIDR 2015.
 
-- Lakshman, Avinash; Malik, Prashant. \"Cassandra: A Decentralized
-  Structured Storage System.\" ACM SIGOPS 2010.
+- Lakshman, Avinash; Malik, Prashant. "Cassandra: A Decentralized Structured Storage System." ACM SIGOPS 2010.
 
-- Zaharia et al. \"Resilient Distributed Datasets: A Fault-Tolerant
-  Abstraction for In-Memory Cluster Computing.\" NSDI 2012.
+- Zaharia et al. "Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing." NSDI 2012.
 
 **Specifications:**
 
@@ -7440,393 +6030,266 @@ This table positions RCM relative to popular AI/LLM frameworks.
 
 **Community Resources:**
 
-- RCM Specification Repository:
-  https://github.com/critical-insight-ai/rcm-spec (adjust to actual)
+- RCM Specification Repository: https://github.com/critical-insight-ai/rcm-spec
 
 - RCM Conformance Test Kit: TBD
 
 - RCM Discussion Forum: GitHub Discussions or mailing list (TBD)
 
-#  
-
 # **Annex C (Informative): Glossary**
 
-This glossary defines key terms used throughout the specification. Terms
-are organized alphabetically with references to authoritative sources
-where applicable.
+This glossary defines key terms used throughout the specification. Terms are organized alphabetically with references to authoritative sources where applicable.
 
 ## **A**
 
 **Acknowledgment (Ack):\**
-A signal from a subscriber to the subscriptions bus confirming
-successful processing of a frame. Delivery semantics rely on acks for
-at-least-once guarantees and retry logic.
+A signal from a subscriber to the subscriptions bus confirming successful processing of a frame. Delivery semantics rely on acks for at-least-once guarantees and retry logic.
 
 **Admission Control:\**
-The process of deciding whether to admit, deny, or defer a unit of work
-based on policy, capacity, or resource availability. In RCM, admission
-control is implemented via extension points (§4.7).
+The process of deciding whether to admit, deny, or defer a unit of work based on policy, capacity, or resource availability. In RCM, admission control is implemented via extension points (§4.7).
 
 **Agent:\**
-A software component that acts autonomously to achieve goals, often
-using AI/ML techniques. In RCM context, agents subscribe to frames for
-fresh context and emit events that trigger view recomputation.
+A software component that acts autonomously to achieve goals, often using AI/ML techniques. In RCM context, agents subscribe to frames for fresh context and emit events that trigger view recomputation.
 
 **At-Least-Once Delivery:\**
-A delivery guarantee where each message/frame is delivered to
-subscribers one or more times. Subscribers must implement idempotent
-processing to handle duplicates. Specified in §4.6.1.
+A delivery guarantee where each message/frame is delivered to subscribers one or more times. Subscribers must implement idempotent processing to handle duplicates. Specified in §4.6.1.
 
 ## **B**
 
 **Backpressure:\**
-A flow control mechanism where consumers signal capacity to producers,
-preventing overload. RCM subscriptions MAY use Reactive Streams-style
-backpressure (§4.6.6).\
+A flow control mechanism where consumers signal capacity to producers, preventing overload. RCM subscriptions MAY use Reactive Streams-style backpressure (§4.6.6).\
 Reference: https://www.reactive-streams.org/
 
 **Blackboard Architecture:\**
-A pattern where independent specialists collaborate via a shared
-\"blackboard\" workspace. RCM frames can serve as blackboard knowledge
-units with versioning and lineage (§5.1.6).\
+A pattern where independent specialists collaborate via a shared "blackboard" workspace. RCM frames can serve as blackboard knowledge units with versioning and lineage (§5.1.6).\
 Reference: Nii, AI Magazine 1986
 
 **Brownout:\**
-A controlled degradation mode where the system widens coalescing
-windows, emits coarse frames, or reduces features to preserve core SLOs
-under load. Specified in §4.4.5 and Chapter 5.
+A controlled degradation mode where the system widens coalescing windows, emits coarse frames, or reduces features to preserve core SLOs under load. Described informatively in §2.3.1, §3.3, and §6.3.2; not normatively specified in this version.
 
 **Budget:\**
-A multi-dimensional allowance (time, money, tokens, network, rows) that
-bounds resource consumption for a unit of work. Managed via leases
-(§4.7, Annex A.2.3).
+A multi-dimensional allowance (time, money, tokens, network, rows) that bounds resource consumption for a unit of work. Managed via leases (§4.7, Annex A.2.3).
 
 ## **C**
 
 **Change Data Capture (CDC):\**
-A technique for streaming row-level changes from databases as events.
-Common RCM source signal type.\
+A technique for streaming row-level changes from databases as events. Common RCM source signal type.\
 Reference: Debezium documentation
 
 **Classification:\**
-A security label applied to frames indicating sensitivity level (e.g.,
-public, internal, confidential, restricted). Drives redaction and access
-control policies (§4.7.3).
+A security label applied to frames indicating sensitivity level (e.g., public, internal, confidential, restricted). Drives redaction and access control policies (§4.7.3).
 
 **Coalescing:\**
-Delaying frame emission for a small, bounded duration to absorb multiple
-rapid source changes into a single frame, reducing version churn while
-adding bounded latency (§4.4.5).
+Delaying frame emission for a small, bounded duration to absorb multiple rapid source changes into a single frame, reducing version churn while adding bounded latency (§4.4.5).
 
 **Conformance:\**
-The property of an implementation satisfying all normative requirements
-in Chapter 4 and passing test vectors in Annex A. RCM defines one
-conformance class (
-
-§4.1, §6.2).
+The property of an implementation satisfying all normative requirements in Chapter 4 and passing test vectors in Annex A. RCM defines one conformance class (§4.1, §6.2).
 
 **Conformance Report:\**
-A structured JSON document (Annex A.6) that demonstrates an
-implementation\'s conformance by documenting test results, SLO
-attainment, environment, and telemetry mappings.
+A structured JSON document (Annex A.6) that demonstrates an implementation's conformance by documenting test results, SLO attainment, environment, and telemetry mappings.
 
 **Consumer:\**
-Any agent, service, UI component, or analytics pipeline that subscribes
-to and processes frames. Consumers MUST implement idempotent processing
-(§4.2.6).
+Any agent, service, UI component, or analytics pipeline that subscribes to and processes frames. Consumers MUST implement idempotent processing (§4.2.6).
 
 **Context View:\**
-A declarative specification of how to compose sources (and/or other
-views) into a derived context. Views are deterministic plans with no
-mutable state (§4.2.2).
+A declarative specification of how to compose sources (and/or other views) into a derived context. Views are deterministic plans with no mutable state (§4.2.2).
 
 **CQRS (Command Query Responsibility Segregation):\**
-An architectural pattern separating write models (commands) from read
-models (queries). RCM implements the read side with reactive semantics
-(§5.1.2).\
+An architectural pattern separating write models (commands) from read models (queries). RCM implements the read side with reactive semantics (§5.1.2).\
 Reference: Fowler, https://martinfowler.com/bliki/CQRS.html
 
 ## **D**
 
 **Dead-Letter Queue (DLQ):\**
-A quarantine destination for frames that repeatedly fail delivery after
-exhausting retries. DLQ entries include full context for debugging and
-remediation (§4.6.4).
+A quarantine destination for frames that repeatedly fail delivery after exhausting retries. DLQ entries include full context for debugging and remediation (§4.6.4).
 
 **Delta Frame:\**
-A frame representing an incremental change relative to prior state.
-Consumers fold deltas to reconstruct full state. Contrasts with snapshot
-frames (§4.2.4).
+A frame representing an incremental change relative to prior state. Consumers fold deltas to reconstruct full state. Contrasts with snapshot frames (§4.2.4).
 
 **Determinism:\**
-The property that identical inputs and parameters produce identical
-outputs. RCM views MUST be deterministic for replay and audit (§4.5.1).
+The property that identical inputs and parameters produce identical outputs. RCM views MUST be deterministic for replay and audit (§4.5.1).
 
 **Differential Privacy:\**
-A mathematical framework for quantifying privacy risk in data releases
-by adding calibrated noise. May be applied to RCM aggregate frames
-(Chapter 12).\
+A mathematical framework for quantifying privacy risk in data releases by adding calibrated noise. May be applied to RCM aggregate frames in a future version of this specification.\
 Reference: NIST SP 800-188
 
 **Duplicate Detection:\**
-The process of identifying repeated work or delivery via idempotencyKey
-matching. Enables safe retries and at-least-once delivery without
-duplicate effects (§4.5.3).
+The process of identifying repeated work or delivery via idempotencyKey matching. Enables safe retries and at-least-once delivery without duplicate effects (§4.5.3).
 
 ## **E**
 
 **Event Sourcing:\**
-A pattern where all state changes are persisted as an append-only event
-log. RCM commonly consumes event-sourced streams as source signals
-(§5.1.1).\
+A pattern where all state changes are persisted as an append-only event log. RCM commonly consumes event-sourced streams as source signals (§5.1.1).\
 Reference: Fowler, https://martinfowler.com/eaaDev/EventSourcing.html
 
 **Event Time:\**
-The timestamp reflecting when an event occurred in the source domain,
-independent of processing time. RCM uses event-time for windows and
-watermarks (§4.4.1).\
+The timestamp reflecting when an event occurred in the source domain, independent of processing time. RCM uses event-time for windows and watermarks (§4.4.1).\
 Reference: Akidau et al., Dataflow Model, VLDB 2015
 
 **Extension Point:\**
-A well-defined hook where implementations inject cross-cutting behaviors
-(admission control, budgets, security) without coupling to core reactive
-semantics (§4.7).
+A well-defined hook where implementations inject cross-cutting behaviors (admission control, budgets, security) without coupling to core reactive semantics (§4.7).
 
 ## **F**
 
 **Fairness:\**
-The property that resources are allocated proportionally to configured
-weights, with aging to prevent starvation. Measured via weighted share
-deviation (Annex A.3.6).
+The property that resources are allocated proportionally to configured weights, with aging to prevent starvation. Measured via weighted share deviation (Annex A.3.6).
 
 **Frame:\**
-An immutable materialization of a Context View at a specific point or
-interval in event-time, carrying headers for identity, version, lineage,
-time, and governance metadata (§4.2.4, §4.3).
+An immutable materialization of a Context View at a specific point or interval in event-time, carrying headers for identity, version, lineage, time, and governance metadata (§4.2.4, §4.3).
 
 **Frame ID:\**
-A globally unique identifier for a specific frame instance (ULID, UUID).
-May change on replay but must remain unique (§4.3.1).
+A globally unique identifier for a specific frame instance (ULID, UUID). May change on replay but must remain unique (§4.3.1).
 
 **Frame Store:\**
-Durable storage for versioned frames with TTL and lineage. Supports
-queries by (contextId, key, version) and time intervals (§4.2.4).
+Durable storage for versioned frames with TTL and lineage. Supports queries by (contextId, key, version) and time intervals (§4.2.4).
 
 **Freshness:\**
-The degree to which context reflects recent source changes. Measured via
-watermark_lag_ms (§A.3.3).
+The degree to which context reflects recent source changes. Measured via watermark_lag_ms (§A.3.3).
 
 ## **G**
 
 **Gate:\**
-A rate-limiting mechanism that caps request or emission rates before
-work is admitted. Part of the governance ordering (§4.7).\
+A rate-limiting mechanism that caps request or emission rates before work is admitted. Part of the governance ordering (§4.7).\
 Reference: RFC 2697 (token bucket)
 
 **Governance:\**
-Cross-cutting policies for access control, resource management,
-security, and observability. Implemented via extension points in RCM
-(§4.7).
+Cross-cutting policies for access control, resource management, security, and observability. Implemented via extension points in RCM (§4.7).
 
 **Golden Replay:\**
-A test using pre-recorded input vectors with expected outputs to verify
-determinism and idempotency (§4.5.5, Annex A.5).
+A test using pre-recorded input vectors with expected outputs to verify determinism and idempotency (§4.5.5, Annex A.5).
 
 ## **H**
 
 **HITL (Human-In-The-Loop):\**
-A gate requiring human approval before high-risk actions or exposures.
-Optional extension point in RCM (§4.7.3).
+A gate requiring human approval before high-risk actions or exposures. Optional extension point in RCM (§4.7.3).
 
 **Histogram:\**
-A metric type recording distribution of values (e.g., latency) with
-support for percentile queries (p50, p95, p99). Required for RCM
-telemetry (Annex A.2.4).
-
-##  
+A metric type recording distribution of values (e.g., latency) with support for percentile queries (p50, p95, p99). Required for RCM telemetry (Annex A.2.4).
 
 ## **I**
 
 **Idempotency:\**
-The property that repeating the same operation has the same effect once.
-RCM requires idempotent plans (materialization) and idempotent consumers
-(delivery) (§4.5).
+The property that repeating the same operation has the same effect once. RCM requires idempotent plans (materialization) and idempotent consumers (delivery) (§4.5).
 
 **Idempotency Key:\**
-A stable hash derived from inputs, plan, window, and parameters that
-uniquely identifies a unit of work. Used for deduplication (§4.3.1,
-§4.5.3).
+A stable hash derived from inputs, plan, window, and parameters that uniquely identifies a unit of work. Used for deduplication (§4.3.1, §4.5.3).
 
 **Immutability:\**
-The property that data cannot be changed after creation. RCM frames MUST
-be immutable; corrections emit new frames with incremented versions
-(§4.3.3).
+The property that data cannot be changed after creation. RCM frames MUST be immutable; corrections emit new frames with incremented versions (§4.3.3).
 
 ## **K**
 
 **Key:\**
-A partition or correlation identifier (e.g., tenant ID, user ID, asset
-ID) that scopes ordering and delivery guarantees. Per-key ordering is a
-core RCM requirement (§4.4.7).
+A partition or correlation identifier (e.g., tenant ID, user ID, asset ID) that scopes ordering and delivery guarantees. Per-key ordering is a core RCM requirement (§4.4.7).
 
 **Knowledge Graph:\**
-A graph-structured knowledge base (RDF, Property Graph) with rich
-semantics. RCM can compose views over graph queries and emit frames with
-graph provenance (§5.1.7).\
+A graph-structured knowledge base (RDF, Property Graph) with rich semantics. RCM can compose views over graph queries and emit frames with graph provenance (§5.1.7).\
 Reference: Hogan et al., ACM CSUR 2021
 
 ## **L**
 
 **Late Data:\**
-Events arriving with event-time timestamps earlier than the current
-watermark. Handled per declared lateness policy (accept, emit corrective
-delta, or drop) (§4.4.6).
+Events arriving with event-time timestamps earlier than the current watermark. Handled per declared lateness policy (accept, emit corrective delta, or drop) (§4.4.6).
 
 **Lease:\**
-A short-TTL reservation of budget units taken before execution and
-settled (committed or cancelled) after completion. Prevents double-spend
-(§4.7.3).
+A short-TTL reservation of budget units taken before execution and settled (committed or cancelled) after completion. Prevents double-spend (§4.7.3).
 
 **Lineage:\**
-Machine-readable evidence of which sources and transforms produced a
-frame. Recorded in the inputs and planHash fields (§4.3.1, §4.3.5).\
+Machine-readable evidence of which sources and transforms produced a frame. Recorded in the inputs and planHash fields (§4.3.1, §4.3.5).\
 Reference: W3C PROV-DM
-
-##  
 
 ## **M**
 
 **Materialized View:\**
-A precomputed query result stored for fast access. RCM standardizes MV
-semantics with envelopes, lineage, and delivery contracts (§5.1.3).
+A precomputed query result stored for fast access. RCM standardizes MV semantics with envelopes, lineage, and delivery contracts (§5.1.3).
 
 **Materializer:\**
-The executor responsible for applying time semantics, evaluating view
-plans, and emitting frames with complete envelopes (§4.2.3).
+The executor responsible for applying time semantics, evaluating view plans, and emitting frames with complete envelopes (§4.2.3).
 
 **MCP (Model Context Protocol):\**
-An open protocol for exposing and consuming context between LLM
-applications and external systems. RCM exposes frames via MCP at edges
-(§5.5.1).\
+An open protocol for exposing and consuming context between LLM applications and external systems. RCM exposes frames via MCP at edges (§5.5.1).\
 Reference: https://modelcontextprotocol.io/
 
 **Monotonicity:\**
-The property of always increasing (or non-decreasing). Watermarks and
-versions MUST be monotonic in RCM (§4.4.2, §4.3.4).
+The property of always increasing (or non-decreasing). Watermarks and versions MUST be monotonic in RCM (§4.4.2, §4.3.4).
 
 ## **O**
 
 **OpenTelemetry (OTel):\**
-A vendor-neutral framework for telemetry (traces, metrics, logs). RCM
-telemetry aligns with OTel conventions (Annex A.2).\
+A vendor-neutral framework for telemetry (traces, metrics, logs). RCM telemetry aligns with OTel conventions (Annex A.2).\
 Reference: https://opentelemetry.io/
 
 **Ordering:\**
-The guarantee that frames for a given (contextId, key) are delivered in
-order by (window.end, version). Cross-key ordering is not required
-(§4.4.7).
+The guarantee that frames for a given (contextId, key) are delivered in order by (window.end, version). Cross-key ordering is not required (§4.4.7).
 
 ## **P**
 
 **Per-Key Ordering:\**
-The delivery guarantee that frames with the same (contextId, key) arrive
-in order, even when cross-key deliveries are concurrent or out-of-order
-(§4.6.2).
+The delivery guarantee that frames with the same (contextId, key) arrive in order, even when cross-key deliveries are concurrent or out-of-order (§4.6.2).
 
 **Plan:\**
-The compiled, deterministic transform graph for a Context View,
-including operator versions and configuration. Identified by planHash
-(§4.5.1, §4.5.2).
+The compiled, deterministic transform graph for a Context View, including operator versions and configuration. Identified by planHash (§4.5.1, §4.5.2).
 
 **Plan Hash:\**
-A cryptographic hash (e.g., SHA-256) of a view\'s compiled plan that
-changes if and only if the effective transform changes. Enables safe
-dual-run and replay (§4.5.2).
+A cryptographic hash (e.g., SHA-256) of a view's compiled plan that changes if and only if the effective transform changes. Enables safe dual-run and replay (§4.5.2).
 
 **Policy:\**
-Declarative rules for access control, retention, classification, and
-consent. Applied via extension points in RCM governance (§4.7).
+Declarative rules for access control, retention, classification, and consent. Applied via extension points in RCM governance (§4.7).
 
 **Processing Time:\**
-The wall-clock time when a system observes or processes an event.
-Contrasts with event-time (§4.4.1).
+The wall-clock time when a system observes or processes an event. Contrasts with event-time (§4.4.1).
 
 **Provenance:\**
-Information about the origins and history of data. RCM frames carry
-provenance via inputs (source ranges + hashes) and planHash (transform
-identity) (§4.3.5).\
+Information about the origins and history of data. RCM frames carry provenance via inputs (source ranges + hashes) and planHash (transform identity) (§4.3.5).\
 Reference: W3C PROV-DM, https://www.w3.org/TR/prov-dm/
 
 ## **R**
 
 **Reactive Composite Memory (RCM):\**
-A design pattern for managing context in intelligent systems as
-governed, reactive dataflow: sources compose into versioned frames that
-update when dependencies change, with lineage and delivery guarantees.
+A design pattern for managing context in intelligent systems as governed, reactive dataflow: sources compose into versioned frames that update when dependencies change, with lineage and delivery guarantees.
 
 **Reactive Streams:\**
-A specification for asynchronous stream processing with non-blocking
-backpressure. RCM subscriptions MAY use Reactive Streams protocols
-(§4.6.6, §5.1.4).\
+A specification for asynchronous stream processing with non-blocking backpressure. RCM subscriptions MAY use Reactive Streams protocols (§4.6.6, §5.1.4).\
 Reference: https://www.reactive-streams.org/
 
 **Redaction:\**
-Removal or masking of sensitive fields before frame storage or egress.
-Applied per classification policy via security extension points
-(§4.7.3).
+Removal or masking of sensitive fields before frame storage or egress. Applied per classification policy via security extension points (§4.7.3).
 
 **Replay:\**
-The ability to re-emit previously materialized frames by version or time
-interval for audit, debugging, or rebuilding state. Replayed frames MUST
-have identical idempotencyKeys (§4.5.4).
+The ability to re-emit previously materialized frames by version or time interval for audit, debugging, or rebuilding state. Replayed frames MUST have identical idempotencyKeys (§4.5.4).
 
 **Retry:\**
-Automatic re-attempt of failed delivery with exponential backoff. RCM
-requires bounded retries with DLQ routing for terminal failures
-(§4.6.4).
+Automatic re-attempt of failed delivery with exponential backoff. RCM requires bounded retries with DLQ routing for terminal failures (§4.6.4).
 
 ## **S**
 
 **Session Window:\**
-A window type where boundaries are determined by gaps in data (periods
-of inactivity). Closes when inactivity exceeds a threshold (§4.4.3).
+A window type where boundaries are determined by gaps in data (periods of inactivity). Closes when inactivity exceeds a threshold (§4.4.3).
 
 **Sliding Window:\**
-A window type where fixed-size intervals overlap (e.g., 5-minute window
-sliding every 1 minute). Produces more frequent but overlapping frames
-than tumbling windows (§4.4.3).
+A window type where fixed-size intervals overlap (e.g., 5-minute window sliding every 1 minute). Produces more frequent but overlapping frames than tumbling windows (§4.4.3).
 
 **Snapshot Frame:\**
-A frame representing complete state for a view, key, and window.
-Consumers can process snapshots independently without prior frames
-(§4.2.4).
+A frame representing complete state for a view, key, and window. Consumers can process snapshots independently without prior frames (§4.2.4).
 
 **Source Signal:\**
-A typed, timestamped change feed (events, CDC, file arrivals) with
-monotone positions that drives reactive recomputation (§4.2.1).
+A typed, timestamped change feed (events, CDC, file arrivals) with monotone positions that drives reactive recomputation (§4.2.1).
 
 **Subscription:\**
-A delivery relationship where consumers receive frames with
-at-least-once, per-key ordered guarantees. Subscriptions enable fan-out
-to many heterogeneous consumers (§4.2.5).
+A delivery relationship where consumers receive frames with at-least-once, per-key ordered guarantees. Subscriptions enable fan-out to many heterogeneous consumers (§4.2.5).
 
 ## **T**
 
 **Time-To-Live (TTL):\**
-A retention policy specifying how long a frame remains accessible before
-deletion. RCM defaults to short, non-zero TTLs for auditability
-(§4.3.1).
+A retention policy specifying how long a frame remains accessible before deletion. RCM defaults to short, non-zero TTLs for auditability (§4.3.1).
 
 **Tumbling Window:\**
-A window type with fixed-size, non-overlapping intervals (e.g., every 1
-minute). Each event belongs to exactly one window (§4.4.3).
+A window type with fixed-size, non-overlapping intervals (e.g., every 1 minute). Each event belongs to exactly one window (§4.4.3).
 
 ## **V**
 
 **Version:\**
-A monotonically increasing counter per (contextId, key) that increments
-by 1 for each new frame (snapshots and deltas share the sequence).
-Enables deterministic replay (§4.3.1, §4.3.4).
+A monotonically increasing counter per (contextId, key) that increments by 1 for each new frame (snapshots and deltas share the sequence). Enables deterministic replay (§4.3.1, §4.3.4).
 
 **View:\**
 See Context View.
@@ -7834,49 +6297,30 @@ See Context View.
 ## **W**
 
 **Watermark:\**
-A threshold in event-time indicating \"no events with timestamps earlier
-than this are expected\" for a given (contextId, key). Watermarks MUST
-advance monotonically and trigger window closure (§4.4.2).\
+A threshold in event-time indicating "no events with timestamps earlier than this are expected" for a given (contextId, key). Watermarks MUST advance monotonically and trigger window closure (§4.4.2).\
 Reference: Akidau et al., Dataflow Model
 
 **Weighted Fair Queueing (WFQ):\**
-A scheduling algorithm that allocates service proportionally to
-configured weights. Used with aging to prevent starvation in RCM
-fairness implementations (Annex A.3.6).\
+A scheduling algorithm that allocates service proportionally to configured weights. Used with aging to prevent starvation in RCM fairness implementations (Annex A.3.6).\
 Reference: https://en.wikipedia.org/wiki/Weighted_fair_queueing
 
 **Window:\**
-An event-time interval \[start, end) that defines the scope of data
-included in a frame. Windows can be tumbling, sliding, or session-based
-(§4.4.3).
+An event-time interval \[start, end) that defines the scope of data included in a frame. Windows can be tumbling, sliding, or session-based (§4.4.3).
 
 **Window Closure:\**
-The moment a window transitions from Accepting to Closing state because
-the watermark has passed the window\'s end. Frames MUST NOT emit before
-closure (§4.4.4).
-
-#  
+The moment a window transitions from Accepting to Closing state because the watermark has passed the window's end. Frames MUST NOT emit before closure (§4.4.4).
 
 # **Annex D (Informative): Extension Patterns**
 
-This annex documents common patterns for implementing RCM extension
-points (§4.7). These patterns are **informative**: implementations MAY
-adopt, adapt, or ignore them. The normative requirement is that
-extension hooks emit required telemetry; the specific policies are
-implementation-defined.
+This annex documents common patterns for implementing RCM extension points (§4.7). These patterns are **informative**: implementations MAY adopt, adapt, or ignore them. The normative requirement is that extension hooks emit required telemetry; the specific policies are implementation-defined.
 
 ## **D.1 Common Extension Point Patterns**
 
-Extension points allow implementations to inject cross-cutting behaviors
-without coupling to core reactive semantics. This section surveys proven
-patterns from distributed systems, cloud platforms, and enterprise
-architectures.
+Extension points allow implementations to inject cross-cutting behaviors without coupling to core reactive semantics. This section surveys proven patterns from distributed systems, cloud platforms, and enterprise architectures.
 
 ⚠️ **INFORMATIVE CONTENT: NOT REQUIRED FOR CONFORMANCE**
 
-This annex documents patterns for implementing RCM\'s extension points
-(§4.7). **None of these patterns are normatively required.** They are
-provided as:
+This annex documents patterns for implementing RCM's extension points (§4.7). **None of these patterns are normatively required.** They are provided as:
 
 - Inspiration for implementers designing governance systems
 
@@ -7890,9 +6334,7 @@ Implementations may:
 
 - Use these examples as starting points and adapt to their needs
 
-**Conformance obligation**: If extension points are provided, emit
-required telemetry (§4.7.3). The specific policies are
-implementation-defined.
+**Conformance obligation**: If extension points are provided, emit required telemetry (§4.7.3). The specific policies are implementation-defined.
 
 **\**
 
@@ -7900,17 +6342,15 @@ implementation-defined.
 
 **Use extensions for:**
 
-- ✅ Cross-cutting concerns (policy, security, cost) that apply
-  uniformly
+- ✅ Cross-cutting concerns (policy, security, cost) that apply uniformly
 
-- ✅ Operational controls (admission, capacity, fairness) needed under
-  load
+- ✅ Operational controls (admission, capacity, fairness) needed under load
 
 - ✅ Compliance requirements (retention, redaction, audit trails)
 
 - ✅ Multi-tenancy (isolation, quotas, chargeback)
 
-**Don\'t use extensions for:**
+**Don't use extensions for:**
 
 - ❌ Business logic (belongs in view definitions)
 
@@ -7920,27 +6360,21 @@ implementation-defined.
 
 ### **D.1.2 Design Principles**
 
-**Orthogonality:** Extensions should not alter frame content or
-ordering; they observe, delay, deny, or charge but do not mutate.
+**Orthogonality:** Extensions should not alter frame content or ordering; they observe, delay, deny, or charge but do not mutate.
 
-**Composability:** Multiple extensions at the same hook should compose
-cleanly (e.g., policy check + rate gate + budget).
+**Composability:** Multiple extensions at the same hook should compose cleanly (e.g., policy check + rate gate + budget).
 
-**Explainability:** Every decision (admit, deny, defer) MUST emit
-telemetry with reasonCode.
+**Explainability:** Every decision (admit, deny, defer) MUST emit telemetry with reasonCode.
 
-**Fail-safe defaults:** Denial is safe; admission requires explicit
-approval.
+**Fail-safe defaults:** Denial is safe; admission requires explicit approval.
 
 ## **D.2 Admission Control Patterns**
 
-Admission control decides whether to accept, reject, or defer a unit of
-work before execution.
+Admission control decides whether to accept, reject, or defer a unit of work before execution.
 
 ### **D.2.1 Simple Rate Limiting (Token Bucket)**
 
-**Pattern:** Limit emission rate per context or tenant using token
-bucket algorithm.
+**Pattern:** Limit emission rate per context or tenant using token bucket algorithm.
 
 **Implementation:**
 
@@ -7948,8 +6382,7 @@ bucket algorithm.
 
 - Materialization request consumes 1 token
 
-- If bucket empty, request denied with
-  reasonCode=\"rate_limit_exceeded\"
+- If bucket empty, request denied with reasonCode="rate_limit_exceeded"
 
 **\**
 
@@ -7969,24 +6402,23 @@ scope: per_tenant \# or per_context, global
 
 admission.decision:
 
-stage: pre-materialize
+hook: pre-materialize
+
+stage: gate
 
 verdict: deny
 
 reasonCode: rate_limit_exceeded
 
-**When to use:** Protect downstream systems from traffic spikes; enforce
-fair use quotas.
+**When to use:** Protect downstream systems from traffic spikes; enforce fair use quotas.
 
 ### **D.2.2 Policy-as-Code (OPA, Cedar)**
 
-**Pattern:** Evaluate declarative policies before admission using
-external policy engine.
+**Pattern:** Evaluate declarative policies before admission using external policy engine.
 
 **Implementation:**
 
-- Before materialization or delivery, call policy engine with context:
-  {contextId, key, requestor, classification, timestamp}
+- Before materialization or delivery, call policy engine with context: {contextId, key, requestor, classification, timestamp}
 
 - Policy returns: {allow: boolean, reason: string}
 
@@ -7996,19 +6428,19 @@ external policy engine.
 
 allow {
 
-input.classification == \"public\"
+input.classification == "public"
 
 }
 
 allow {
 
-input.classification == \"internal\"
+input.classification == "internal"
 
-input.requestor.role == \"employee\"
+input.requestor.role == "employee"
 
 }
 
-deny_reason = \"insufficient_clearance\" {
+deny_reason = "insufficient_clearance" {
 
 not allow
 
@@ -8020,14 +6452,15 @@ not allow
 
 admission.decision:
 
-stage: pre-publish
+hook: delivery
+
+stage: policy
 
 verdict: deny
 
 reasonCode: insufficient_clearance
 
-**When to use:** Complex, organization-wide policies; compliance
-requirements; need for audit trails on policy decisions.
+**When to use:** Complex, organization-wide policies; compliance requirements; need for audit trails on policy decisions.
 
 **References:**
 
@@ -8037,15 +6470,13 @@ requirements; need for audit trails on policy decisions.
 
 ### **D.2.3 Concurrency Limiting**
 
-**Pattern:** Cap in-flight materializations to prevent resource
-exhaustion.
+**Pattern:** Cap in-flight materializations to prevent resource exhaustion.
 
 **Implementation:**
 
 - Maintain counter: active_materializations
 
-- On request: if active \< max_concurrency, admit and increment; else
-  defer
+- On request: if active \< max_concurrency, admit and increment; else defer
 
 - On completion: decrement counter
 
@@ -8063,28 +6494,27 @@ max_deliveries: 200
 
 admission.decision:
 
-stage: pre-materialize
+hook: pre-materialize
+
+stage: concurrency
 
 verdict: defer
 
 reasonCode: concurrency_limit_reached
 
-concurrency_utilization: 1.0 \# gauge metric
+concurrency_utilization: 1.0 \# gauge metric (extension metric, Annex A.2.5)
 
-**When to use:** Prevent overload during bursts; bound memory/CPU usage;
-ensure system stability.
+**When to use:** Prevent overload during bursts; bound memory/CPU usage; ensure system stability.
 
 **\**
 
 ## **D.3 Resource Management Patterns**
 
-Resource management tracks and bounds consumption of compute, memory,
-network, tokens, and cost.
+Resource management tracks and bounds consumption of compute, memory, network, tokens, and cost.
 
 ### **D.3.1 Multi-Dimensional Budgets**
 
-**Pattern:** Track multiple resource dimensions (time, money, tokens,
-network, rows) with per-tenant or per-context budgets.
+**Pattern:** Track multiple resource dimensions (time, money, tokens, network, rows) with per-tenant or per-context budgets.
 
 **Implementation:**
 
@@ -8094,8 +6524,7 @@ network, rows) with per-tenant or per-context budgets.
 
 - After work: commit(lease, actual_units) or cancel(lease, reason)
 
-- Enforce limits: if any dimension exceeded, deny with
-  reasonCode=\"budget_exhausted\_{dimension}\"
+- Enforce limits: if any dimension exceeded, deny with reasonCode="budget_exhausted\_{dimension}"
 
 **Configuration:**
 
@@ -8131,13 +6560,11 @@ leaseId: uuid
 
 actual: {timeMs: 85, tokens: 450}
 
-**When to use:** Multi-tenant SaaS with chargeback; cost control for LLM
-inference; prevent runaway spend.
+**When to use:** Multi-tenant SaaS with chargeback; cost control for LLM inference; prevent runaway spend.
 
 ### **D.3.2 Adaptive Budgets**
 
-**Pattern:** Adjust budgets dynamically based on usage patterns,
-priority, or external signals (e.g., grid carbon intensity).
+**Pattern:** Adjust budgets dynamically based on usage patterns, priority, or external signals (e.g., grid carbon intensity).
 
 **Implementation:**
 
@@ -8145,8 +6572,7 @@ priority, or external signals (e.g., grid carbon intensity).
 
 - Monitor: usage rate, time-of-day, tenant priority, carbon intensity
 
-- Adjust: increase budget for high-priority during business hours;
-  decrease during high-carbon periods
+- Adjust: increase budget for high-priority during business hours; decrease during high-carbon periods
 
 **Example logic:**
 
@@ -8170,13 +6596,11 @@ multiplier \*= 0.7 \# reduce during high-carbon periods
 
 return baseBudget \* multiplier
 
-**When to use:** Dynamic workload management; sustainability goals;
-priority-based fairness.
+**When to use:** Dynamic workload management; sustainability goals; priority-based fairness.
 
-**D.3.3 Lease-Based Budgets with TTL**
+### **D.3.3 Lease-Based Budgets with TTL**
 
-**Pattern:** Reserve budget with short TTL to prevent indefinite holds;
-release on timeout or cancel.
+**Pattern:** Reserve budget with short TTL to prevent indefinite holds; release on timeout or cancel.
 
 **Implementation:**
 
@@ -8184,8 +6608,7 @@ release on timeout or cancel.
 
 - Lease expires after ttlMs; unreleased leases auto-cancel
 
-- On success: commit(leaseId, actualUnits); on failure: cancel(leaseId,
-  reason)
+- On success: commit(leaseId, actualUnits); on failure: cancel(leaseId, reason)
 
 - Detect leaks: leases neither committed nor cancelled within TTL
 
@@ -8199,18 +6622,15 @@ release on timeout or cancel.
 
 - Bounded lease lifetime simplifies reasoning
 
-**When to use:** Distributed systems with worker failures; need for
-accurate cost attribution despite retries.
+**When to use:** Distributed systems with worker failures; need for accurate cost attribution despite retries.
 
 ## **D.4 Security and Privacy Patterns**
 
-Security extensions enforce classification, redaction, and access
-control.
+Security extensions enforce classification, redaction, and access control.
 
 ### **D.4.1 Classification Taxonomy**
 
-**Pattern:** Label frames with sensitivity levels; enforce policy based
-on labels.
+**Pattern:** Label frames with sensitivity levels; enforce policy based on labels.
 
 **Common taxonomies:**
 
@@ -8226,7 +6646,7 @@ on labels.
 
 - Classifier examines frame body (keywords, patterns, ML model)
 
-- Assigns label: classification = \"confidential\"
+- Assigns label: classification = "confidential"
 
 - Stores in frame header: extensions.classification
 
@@ -8238,35 +6658,31 @@ classification:
 
 rules:
 
-\- pattern: \"SSN:\\\\d{3}-\\\\d{2}-\\\\d{4}\"
+\- pattern: "SSN:\\d{3}-\\d{2}-\\d{4}"
 
 label: restricted
 
-\- pattern: \"INTERNAL ONLY\"
+\- pattern: "INTERNAL ONLY"
 
 label: internal
 
 default: public
 
-**When to use:** Compliance (GDPR, HIPAA, SOC 2); multi-tenant SaaS;
-government/defense.
+**When to use:** Compliance (GDPR, HIPAA, SOC 2); multi-tenant SaaS; government/defense.
 
 ### **D.4.2 Field-Level Redaction**
 
-**Pattern:** Remove or mask specific fields before frame storage or
-egress.
+**Pattern:** Remove or mask specific fields before frame storage or egress.
 
 **Implementation:**
 
-- Policy defines redaction paths per classification: {classification:
-  \"restricted\", redact: \[\"\$.user.ssn\", \"\$.user.email\"\]}
+- Policy defines redaction paths per classification: {classification: "restricted", redact: \["\$.user.ssn", "\$.user.email"\]}
 
-- Before publish, apply redactions: replace with null, \"\[REDACTED\]\",
-  or hash
+- Before publish, apply redactions: replace with null, "\[REDACTED\]", or hash
 
 - Record redacted paths in extensions.redactedPaths
 
-- Emit telemetry: security.redaction.count
+- Emit telemetry: security.redaction event; security_redaction_count metric
 
 **Example:**
 
@@ -8274,13 +6690,13 @@ egress.
 
 {
 
-\"user\": {
+"user": {
 
-\"name\": \"Alice\",
+"name": "Alice",
 
-\"email\": \"alice@example.com\",
+"email": "alice@example.com",
 
-\"ssn\": \"123-45-6789\"
+"ssn": "123-45-6789"
 
 }
 
@@ -8290,22 +6706,19 @@ egress.
 
 {
 
-\"user\": {
+"user": {
 
-\"name\": \"Alice\",
+"name": "Alice",
 
-\"email\": \"\[REDACTED\]\",
+"email": "\[REDACTED\]",
 
-\"ssn\": \"\[REDACTED\]\"
-
-}
+"ssn": "\[REDACTED\]"
 
 }
 
-**When to use:** PII protection; GDPR Article 5(1)(c) data minimization;
-export controls.
+}
 
-###  
+**When to use:** PII protection; GDPR Article 5(1)(c) data minimization; export controls.
 
 ### **D.4.3 Human-in-the-Loop Approval**
 
@@ -8313,19 +6726,17 @@ export controls.
 
 **Implementation:**
 
-- Pre-publish hook detects high-risk condition
-  (classification=restricted, cost\>threshold, anomaly detected)
+- Pre-publish hook detects high-risk condition (classification=restricted, cost\>threshold, anomaly detected)
 
 - Emit human.approval.requested with approval ID and TTL
 
-- Block frame publication until: approval granted, approval denied, or
-  TTL expires
+- Block frame publication until: approval granted, approval denied, or TTL expires
 
 - On timeout, route to DLQ or auto-deny per policy
 
 **Workflow:**
 
-1\. Frame materialized, classified as \"restricted\"
+1\. Frame materialized, classified as "restricted"
 
 2\. Hook: requestApproval(frameId, ttl=15m)
 
@@ -8339,20 +6750,15 @@ export controls.
 
 7\. Frame published or blocked
 
-**When to use:** High-stakes decisions (financial trades, medical
-diagnoses); regulatory requirements; trust-building.
-
-##  
+**When to use:** High-stakes decisions (financial trades, medical diagnoses); regulatory requirements; trust-building.
 
 ## **D.5 Observability Patterns**
 
-Observability extensions emit telemetry for lineage tracking, cost
-attribution, and health monitoring.
+Observability extensions emit telemetry for lineage tracking, cost attribution, and health monitoring.
 
 ### **D.5.1 Distributed Tracing Integration**
 
-**Pattern:** Propagate trace context through RCM pipeline; link frames
-to upstream and downstream traces.
+**Pattern:** Propagate trace context through RCM pipeline; link frames to upstream and downstream traces.
 
 **Implementation:**
 
@@ -8364,40 +6770,33 @@ to upstream and downstream traces.
 
 - Subscribers create child spans: process_frame
 
-- Result: end-to-end trace from source change → materialization →
-  delivery → consumption
+- Result: end-to-end trace from source change → materialization → delivery → consumption
 
 **OpenTelemetry example:**
 
-with tracer.start_as_current_span(\"materialize_frame\") as span:
+with tracer.start_as_current_span("materialize_frame") as span:
 
-span.set_attribute(\"rcm.contextId\", contextId)
+span.set_attribute("rcm.contextId", contextId)
 
-span.set_attribute(\"rcm.key\", key)
+span.set_attribute("rcm.key", key)
 
-span.set_attribute(\"rcm.version\", version)
+span.set_attribute("rcm.version", version)
 
 frame = evaluatePlan(inputs, plan)
 
 publishFrame(frame)
 
-**When to use:** Debugging latency issues; understanding causal chains;
-compliance audits.
+**When to use:** Debugging latency issues; understanding causal chains; compliance audits.
 
-**Reference:** OpenTelemetry Tracing:
-https://opentelemetry.io/docs/concepts/signals/traces/
-
-###  
+**Reference:** OpenTelemetry Tracing: https://opentelemetry.io/docs/concepts/signals/traces/
 
 ### **D.5.2 Cost Attribution and Chargeback**
 
-**Pattern:** Attribute resource costs to tenants, contexts, or business
-units for chargeback.
+**Pattern:** Attribute resource costs to tenants, contexts, or business units for chargeback.
 
 **Implementation:**
 
-- On budget commit, record: {tenantId, contextId, key, version, units,
-  timestamp}
+- On budget commit, record: {tenantId, contextId, key, version, units, timestamp}
 
 - Aggregate by tenant/month: Σ units.moneyCents
 
@@ -8407,46 +6806,39 @@ units for chargeback.
 
 **Metrics:**
 
-budget.moneyCents_committed (counter, labels: tenantId, contextId)
+budget_moneyCents_committed (counter, labels: tenantId, contextId)
 
 cost_per_frame_avg (gauge, calculated: total_cost / total_frames)
 
-**When to use:** Multi-tenant SaaS; internal IT chargeback; FinOps
-initiatives.
+**When to use:** Multi-tenant SaaS; internal IT chargeback; FinOps initiatives.
 
 ### **D.5.3 Lineage Graph Construction**
 
-**Pattern:** Build a graph of frame dependencies for provenance
-visualization.
+**Pattern:** Build a graph of frame dependencies for provenance visualization.
 
 **Implementation:**
 
 - Parse inputs field from each frame
 
-- Create graph edges: frame_v2 -\[DERIVED_FROM\]-\> source_range,
-  frame_v2 -\[SUPERSEDES\]-\> frame_v1
+- Create graph edges: frame_v2 -\[DERIVED_FROM\]-\> source_range, frame_v2 -\[SUPERSEDES\]-\> frame_v1
 
 - Store in graph database (Neo4j, TigerGraph) or as RDF triples
 
-- Query: \"Show all frames contributing to decision X\" or \"Trace data
-  lineage for user Y\"
+- Query: "Show all frames contributing to decision X" or "Trace data lineage for user Y"
 
 **Graph schema:**
 
 Nodes: Frame, Source, View
 
-Edges: DERIVED_FROM (Frame -\> Source/Frame), SUPERSEDES (Frame -\>
-Frame), DEFINED_BY (Frame -\> View)
+Edges: DERIVED_FROM (Frame -\> Source/Frame), SUPERSEDES (Frame -\> Frame), DEFINED_BY (Frame -\> View)
 
 Properties: frameId, contextId, key, version, timestamp, planHash
 
-**When to use:** Regulatory compliance (GDPR Article 15); trust and
-explainability; debugging data quality issues.
+**When to use:** Regulatory compliance (GDPR Article 15); trust and explainability; debugging data quality issues.
 
 ## **D.6 Example: Multi-Stage Governance Chain**
 
-This example combines multiple extension patterns into a coordinated
-governance chain.
+This example combines multiple extension patterns into a coordinated governance chain.
 
 **Design:** Policy → Gate → Concurrency → Priority → Budget (with aging)
 
@@ -8460,13 +6852,13 @@ governance chain.
 
 \- Check: Is classification permitted?
 
-\- Verdict: admit \| deny (reasonCode=\"policy_denied\")
+\- Verdict: admit \| deny (reasonCode="policy_denied")
 
 3\. Stage: Gate (if admitted)
 
 \- Check: Token bucket has tokens?
 
-\- Verdict: admit \| deny (reasonCode=\"rate_limit_exceeded\")
+\- Verdict: admit \| deny (reasonCode="rate_limit_exceeded")
 
 4\. Stage: Concurrency (if admitted)
 
@@ -8478,8 +6870,7 @@ governance chain.
 
 5\. Stage: Priority (if queued)
 
-\- Assign priority: 1 (low) to 5 (high) based on tenant tier, context
-type
+\- Assign priority: 1 (low) to 5 (high) based on tenant tier, context type
 
 \- Apply aging: priority increases over time queued
 
@@ -8491,7 +6882,7 @@ type
 
 \- If granted: proceed to materialize
 
-\- If denied: deny (reasonCode=\"budget_exhausted\")
+\- If denied: deny (reasonCode="budget_exhausted")
 
 7\. Materialize
 
@@ -8506,8 +6897,6 @@ type
 \- decrement concurrency counter
 
 \- emit frame.materialized
-
-###  
 
 ### **D.6.2 Configuration**
 
@@ -8543,11 +6932,11 @@ default: 3
 
 rules:
 
-\- condition: tenant.tier == \"premium\"
+\- condition: tenant.tier == "premium"
 
 priority: 5
 
-\- condition: contextId.startsWith(\"incident\_\")
+\- condition: contextId.startsWith("incident\_")
 
 priority: 4
 
@@ -8561,104 +6950,107 @@ tracking: per_tenant_monthly
 
 ### **D.6.3 Telemetry Example**
 
-For a single materialization attempt (tenant=acme,
-contextId=support_context, key=user_123):
+For a single materialization attempt (tenant=acme, contextId=support_context, key=user_123):
 
 \[
 
 {
 
-\"event\": \"admission.decision\",
+"event": "admission.decision",
 
-\"stage\": \"policy\",
+"stage": "policy",
 
-\"verdict\": \"admit\",
+"hook": "pre-materialize",
 
-\"reasonCode\": null
+"verdict": "admit",
 
-},
-
-{
-
-\"event\": \"admission.decision\",
-
-\"stage\": \"gate\",
-
-\"verdict\": \"admit\",
-
-\"reasonCode\": null
+"reasonCode": null
 
 },
 
 {
 
-\"event\": \"admission.decision\",
+"event": "admission.decision",
 
-\"stage\": \"concurrency\",
+"stage": "gate",
 
-\"verdict\": \"defer\",
+"hook": "pre-materialize",
 
-\"reasonCode\": \"concurrency_limit_reached\"
+"verdict": "admit",
 
-},
-
-{
-
-\"event\": \"queue.enqueued\",
-
-\"priority\": 3,
-
-\"queueDepth\": 12
-
-},
-
-// \... time passes, aging increases effective priority \...
-
-{
-
-\"event\": \"queue.dequeued\",
-
-\"effectivePriority\": 3.8,
-
-\"waitMs\": 1200
+"reasonCode": null
 
 },
 
 {
 
-\"event\": \"budget.lease\",
+"event": "admission.decision",
 
-\"leaseId\": \"lease_xyz\",
+"stage": "concurrency",
 
-\"units\": {\"timeMs\": 100, \"moneyCents\": 5, \"tokens\": 500}
+"hook": "pre-materialize",
 
-},
+"verdict": "defer",
 
-{
-
-\"event\": \"frame.materialized\",
-
-\"frameId\": \"frame_abc\",
-
-\"version\": 42,
-
-\"durationMs\": 85
+"reasonCode": "concurrency_limit_reached"
 
 },
 
 {
 
-\"event\": \"budget.commit\",
+"event": "queue.enqueued",
 
-\"leaseId\": \"lease_xyz\",
+"priority": 3,
 
-\"actual\": {\"timeMs\": 85, \"moneyCents\": 4, \"tokens\": 450}
+"queueDepth": 12
+
+},
+
+// ... time passes, aging increases effective priority ...
+
+{
+
+"event": "queue.dequeued",
+
+"effectivePriority": 3.8,
+
+"waitMs": 1200
+
+},
+
+{
+
+"event": "budget.lease",
+
+"leaseId": "lease_xyz",
+
+"units": {"timeMs": 100, "moneyCents": 5, "tokens": 500}
+
+},
+
+{
+
+"event": "frame.materialized",
+
+"frameId": "frame_abc",
+
+"version": 42,
+
+"durationMs": 85
+
+},
+
+{
+
+"event": "budget.commit",
+
+"leaseId": "lease_xyz",
+
+"actual": {"timeMs": 85, "moneyCents": 4, "tokens": 450}
 
 }
 
 \]
-
-##  
 
 ## **D.7 Example: Simple Rate Limiting**
 
@@ -8676,16 +7068,15 @@ def onBeforeMaterialize(self, contextId, key):
 
 if self.bucket.tryConsume(1):
 
-emit(\"admission.decision\", stage=\"gate\", verdict=\"admit\")
+emit("admission.decision", hook="pre-materialize", stage="gate", verdict="admit")
 
-return {\"admit\": True}
+return {"admit": True}
 
 else:
 
-emit(\"admission.decision\", stage=\"gate\", verdict=\"deny\",
-reasonCode=\"rate_limit_exceeded\")
+emit("admission.decision", hook="pre-materialize", stage="gate", verdict="deny", reasonCode="rate_limit_exceeded")
 
-return {\"admit\": False, \"reason\": \"rate_limit_exceeded\"}
+return {"admit": False, "reason": "rate_limit_exceeded"}
 
 **Usage:**
 
@@ -8695,10 +7086,7 @@ return {\"admit\": False, \"reason\": \"rate_limit_exceeded\"}
 
 - Simple, stateless, low overhead
 
-**When to use:** Proof-of-concept; single-tenant systems; protect
-downstream from bursts.
-
-##  
+**When to use:** Proof-of-concept; single-tenant systems; protect downstream from bursts.
 
 ## **D.8 Example: Policy-as-Code Integration (OPA)**
 
@@ -8716,7 +7104,7 @@ default allow = false
 
 allow if {
 
-input.classification == \"public\"
+input.classification == "public"
 
 }
 
@@ -8724,9 +7112,9 @@ input.classification == \"public\"
 
 allow if {
 
-input.classification == \"internal\"
+input.classification == "internal"
 
-input.requestor.role in \[\"employee\", \"contractor\"\]
+input.requestor.role in \["employee", "contractor"\]
 
 }
 
@@ -8734,7 +7122,7 @@ input.requestor.role in \[\"employee\", \"contractor\"\]
 
 allow if {
 
-input.classification == \"restricted\"
+input.classification == "restricted"
 
 input.requestor.clearance \>= 3
 
@@ -8746,8 +7134,7 @@ deny_reason = reason if {
 
 not allow
 
-reason := sprintf(\"insufficient_clearance: needs clearance %d, has
-%d\",
+reason := sprintf("insufficient_clearance: needs clearance %d, has %d",
 
 \[required_clearance(input.classification),
 
@@ -8755,83 +7142,64 @@ input.requestor.clearance\])
 
 }
 
-required_clearance(c) = 1 if c == \"public\"
+required_clearance(c) = 1 if c == "public"
 
-required_clearance(c) = 2 if c == \"internal\"
+required_clearance(c) = 2 if c == "internal"
 
-required_clearance(c) = 3 if c == \"restricted\"
+required_clearance(c) = 3 if c == "restricted"
 
 **Integration:**
 
 def onBeforePublish(frameHeaders, frameBody):
 
-classification = frameHeaders.extensions.get(\"classification\",
-\"public\")
+classification = frameHeaders.extensions.get("classification", "public")
 
 requestor = getCurrentRequestor()
 
-decision = opaClient.evaluate(\"rcm/allow\", {
+decision = opaClient.evaluate("rcm/allow", {
 
-\"classification\": classification,
+"classification": classification,
 
-\"requestor\": {
+"requestor": {
 
-\"role\": requestor.role,
+"role": requestor.role,
 
-\"clearance\": requestor.clearance
+"clearance": requestor.clearance
 
 }
 
 })
 
-if decision\[\"allow\"\]:
+if decision\["allow"\]:
 
-emit(\"admission.decision\", stage=\"pre-publish\", verdict=\"admit\")
+emit("admission.decision", hook="pre-publish", stage="policy", verdict="admit")
 
-return {\"admit\": True}
+return {"admit": True}
 
 else:
 
-reason = decision.get(\"deny_reason\", \"policy_denied\")
+reason = decision.get("deny_reason", "policy_denied")
 
-emit(\"admission.decision\", stage=\"pre-publish\", verdict=\"deny\",
-reasonCode=reason)
+emit("admission.decision", hook="pre-publish", stage="policy", verdict="deny", reasonCode=reason)
 
-return {\"admit\": False, \"reason\": reason}
+return {"admit": False, "reason": reason}
 
-**When to use:** Organization-wide policies; separation of policy from
-code; need for policy versioning and audit.
-
-##  
+**When to use:** Organization-wide policies; separation of policy from code; need for policy versioning and audit.
 
 ## **D.9 Summary: Choosing Extension Patterns**
 
 **Decision matrix:**
 
-  ---------------- ------------------- ---------------- -----------------------
-      **Need**         **Pattern**      **Complexity**      **When to Use**
-
-     Basic rate       Token bucket           Low         Protect from bursts;
-      limiting                                               simple quotas
-
-  Complex policies   Policy-as-Code         Medium            Compliance;
-                          (OPA)                          multi-condition rules
-
-    Concurrency     Semaphore + queue        Low        Prevent overload; bound
-      control                                                  resources
-
-   Cost tracking    Multi-dimensional    Medium-High      Multi-tenant SaaS;
-                         budgets                              chargeback
-
-   PII protection   Classification +        Medium        GDPR; HIPAA; export
-                        redaction                               control
-
-    High-stakes       HITL approval         Medium        Financial; medical;
-     decisions                                              trust-building
-
-  Full governance   Multi-stage chain        High        Enterprise; regulated
-                                                              industries
-  ---------------- ------------------- ---------------- -----------------------
+|  |  |  |  |
+|:--:|:--:|:--:|:--:|
+| **Need** | **Pattern** | **Complexity** | **When to Use** |
+| Basic rate limiting | Token bucket | Low | Protect from bursts; simple quotas |
+| Complex policies | Policy-as-Code (OPA) | Medium | Compliance; multi-condition rules |
+| Concurrency control | Semaphore + queue | Low | Prevent overload; bound resources |
+| Cost tracking | Multi-dimensional budgets | Medium-High | Multi-tenant SaaS; chargeback |
+| PII protection | Classification + redaction | Medium | GDPR; HIPAA; export control |
+| High-stakes decisions | HITL approval | Medium | Financial; medical; trust-building |
+| Full governance | Multi-stage chain | High | Enterprise; regulated industries |
 
 **Adoption path:**
 
@@ -8847,19 +7215,15 @@ code; need for policy versioning and audit.
 
 - ❌ Building all governance upfront (YAGNI violation)
 
-- ❌ Governance without telemetry (can\'t verify or debug)
+- ❌ Governance without telemetry (can't verify or debug)
 
 - ❌ Policy logic in materialization code (couples concerns)
 
 - ❌ Extensions that mutate frame content (violates determinism)
 
-#  
-
 # **Appendix I (Non-Normative): Implementation Guidance**
 
-This appendix provides brief pointers to implementation concerns.
-Detailed implementation strategies are covered in separate playbooks
-(vendor-agnostic and platform-specific guides).
+This appendix provides brief pointers to implementation concerns. Detailed implementation strategies are covered in separate playbooks (vendor-agnostic and platform-specific guides).
 
 ## **I.1 Minimal Runtime Primitives**
 
@@ -8867,17 +7231,13 @@ RCM can be implemented with a small set of primitives:
 
 - **Streams:** Append-only change feeds (Kafka, Kinesis, Pulsar, NATS)
 
-- **Deterministic compute:** Pure functions, dataflow engines (Flink,
-  Spark Streaming, custom)
+- **Deterministic compute:** Pure functions, dataflow engines (Flink, Spark Streaming, custom)
 
-- **Storage:** Versioned key-value or document store (Postgres,
-  DynamoDB, MongoDB, S3)
+- **Storage:** Versioned key-value or document store (Postgres, DynamoDB, MongoDB, S3)
 
-- **Delivery:** At-least-once message bus (Kafka, RabbitMQ, SQS+SNS,
-  gRPC streams)
+- **Delivery:** At-least-once message bus (Kafka, RabbitMQ, SQS+SNS, gRPC streams)
 
-- **Time:** Event-time tracking, watermarks (built into Flink/Beam, or
-  custom)
+- **Time:** Event-time tracking, watermarks (built into Flink/Beam, or custom)
 
 ## **I.2 Technology Mapping Examples**
 
@@ -8911,117 +7271,81 @@ RCM can be implemented with a small set of primitives:
 
 - Subscriptions: Actor pub-sub or external bus
 
-##  
-
 ## **I.3 Further Resources**
 
 Detailed implementation guidance is available in:
 
-- **RCM Implementation Playbook** (vendor-agnostic): Architecture
-  patterns, technology mappings, deployment topologies
+- **RCM Implementation Playbook** (vendor-agnostic): Architecture patterns, technology mappings, deployment topologies
 
 - **Platform-Specific Guides**: CognOS, Kafka/Flink, AWS, Azure, GCP
 
-- **Community Recipes**: GitHub discussions, blog posts, conference
-  talks
-
-#  
+- **Community Recipes**: GitHub discussions, blog posts, conference talks
 
 # **Appendix II (Non-Normative): Cognitive Analogies**
 
-This appendix briefly summarizes the cognitive science analogies from
-the original document (Chapter 8) to provide intuitions for RCM design
-choices.
+This appendix briefly summarizes cognitive science analogies that provide intuitions for RCM design choices.
 
 ## **II.1 William James: Stream of Consciousness**
 
-James distinguished **substantive** (resting) and **transitive**
-(in-flight) parts of thought. In RCM: frames are substantive resting
-places; reactive recomputation is the transitive flight between states.
+James distinguished **substantive** (resting) and **transitive** (in-flight) parts of thought. In RCM: frames are substantive resting places; reactive recomputation is the transitive flight between states.
 
-**Design takeaway:** Make each frame a coherent, inspectable state; keep
-transitions (windowing, watermarks) explicit and observable.
+**Design takeaway:** Make each frame a coherent, inspectable state; keep transitions (windowing, watermarks) explicit and observable.
 
 ## **II.2 Atkinson-Shiffrin: Modal Model**
 
-The modal model splits memory into sensory buffer → short-term →
-long-term stores. In RCM: coalescing buffers → hot frames (short TTL) →
-warm/cold frames (longer TTL with compaction).
+The modal model splits memory into sensory buffer → short-term → long-term stores. In RCM: coalescing buffers → hot frames (short TTL) → warm/cold frames (longer TTL with compaction).
 
-**Design takeaway:** Separate latency concerns (hot tier) from forensic
-concerns (warm/cold); use deltas for hot, snapshots for warm/cold.
+**Design takeaway:** Separate latency concerns (hot tier) from forensic concerns (warm/cold); use deltas for hot, snapshots for warm/cold.
 
 ## **II.3 Baddeley-Hitch: Working Memory**
 
-Working memory has limited capacity and a central executive. In RCM:
-agents act as the executive, drawing from hot frames (working memory);
-coalescing and capacity limits model attention constraints.
+Working memory has limited capacity and a central executive. In RCM: agents act as the executive, drawing from hot frames (working memory); coalescing and capacity limits model attention constraints.
 
-**Design takeaway:** Expect pressure at hot tier; provide summary views
-as reusable chunks; model attention as governance (gates, priorities,
-budgets).
+**Design takeaway:** Expect pressure at hot tier; provide summary views as reusable chunks; model attention as governance (gates, priorities, budgets).
 
 ## **II.4 Tulving: Episodic vs. Semantic Memory**
 
-Episodic memory is time-stamped and eventful; semantic memory is
-fact-like. In RCM: versioned frame series = episodic; stable summary
-views = semantic.
+Episodic memory is time-stamped and eventful; semantic memory is fact-like. In RCM: versioned frame series = episodic; stable summary views = semantic.
 
-**Design takeaway:** Keep episodic trails for audit; surface semantic
-projections for day-to-day consumers.
+**Design takeaway:** Keep episodic trails for audit; surface semantic projections for day-to-day consumers.
 
 ## **II.5 Forgetting and Consolidation**
 
-Biological memory consolidates (short-term → long-term) and forgets. In
-RCM: short default TTLs with periodic snapshots; selective retention
-based on tags or access patterns.
+Biological memory consolidates (short-term → long-term) and forgets. In RCM: short default TTLs with periodic snapshots; selective retention based on tags or access patterns.
 
-**Design takeaway:** Default to short TTLs; extend only with
-justification; schedule consolidation to cap replay times.
-
-#  
+**Design takeaway:** Default to short TTLs; extend only with justification; schedule consolidation to cap replay times.
 
 # **Appendix III (Non-Normative): Version History and Change Log**
 
-## **Version 1.0 (January 2025)**
+## **Version 1.0 (October 2025)**
 
 **Status:** Initial Community Specification Release
 
 **Major components:**
 
-- Normative semantics (Chapter 4): envelope, time/ordering, determinism,
-  delivery, extension points
+- Normative semantics (Chapter 4): envelope, time/ordering, determinism, delivery, extension points
 
-- Conformance test suite (Annex A): test vectors, telemetry
-  requirements, SLO measurement
+- Conformance test suite (Annex A): test vectors, telemetry requirements, SLO measurement
 
-- Comparative guide (Chapter 5): positioning vs. Event Sourcing, CQRS,
-  caching, UI patterns
+- Comparative guide (Chapter 5): positioning vs. Event Sourcing, CQRS, caching, UI patterns
 
-- Extension patterns (Annex D): admission control, budgets, security,
-  observability
+- Extension patterns (Annex D): admission control, budgets, security, observability
 
 **Design decisions:**
 
-- Single conformance class (dropped Core/Governed split based on
-  feedback)
+- Single conformance class (dropped Core/Governed split based on feedback)
 
-- Extension points are optional but recommended; telemetry required if
-  implemented
+- Extension points are optional but recommended; telemetry required if implemented
 
-- Governance policies are implementation-defined; pattern specifies
-  hooks and telemetry semantics
+- Governance policies are implementation-defined; pattern specifies hooks and telemetry semantics
 
 **Known limitations:**
 
-- Conformance test kit implementation in progress (reference available
-  Q1 2025)
+- Conformance test kit: requirements defined in Annex A; no harness published yet
 
-- Cross-implementation interoperability not yet demonstrated (target: Q2
-  2025)
+- Cross-implementation interoperability not yet demonstrated (one implementation exists)
 
-- Federation semantics deferred to future version (outlined in Chapter
-  12)
+- Federation semantics deferred to a future version
 
 **Contributors:**
 
@@ -9033,18 +7357,52 @@ justification; schedule consolidation to cap replay times.
 
 - Early reviewers and implementers (to be named)
 
-- Research communities: stream processing, event-driven architectures,
-  cognitive science
+- Research communities: stream processing, event-driven architectures, cognitive science
 
 - Standards bodies: W3C (PROV), Reactive Streams, OpenTelemetry
 
+## **October 2026 revision (unreleased; version number to be assigned)**
+
+**Status:** Draft revision, not yet released. Whether it ships as 1.0.1 (editorial) or 1.1 (minor) depends on whether the admission telemetry label change below is treated as breaking for conformance reports.
+
+**Editorial:**
+
+- Removed drafting leftovers and references to chapters that do not exist; unified dates; repaired heading structure and the table of contents; replaced dead links
+
+- Markdown export regenerated with figures and without escaping artifacts; diagram source kept in the repository
+
+**Clarifications aligned with the first implementation (CognOS):**
+
+- Budget leases attach to the hook that precedes the work they bound (compute at pre-materialize, egress at delivery), are taken only after admission gates admit, and are settled post-publish (sections 3.2, 3.3, 4.7.2)
+
+- admission.decision carries hook (where the decision was made) and stage (which check decided); the verdict set is admit, delay, defer, deny (sections 4.7.3, A.2.3, A.2.5, Annex D)
+
+- The non-overlap rule for snapshot windows is limited to tumbling and session windows; sliding windows overlap by construction (section 4.4.3)
+
+- Window lifecycle: Accepting is defined by event arrival; closure occurs at window.end plus an optional, documented grace period (section 4.4.4)
+
+- Watermarks may be maintained per (contextId, key) or per partition (sections 4.2.3, 4.4.2, A.2.4)
+
+- Idempotency-key inputs are canonicalized by (sourceId, from, to); the two illustrative algorithms now agree (sections 4.3.6, 4.5.3)
+
+- Metric labels must be low-cardinality and never carry frame identifiers, keys, or idempotency keys; keys that are personal data are pseudonymized in telemetry (sections A.2.1, A.2.4)
+
+- schemaRef and checksum are RECOMMENDED header fields (section 4.3.2)
+
+- Telemetry catalogue made self-consistent across chapters; frame.replayed, late_data.\*, coalesce.triggered, delivery.denied, late_data_count and coalesce_duration_ms added; concurrency_utilization moved to extension metrics (sections 4.8.3, A.2)
+
+**Open before release:**
+
+- Redaction model: section 4.7.1 forbids extensions from altering frame content while the section 4.7.2 pre-publish example returns a redacted body. The candidate resolutions are redaction as a plan operator (stored redacted, policy folded into planHash) or redaction as a per-subscriber projection at delivery (stored intact). Test EX-3 follows the choice
+
+- Whether planHash must cover operator and library versions (section 4.5.2) or only the plan definition
+
 ## **About This Specification**
 
-**Title:** Reactive Composite Memory (RCM): A Pattern for Governed,
-Versioned Context in Intelligent Systems
+**Title:** Reactive Composite Memory (RCM): A Pattern for Governed, Versioned Context in Intelligent Systems
 
 **Version:** 1.0\
-**Date:** January 2025\
+**Date:** October 2025\
 **Status:** Community Specification Draft
 
 **Maintainers:**
@@ -9063,15 +7421,14 @@ Versioned Context in Intelligent Systems
 
 **How to Cite:**
 
-Vanderboom, Dan. \"Reactive Composite Memory: A Pattern for Governed,
+Vanderboom, Dan. "Reactive Composite Memory: A Pattern for Governed,
 
-Versioned Context in Intelligent Systems.\" Version 1.0. Critical
-Insight Inc.,
+Versioned Context in Intelligent Systems." Version 1.0. Critical Insight Inc.,
 
-January 2025. https://github.com/critical-insight-ai/rcm-spec
+October 2025. https://github.com/critical-insight-ai/rcm-spec
 
 **Contact:**
 
-- Email: rcm-spec@criticalinsight.com
+- Email: dan@criticalinsight.ai
 
 - Website: https://rcm-pattern.org (TBD)

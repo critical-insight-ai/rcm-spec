@@ -3,8 +3,8 @@
 > **A pattern for governed, versioned context in intelligent systems**
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Spec Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://github.com/critical-insight-ai/rcm-spec/releases/tag/v1.0)
-[![Status](https://img.shields.io/badge/status-Community%20Draft-orange.svg)](https://github.com/critical-insight-ai/rcm-spec/blob/main/STATUS.md)
+[![Spec Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://github.com/critical-insight-ai/rcm-spec/releases)
+[![Status](https://img.shields.io/badge/status-Community%20Draft-orange.svg)](#status-community-specification)
 
 ---
 
@@ -64,6 +64,7 @@ view:
   "contextId": "support_context",
   "key": "customer_12345",
   "version": 47,
+  "type": "snapshot",
   "window": {"start": "2025-01-15T10:23:00Z", "end": "2025-01-15T10:28:00Z"},
   "watermarkAt": "2025-01-15T10:28:01Z",
   "inputs": [
@@ -73,6 +74,7 @@ view:
   "planHash": "sha256:xyz789...",
   "idempotencyKey": "sha256:stable_dedupe_key...",
   "ttl": "PT5M",
+  "createdAt": "2025-01-15T10:28:01Z",
   "body": {
     "profile": {...},
     "recentTickets": [...],
@@ -114,24 +116,16 @@ view:
 ```
 rcm-spec/
 ├── README.md                          # You are here
-├── specification/
-│   ├── rcm-spec-v1.0.md              # Full specification (164 pages)
-│   ├── executive-summary.md           # 2-page overview
-│   └── changelog.md                   # Version history
-├── conformance/
-│   ├── test-vectors/                  # Golden replay tests
-│   ├── telemetry-schema.json          # Required events/metrics
-│   └── report-template.json           # Conformance report format
-├── examples/
-│   ├── support-agent-context/         # Example from README
-│   ├── fraud-detection/               # Real-time risk assessment
-│   └── personalization/               # User preference management
-├── guides/
-│   ├── getting-started.md             # 30-minute introduction
-│   ├── comparison-guide.md            # RCM vs. Event Sourcing, CQRS, caching
-│   └── adoption-path.md               # Pilot → production playbook
-└── LICENSE                            # CC-BY-4.0 (spec), Apache-2.0 (code)
+├── Reactive-Composite-Memory.docx     # Full specification (source of truth)
+├── Reactive-Composite-Memory.md       # Markdown export of the spec (generated; do not edit by hand)
+├── generate-spec-md.bat               # Regenerates the Markdown export with pandoc
+├── media/                             # Figures extracted from the .docx by the export
+├── diagrams/
+│   └── rcm-overview.mmd               # Mermaid source for the Chapter 3 overview figure
+└── LICENSE.md                         # CC-BY-4.0 (spec), Apache-2.0 (code)
 ```
+
+**Planned additions** (not yet in the repo): an executive summary, getting-started and comparison guides, a `conformance/` folder with golden test vectors, the telemetry schema and conformance report template, and worked `examples/`. Until then, the corresponding material lives in the specification itself: Chapter 5 is the comparison guide, Section 6.3 is the adoption path, and Annex A defines the test vectors and report format.
 
 ---
 
@@ -139,12 +133,12 @@ rcm-spec/
 
 ### For Evaluators
 
-**Read these first** (15 minutes):
-1. [Executive Summary](specification/executive-summary.md)
-2. [Comparison Guide](guides/comparison-guide.md) - RCM vs. adjacent patterns
-3. [Getting Started](guides/getting-started.md) - conceptual walkthrough
+**Read these first** (15 minutes), all in the [full specification](Reactive-Composite-Memory.md):
+1. Abstract and Chapter 1 (Introduction) - purpose, scope, what RCM is and is not
+2. Chapter 3 (RCM in One Picture) - visual model and illustrative flow
+3. Chapter 5 (Comparative Guide) - RCM vs. adjacent patterns, with decision heuristics
 
-**Then**: Chapters 1-3 of the [full specification](specification/rcm-spec-v1.0.md)
+**Then**: Chapter 2 (Problem and Design Forces) and Section 6.3 (Adoption Path)
 
 ### For Implementers
 
@@ -152,7 +146,7 @@ rcm-spec/
 - Chapter 4: Normative Semantics (frame envelope, time semantics, delivery contracts)
 - Annex A: Conformance and Testing (test vectors, telemetry requirements)
 
-**Reference implementation** (coming Q1/Q2 2026): [CognOS](https://cognos.is)
+**Reference implementation** (in development): [CognOS](https://cognos.is), the first implementation of RCM. A gap assessment of its Dataflow module against Chapter 4 and Annex A was completed in October 2026 and is driving both the implementation and the next spec revision.
 
 ### For Standards Bodies
 
@@ -166,20 +160,21 @@ All chapters + Annexes A-C provide formal apparatus for evaluation.
 **Maturity**: Community Draft  
 **Conformance**: Core semantics (reactive composition, versioning, time, ordering, delivery) are testable and portable. Extension points (governance) are optional and implementation-defined.
 
-### Current State
+### Current State (as of October 2026)
 
-✅ Specification published (normative + informative)  
-✅ Conformance test vectors defined (Annex A.5)  
-✅ Telemetry schema documented (Annex A.2)  
-🚧 Reference implementation underway (CognOS)  
-🚧 Conformance test harness in development  
-📅 Target: 3+ independent implementations by Q2 2025
+✅ Specification v1.0 published, October 2025 (normative + informative)  
+✅ Conformance test vectors defined (Annex A.5) and telemetry schema documented (Annex A.2)  
+✅ First implementation exists (CognOS) and has been assessed against the spec  
+🚧 Spec revision in progress, folding in what the first implementation taught us (see the change log in Appendix III)  
+🚧 CognOS closing its conformance gaps (window closure, per-key ordering, per-key version sequence, replay by version, budget settlement)  
+📅 Conformance test harness: requirements defined in Annex A; no harness published yet  
+📅 No independent (non-CognOS) implementation yet
 
 ### Known Implementations
 
 | Implementation | Status | Platform | Conformance Report |
 |----------------|--------|----------|-------------------|
-| CognOS | In development | Multi-platform | Expected Q1/Q2 2026 |
+| CognOS | In development; gap assessment completed October 2026 | .NET / Orleans | Not yet (about 4 of 9 core test vectors would pass today) |
 | _Your implementation?_ | - | - | [Join us!](#contributing) |
 
 ---
@@ -200,7 +195,7 @@ All chapters + Annexes A-C provide formal apparatus for evaluation.
 
 **Key insight**: RCM doesn't replace these patterns—it **complements** them by standardizing context lifecycle.
 
-See [Comparison Guide](guides/comparison-guide.md) for detailed decision heuristics.
+See Chapter 5 of the [specification](Reactive-Composite-Memory.md) for detailed decision heuristics.
 
 ---
 
@@ -216,9 +211,9 @@ We welcome contributions! This is an open, community-driven specification.
 
 🔨 **Build an implementation**: Claim conformance; publish report; share learnings
 
-🧪 **Contribute test vectors**: Add edge cases to `conformance/test-vectors/`
+🧪 **Contribute test vectors**: Propose edge cases in the format defined in Annex A.8.3 (a `conformance/test-vectors/` folder will be added to hold them)
 
-💬 **Join discussions**: [GitHub Discussions](https://github.com/critical-insight-ai/rcm-spec/discussions)
+💬 **Join discussions**: Use [GitHub Issues](https://github.com/critical-insight-ai/rcm-spec/issues) for now; GitHub Discussions will be enabled as the community grows
 
 📢 **Spread the word**: Blog posts, talks, case studies
 
@@ -228,7 +223,7 @@ We welcome contributions! This is an open, community-driven specification.
 **Process**: Rough consensus; versioned releases; community review  
 **Decisions**: Major changes require discussion issue + 2 weeks for feedback
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+Detailed contribution guidelines (CONTRIBUTING.md) are planned; until then, open an issue to discuss a change before submitting a pull request.
 
 ---
 
@@ -254,29 +249,35 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 - **RCM Solution**: Per-tenant budgets; governed admission; telemetry
 - **Impact**: Predictable costs; fair resource allocation
 
-See [examples/](examples/) for detailed scenarios.
+Worked example scenarios are planned for an `examples/` folder; Section 5.3 of the specification walks through co-existence patterns in the meantime.
 
 ---
 
 ## Roadmap
 
-### Q3 2025
-- ✅ Publish v1.0 specification
-- 🚧 Release CognOS reference implementation
-- 🚧 Launch conformance test harness
-- 📅 Host community kickoff call
+Status as of October 2026. Dates are given only for what has happened; the rest is ordered by dependency, not scheduled.
 
-### Q2 2026
-- 📅 3+ independent implementations
-- 📅 Public conformance reports
-- 📅 Crosswalks to LangChain, Semantic Kernel, LlamaIndex
-- 📅 Submit paper to SIGMOD/VLDB
+### Done
+- ✅ v1.0 specification published (October 2025)
+- ✅ First implementation (CognOS) built against v1.0
+- ✅ Gap assessment of CognOS against Chapter 4 and Annex A (October 2026)
 
-### H2 2026
-- 📅 Standards body engagement (OASIS/CNCF)
-- 📅 Cloud provider integrations (AWS, Azure, GCP)
-- 📅 MCP/A2A protocol alignment
-- 📅 V1.1 based on implementation feedback
+### In progress
+- 🚧 Spec revision from implementation feedback: admission telemetry (`hook` and `stage`), window lifecycle and grace, sliding-window overlap, per-partition watermarks, metric label hygiene, telemetry catalogue consistency
+- 🚧 CognOS conformance work: watermark-gated window closure, per-key `(window.end, version)` delivery order, per-key version sequence, corrective deltas, budget lease settlement, replay by version
+
+### Next, in order
+1. Decide the redaction model (plan operator vs. egress projection) and fix §4.7 and test EX-3 accordingly
+2. Publish the revised spec (v1.1 or v1.0.1, depending on whether the telemetry label changes are treated as breaking)
+3. Executive summary and getting-started guide; worked examples
+4. Conformance test harness and golden vectors (Annex A.5, A.8.3); first CognOS conformance report
+5. Architecture diagrams (Mermaid sources in `diagrams/`)
+
+### Later
+- Independent implementations (target: 3+) and public conformance reports
+- Crosswalks to LangChain, Semantic Kernel, LlamaIndex
+- MCP/A2A protocol alignment; cloud provider integration notes (AWS, Azure, GCP)
+- Standards body engagement (OASIS/CNCF); paper submission (SIGMOD/VLDB)
 
 ---
 
@@ -291,10 +292,9 @@ You are free to implement, extend, and distribute implementations under any lice
 
 ## Contact
 
-**Questions?** [Open a discussion](https://github.com/critical-insight-ai/rcm-spec/discussions)  
-**Found a bug?** [File an issue](https://github.com/critical-insight-ai/rcm-spec/issues)  
-**Want to chat?** Email: dan@criticalinsight.ai
-**Latest updates**: Watch this repo or follow [@CriticalInsightInc] Bluesky/TBD
+**Questions or bugs?** [Open an issue](https://github.com/critical-insight-ai/rcm-spec/issues)  
+**Want to chat?** Email: dan@criticalinsight.ai  
+**Latest updates**: Watch this repo
 
 ---
 
@@ -314,16 +314,14 @@ Thank you to early reviewers and the open-source community for ongoing collabora
 
 ## Quick Links
 
-📖 [Full Specification](Reactive-Composite-Memory.md) -- this works
+📖 [Full Specification (Markdown)](Reactive-Composite-Memory.md)  
+📝 [Full Specification (Word source)](Reactive-Composite-Memory.docx)  
+🖼️ [Diagram sources](diagrams/)  
+⚖️ [License](LICENSE.md)  
+🗺️ [Roadmap](#roadmap)  
+🤝 [Contributing](#contributing)  
 
-TBD:
-📄 [Executive Summary](specification/executive-summary.md)  
-🚀 [Getting Started Guide](guides/getting-started.md)  
-⚖️ [Comparison Guide](guides/comparison-guide.md)  
-🧪 [Conformance Tests](conformance/)  
-💡 [Examples](examples/)  
-🗺️ [Roadmap](ROADMAP.md)  
-🤝 [Contributing](CONTRIBUTING.md)  
+Planned, not yet available: executive summary, getting-started guide, standalone comparison guide, conformance test kit, worked examples.
 
 ---
 

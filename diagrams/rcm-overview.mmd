@@ -1,0 +1,30 @@
+flowchart LR
+    subgraph Sources
+        E[Event Streams]
+        D[Databases / CDC]
+        G[Graphs / Indices]
+        X[External APIs]
+    end
+    
+    Sources -->|changes| V[Context Views<br/>declarative composition]
+    V --> M[Materializer<br/>windowing, time semantics]
+    M --> F[(Frames<br/>versioned, immutable)]
+    F --> B[Subscriptions Bus<br/>ordered delivery]
+    B --> C1[Agents]
+    B --> C2[Services]
+    B --> C3[Dashboards/UI]
+    B --> C4[Analytics]
+    
+    subgraph Extensions
+        P[Policy / Access]
+        R[Resource Mgmt]
+        S[Security / Privacy]
+        O[Observability]
+    end
+    
+    V -.->|inject| P
+    M -.->|inject| R
+    F -.->|inject| S
+    B -.->|inject| O
+    
+    style Extensions fill:#f0f0f0,stroke:#999,stroke-dasharray: 5 5
