@@ -254,6 +254,10 @@ Sources may involve non-deterministic processes (ML inference, external APIs), b
 
 When a source changes, affected views recompute and emit new frames automatically. Consumers subscribe to frame streams rather than polling or rebuilding context. The effect is **memory that stays fresh**, **operations that are explainable** (every frame cites its sources), and **costs that are predictable** (recomputation happens on change, not on traffic).
 
+**What makes this composable:**
+
+Views are declarative recipes over sources **and other views**, so complex context is built from simpler, already-governed pieces instead of bespoke pipelines. A new view reuses existing frames rather than re-deriving them, and its lineage carries through automatically: a frame’s inputs name the upstream frames it was built from, so composition never loses provenance (see section 4.2.2).
+
 **Extension points:**
 
 RCM provides well-defined hooks where implementations inject cross-cutting behaviors—admission control (policy checks, rate limits), resource management (budgets, quotas), security posture (classification, redaction), and human-in-the-loop gates. The pattern specifies *where* these extensions attach and *what telemetry* they must emit; the specific policies are implementation-defined. (See §4.7 and Annex D.)
