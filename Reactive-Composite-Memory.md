@@ -226,13 +226,10 @@ RCM treats memory not as a static store or per-request cache, but as a **reactiv
 
 **Core flow:**
 
-Source Signals → Context Views → Materializer → Frames → Subscriptions → Consumers
-
-↓ ↓ ↓ ↓ ↓ ↓
-
-(changes) (declarative) (windowing) (versioned) (ordered) (idempotent)
-
-(deterministic) (time-aware) (lineage) (delivery) (effects)
+    Source Signals → Context Views → Materializer → Frames → Subscriptions → Consumers
+          ↓              ↓               ↓            ↓           ↓            ↓
+      (changes)    (declarative)   (windowing)  (versioned)  (ordered)   (idempotent)
+                    (deterministic) (time-aware) (lineage)    (delivery)  (effects)
 
 Sources may involve non-deterministic processes (ML inference, external APIs), but once captured as signals, view evaluation is deterministic.
 
@@ -504,19 +501,13 @@ RCM addresses a constellation of operational pains that surface when systems sca
 
 **What it looks like:**
 
-On inference request:
-
-1\. Fetch user profile from DB
-
-2\. Query last N messages from store
-
-3\. Retrieve relevant docs via vector search
-
-4\. Call external API for real-time signal
-
-5\. Assemble prompt
-
-6\. Send to LLM
+    On inference request:
+      1. Fetch user profile from DB
+      2. Query last N messages from store
+      3. Retrieve relevant docs via vector search
+      4. Call external API for real-time signal
+      5. Assemble prompt
+      6. Send to LLM
 
 **Why it fails:**
 
@@ -536,11 +527,9 @@ On inference request:
 
 **What it looks like:**
 
-Cache key: user_123_context
-
-Value: {profile, lastActivity, preferences}
-
-TTL: 5 minutes
+    Cache key: user_123_context
+    Value: {profile, lastActivity, preferences}
+    TTL: 5 minutes
 
 **Why it fails:**
 
@@ -556,13 +545,10 @@ TTL: 5 minutes
 
 **What it looks like:**
 
-Every hour:
-
-1\. Extract from sources
-
-2\. Transform (joins, aggregations)
-
-3\. Load to warehouse or data lake
+    Every hour:
+      1. Extract from sources
+      2. Transform (joins, aggregations)
+      3. Load to warehouse or data lake
 
 **Why it fails:**
 
@@ -783,55 +769,31 @@ A coherent design that makes these forces **explicit**, trade-offs **tunable**, 
 
 The following diagram captures RCM's structure and flow at a glance. Read left to right: changes flow from sources through composition and materialization into versioned frames, which are delivered to many consumers. Extension points (dotted lines) show where implementations inject cross-cutting behaviors.
 
-┌─────────────────────────────────────────────┐
-
-│ Write Paths (may include non-determinism) │
-
-│ • ML model inference (temp \> 0) │
-
-│ • External API calls │
-
-│ • Human-in-loop decisions │
-
-└──────────────┬──────────────────────────────┘
-
-│ Results captured as...
-
-▼
-
-┌─────────────────────────────────────────────┐
-
-│ Source Signals (immutable facts) │
-
-│ • Event streams │
-
-│ • CDC feeds │
-
-│ • API response artifacts │
-
-└──────────────┬──────────────────────────────┘
-
-│ Deterministically composed...
-
-▼
-
-┌─────────────────────────────────────────────┐
-
-│ Views (referentially transparent) │
-
-│ Same inputs → Same outputs │
-
-└──────────────┬──────────────────────────────┘
-
-│ Materialize as...
-
-▼
-
-┌─────────────────────────────────────────────┐
-
-│ Frames (versioned, replayable) │
-
-└─────────────────────────────────────────────┘
+    ┌─────────────────────────────────────────────┐
+    │   Write Paths (may include non-determinism) │
+    │   • ML model inference (temp > 0)           │
+    │   • External API calls                      │
+    │   • Human-in-loop decisions                 │
+    └──────────────┬──────────────────────────────┘
+                   │ Results captured as...
+                   ▼
+    ┌─────────────────────────────────────────────┐
+    │   Source Signals (immutable facts)          │
+    │   • Event streams                           │
+    │   • CDC feeds                               │
+    │   • API response artifacts                  │
+    └──────────────┬──────────────────────────────┘
+                   │ Deterministically composed...
+                   ▼
+    ┌─────────────────────────────────────────────┐
+    │   Views (referentially transparent)         │
+    │   Same inputs → Same outputs                │
+    └──────────────┬──────────────────────────────┘
+                   │ Materialize as...
+                   ▼
+    ┌─────────────────────────────────────────────┐
+    │   Frames (versioned, replayable)            │
+    └─────────────────────────────────────────────┘
 
 RCM's determinism boundary: Non-determinism is acceptable in write paths (how facts are created); determinism is required in read paths (how facts are composed into frames).
 
@@ -1031,19 +993,14 @@ Subscribers bound to support_context and matching key patterns receive the frame
 
 Consumer pseudocode:
 
-onFrame(frame):
-
-if seenBefore(frame.idempotencyKey):
-
-ack(); return // idempotent deduplication
-
-effect = processFrame(frame.body)
-
-commitEffect(effect)
-
-recordSeen(frame.idempotencyKey)
-
-ack()
+    onFrame(frame):
+      if seenBefore(frame.idempotencyKey):
+        ack(); return  // idempotent deduplication
+      
+      effect = processFrame(frame.body)
+      commitEffect(effect)
+      recordSeen(frame.idempotencyKey)
+      ack()
 
 If processing fails, the bus retries with exponential backoff. After exhausting retries, the frame routes to a dead-letter queue with enough context (frame headers, failure reason) to remediate and re-drive.
 
@@ -1383,13 +1340,10 @@ The idempotencyKey MUST be a pure function of:
 
 **Illustrative algorithm (informative):**
 
-function makeIdempotencyKey(contextId, key, window, inputs, planHash):
-
-inputsSummary = sort(inputs, by: \[sourceId, from, to\]).map(i =\> \[i.sourceId, i.from, i.to, i.hash\])
-
-canonical = {contextId, key, window, inputsSummary, planHash}
-
-return sha256(serialize(canonical))
+    function makeIdempotencyKey(contextId, key, window, inputs, planHash):
+      inputsSummary = sort(inputs, by: [sourceId, from, to]).map(i => [i.sourceId, i.from, i.to, i.hash])
+      canonical = {contextId, key, window, inputsSummary, planHash}
+      return sha256(serialize(canonical))
 
 Implementations MAY use different hash algorithms (e.g., BLAKE3) if documented.
 
@@ -1471,11 +1425,9 @@ Windows progress through the following normative states:
 
 **Illustrative state diagram (informative):**
 
-\[\*\] → Open → Accepting → Closing → Emitted → Expired
-
-↑ ↓
-
-└─ late data─┘ (optional, if policy allows)
+    [*] → Open → Accepting → Closing → Emitted → Expired
+                    ↑            ↓
+                    └─ late data─┘ (optional, if policy allows)
 
 ### **4.4.5 Reactivity Policy**
 
@@ -1613,11 +1565,9 @@ The planHash field MUST uniquely identify the effective transform applied to pro
 
 **Illustrative algorithm (informative):**
 
-function computePlanHash(plan):
-
-canonical = canonicalize(plan.operators, plan.params, plan.versions, plan.config)
-
-return sha256(serialize(canonical))
+    function computePlanHash(plan):
+      canonical = canonicalize(plan.operators, plan.params, plan.versions, plan.config)
+      return sha256(serialize(canonical))
 
 ### **4.5.3 Idempotency Key**
 
@@ -1657,15 +1607,11 @@ The inputs summary MUST be deterministically ordered. Implementations MUST eithe
 
 **Illustrative algorithm (informative):**
 
-function makeIdempotencyKey(contextId, key, window, inputs, planHash):
-
-sortedInputs = sort(inputs, by: \[sourceId, from, to\])
-
-summary = sortedInputs.map(i =\> {i.sourceId, i.from, i.to, i.hash})
-
-canonical = {contextId, key, window.start, window.end, summary, planHash}
-
-return sha256(serialize(canonical))
+    function makeIdempotencyKey(contextId, key, window, inputs, planHash):
+      sortedInputs = sort(inputs, by: [sourceId, from, to])
+      summary = sortedInputs.map(i => {i.sourceId, i.from, i.to, i.hash})
+      canonical = {contextId, key, window.start, window.end, summary, planHash}
+      return sha256(serialize(canonical))
 
 ### **4.5.4 Replay Requirements**
 
@@ -1803,21 +1749,15 @@ If a frame F1 fails and is retried, the subscription system MUST NOT deliver sub
 
 **Implementation pattern (informative):**
 
-function onFrame(frame):
-
-if alreadyProcessed(frame.idempotencyKey):
-
-acknowledge(frame)
-
-return
-
-effect = computeEffect(frame.body)
-
-applyEffect(effect)
-
-recordProcessed(frame.idempotencyKey)
-
-acknowledge(frame)
+    function onFrame(frame):
+      if alreadyProcessed(frame.idempotencyKey):
+        acknowledge(frame)
+        return
+      
+      effect = computeEffect(frame.body)
+      applyEffect(effect)
+      recordProcessed(frame.idempotencyKey)
+      acknowledge(frame)
 
 **\**
 
@@ -1951,13 +1891,10 @@ Invoked after a source change is detected but before the Materializer evaluates 
 
 **Extension interface (informative):**
 
-onBeforeMaterialize(contextId, key, sourceChange):
-
-decision = {admit: bool, reason: string, delay: duration?}
-
-emit("admission.decision", {stage: "pre-materialize", contextId, key, decision})
-
-return decision
+    onBeforeMaterialize(contextId, key, sourceChange):
+      decision = {admit: bool, reason: string, delay: duration?}
+      emit("admission.decision", {stage: "pre-materialize", contextId, key, decision})
+      return decision
 
 **If denied:** The Materializer MUST NOT evaluate the plan. It SHOULD queue the work for retry if the denial is temporary (e.g., rate limit) or drop it permanently if policy forbids it.
 
@@ -1977,17 +1914,15 @@ Invoked after the frame is computed but before it is written to the Frame Store 
 
 **Extension interface (informative):**
 
-onBeforePublish(frameHeaders, frameBody):
-
-classification = classify(frameBody)
-
-redactedBody = applyRedactions(frameBody, classification)
-
-emit("security.classification", {contextId, key, classification})
-
-emit("security.redaction", {contextId, key, pathsRedacted: \[...\]})
-
-return {admit: true, body: redactedBody, metadata: {classification}}
+    onBeforePublish(frameHeaders, frameBody):
+      
+      classification = classify(frameBody)
+      redactedBody = applyRedactions(frameBody, classification)
+      
+      emit("security.classification", {contextId, key, classification})
+      emit("security.redaction", {contextId, key, pathsRedacted: [...]})
+      
+      return {admit: true, body: redactedBody, metadata: {classification}}
 
 **If denied:** The frame MUST NOT be published. The extension SHOULD emit telemetry explaining the denial (e.g., admission.decision with hook=pre-publish, stage=approval, verdict=deny, reasonCode="approval_denied").
 
@@ -2005,13 +1940,10 @@ Invoked after the frame is stored and notified to the subscription bus, before t
 
 **Extension interface (informative):**
 
-onAfterPublish(frameId, actualUsage):
-
-budgets.commit(leaseId, actualUsage)
-
-emit("budget.commit", {leaseId, actual: {timeMs: 95, ...}})
-
-record("frame_size_bytes", frameSize)
+    onAfterPublish(frameId, actualUsage):
+      budgets.commit(leaseId, actualUsage)
+      emit("budget.commit", {leaseId, actual: {timeMs: 95, ...}})
+      record("frame_size_bytes", frameSize)
 
 **4. Delivery Hook (At Subscription)**
 
@@ -2027,17 +1959,13 @@ Invoked when delivering a frame to a subscriber, before the frame is sent.
 
 **Extension interface (informative):**
 
-onBeforeDeliver(frame, subscriberId):
-
-if !hasAccess(subscriberId, frame.extensions.classification):
-
-emit("delivery.denied", {subscriberId, contextId, key, reason: "access denied"})
-
-return {admit: false}
-
-emit("delivery.attempt", {subscriberId, contextId, key, version})
-
-return {admit: true}
+    onBeforeDeliver(frame, subscriberId):
+      if !hasAccess(subscriberId, frame.extensions.classification):
+        emit("delivery.denied", {subscriberId, contextId, key, reason: "access denied"})
+        return {admit: false}
+      
+      emit("delivery.attempt", {subscriberId, contextId, key, version})
+      return {admit: true}
 
 ### **4.7.3 Required Telemetry for Extensions**
 
@@ -2282,23 +2210,15 @@ The following table provides a high-level comparison. Subsequent sections elabor
 
 **Example architecture:**
 
-Commands → Event Store (append-only)
-
-↓
-
-RCM Source Signal
-
-↓
-
-Context Views (join events + reference data)
-
-↓
-
-Frames (versioned read models)
-
-↓
-
-Agents, Services, Dashboards
+    Commands → Event Store (append-only)
+                  ↓
+             RCM Source Signal
+                  ↓
+             Context Views (join events + reference data)
+                  ↓
+             Frames (versioned read models)
+                  ↓
+             Agents, Services, Dashboards
 
 **When to use Event Sourcing without RCM:** You need a complete audit trail and temporal queries ("what was the state at time T?") but don't need reactive multi-source composition or governed delivery.
 
@@ -2318,13 +2238,11 @@ Agents, Services, Dashboards
 
 **Co-existence pattern:**
 
-Write Side (Commands):
+    Write Side (Commands):
+      Commands → Aggregate → Events → Event Store
 
-Commands → Aggregate → Events → Event Store
-
-Read Side (Queries):
-
-Event Store → RCM Views → Frames → Subscriptions → Consumers
+    Read Side (Queries):
+      Event Store → RCM Views → Frames → Subscriptions → Consumers
 
 **When to use CQRS without RCM:** You need read/write separation but can serve queries with simple projections or direct database queries; reactive updates and multi-consumer fan-out aren't critical.
 
@@ -2398,15 +2316,12 @@ All share: events/actions flow into pure functions that produce new state; views
 
 **Co-existence pattern:**
 
-Server (RCM):
+    Server (RCM):
+      Sources → Views → Frames → Subscriptions
 
-Sources → Views → Frames → Subscriptions
-
-Client (Redux/MVU):
-
-Subscribe to frames → Dispatch actions → Reducers → UI renders
-
-Local state for transient UI concerns (hover, focus, form draft)
+    Client (Redux/MVU):
+      Subscribe to frames → Dispatch actions → Reducers → UI renders
+      Local state for transient UI concerns (hover, focus, form draft)
 
 **When to use Redux/MVU without RCM:** You're building a single-page app with no backend persistence or cross-session memory; all state is local and ephemeral.
 
@@ -2444,19 +2359,13 @@ Local state for transient UI concerns (hover, focus, form draft)
 
 **Co-existence pattern:**
 
-Knowledge Graph (persistent, queryable)
-
-↕
-
-RCM Context Views (reactive queries over graph)
-
-↓
-
-Frames (versioned slices with lineage to graph entities)
-
-↓
-
-Agents, Dashboards (subscribe for fresh graph-derived contexts)
+    Knowledge Graph (persistent, queryable)
+             ↕
+    RCM Context Views (reactive queries over graph)
+             ↓
+    Frames (versioned slices with lineage to graph entities)
+             ↓
+    Agents, Dashboards (subscribe for fresh graph-derived contexts)
 
 **When to use KG without RCM:** You need semantic search, inference, and traversals but don't need reactive updates or multi-consumer delivery with governance.
 
@@ -2476,19 +2385,13 @@ Agents, Dashboards (subscribe for fresh graph-derived contexts)
 
 **Co-existence pattern:**
 
-RCM Frames (facts: user context, recent events, policies)
-
-↓
-
-Rule Engine Working Memory
-
-↓
-
-Rules Fire (produce actions, alerts, decisions)
-
-↓
-
-Actions as new Source Signals → RCM recomputes affected views
+    RCM Frames (facts: user context, recent events, policies)
+          ↓
+    Rule Engine Working Memory
+          ↓
+    Rules Fire (produce actions, alerts, decisions)
+          ↓
+    Actions as new Source Signals → RCM recomputes affected views
 
 **When to use Rule Engine without RCM:** You have complex business logic with many interdependent rules; all facts fit in memory; single-process execution; no need for durable versioning or multi-consumer delivery.
 
@@ -2508,15 +2411,11 @@ Actions as new Source Signals → RCM recomputes affected views
 
 **Co-existence pattern:**
 
-RCM Frame Store (durable, versioned, governed)
-
-↓
-
-Cache Layer (ephemeral, fast, key-value)
-
-↓
-
-Consumers (fast reads from cache; fallback to frame store on miss)
+    RCM Frame Store (durable, versioned, governed)
+          ↓
+    Cache Layer (ephemeral, fast, key-value)
+          ↓
+    Consumers (fast reads from cache; fallback to frame store on miss)
 
 **When to use Cache without RCM:** You need fast lookups of simple values (user sessions, rate-limit counters); no need for composition, lineage, or versioning.
 
@@ -2641,27 +2540,17 @@ This section shows how RCM composes with adjacent patterns in practice.
 
 **Architecture:**
 
-Commands → Aggregates → Event Store (append-only log)
-
-↓
-
-RCM Source Signal
-
-↓
-
-Context Views (events ⨝ reference data)
-
-↓
-
-Frames (versioned read models)
-
-↓
-
-Subscriptions (deliver to consumers)
-
-↓
-
-Agents, Dashboards, Search Indices, Analytics
+    Commands → Aggregates → Event Store (append-only log)
+                                  ↓
+                            RCM Source Signal
+                                  ↓
+                         Context Views (events ⨝ reference data)
+                                  ↓
+                             Frames (versioned read models)
+                                  ↓
+                           Subscriptions (deliver to consumers)
+                                  ↓
+                  Agents, Dashboards, Search Indices, Analytics
 
 **Benefits:**
 
@@ -2689,13 +2578,11 @@ Agents, Dashboards, Search Indices, Analytics
 
 **Architecture:**
 
-Write Side:
+    Write Side:
+      Commands → Command Handlers → Domain Model → Events → Event Store
 
-Commands → Command Handlers → Domain Model → Events → Event Store
-
-Read Side (RCM):
-
-Event Store → RCM Context Views → Frames → Subscriptions → Query Services
+    Read Side (RCM):
+      Event Store → RCM Context Views → Frames → Subscriptions → Query Services
 
 **Benefits:**
 
@@ -2725,23 +2612,15 @@ Event Store → RCM Context Views → Frames → Subscriptions → Query Service
 
 **Architecture:**
 
-RCM Context Views → Frames (entities, facts, summaries)
-
-↓
-
-Indexing Pipeline (curated, redacted)
-
-↓
-
-Search/Vector Index (Elasticsearch, Pinecone, etc.)
-
-↓
-
-Apps, Agents (search for context)
-
-↓
-
-Lookup Frame by ID (for full lineage, replay)
+    RCM Context Views → Frames (entities, facts, summaries)
+                           ↓
+                Indexing Pipeline (curated, redacted)
+                           ↓
+              Search/Vector Index (Elasticsearch, Pinecone, etc.)
+                           ↓
+                   Apps, Agents (search for context)
+                           ↓
+                Lookup Frame by ID (for full lineage, replay)
 
 **Benefits:**
 
@@ -2769,31 +2648,19 @@ Lookup Frame by ID (for full lineage, replay)
 
 **Architecture:**
 
-RCM Frames (facts: user context, policies, recent events)
-
-↓
-
-Rule Engine Working Memory
-
-↓
-
-Rules Fire (produce decisions, alerts, recommendations)
-
-↓
-
-Decisions as new Source Signals
-
-↓
-
-RCM recomputes affected views (e.g., "user_risk_assessment")
-
-↓
-
-New Frames (include rule firing lineage)
-
-↓
-
-Agents, Services (consume updated context)
+    RCM Frames (facts: user context, policies, recent events)
+           ↓
+    Rule Engine Working Memory
+           ↓
+    Rules Fire (produce decisions, alerts, recommendations)
+           ↓
+    Decisions as new Source Signals
+           ↓
+    RCM recomputes affected views (e.g., "user_risk_assessment")
+           ↓
+    New Frames (include rule firing lineage)
+           ↓
+    Agents, Services (consume updated context)
 
 **Benefits:**
 
@@ -2823,21 +2690,16 @@ Agents, Services (consume updated context)
 
 **Architecture:**
 
-Internal (RCM):
+    Internal (RCM):
+      Sources → Views → Frames → Subscriptions → Agents, Services
 
-Sources → Views → Frames → Subscriptions → Agents, Services
+    Edge (MCP Gateway):
+      External LLM Apps ← MCP Context Requests ← RCM Frames (curated, redacted)
+      External LLM Apps → MCP Context Pushes → RCM Source Signals (stamped with policy)
 
-Edge (MCP Gateway):
-
-External LLM Apps ← MCP Context Requests ← RCM Frames (curated, redacted)
-
-External LLM Apps → MCP Context Pushes → RCM Source Signals (stamped with policy)
-
-Edge (A2A Gateway):
-
-Partner Agents ← A2A Delegation Requests ← RCM Frames (with budget envelopes)
-
-Partner Agents → A2A Results → RCM Source Signals (recorded for lineage)
+    Edge (A2A Gateway):
+      Partner Agents ← A2A Delegation Requests ← RCM Frames (with budget envelopes)
+      Partner Agents → A2A Results → RCM Source Signals (recorded for lineage)
 
 **Benefits:**
 
@@ -2973,15 +2835,12 @@ RCM operates internally; edge protocols enable interoperability with external sy
 
 **Integration pattern:**
 
-Internal RCM:
+    Internal RCM:
+      Sources → Views → Frames (versioned, governed)
 
-Sources → Views → Frames (versioned, governed)
-
-MCP Gateway:
-
-External LLM App → MCP Context Request → Gateway fetches relevant frames → applies redaction → returns via MCP
-
-External LLM App → MCP Tool Invocation → Gateway logs as Source Signal → RCM recomputes affected views
+    MCP Gateway:
+      External LLM App → MCP Context Request → Gateway fetches relevant frames → applies redaction → returns via MCP
+      External LLM App → MCP Tool Invocation → Gateway logs as Source Signal → RCM recomputes affected views
 
 **Benefits:**
 
@@ -3029,29 +2888,22 @@ Collaboration opportunity: Implementations exposing RCM frames via MCP gateways 
 
 **Integration pattern:**
 
-Agent A (Internal RCM):
+    Agent A (Internal RCM):
+      Uses RCM frame "user_context_v42" to assess situation
+      Determines delegation is needed
 
-Uses RCM frame "user_context_v42" to assess situation
+    Agent A → A2A Delegation Request → Agent B (external or federated domain)
+      Payload: {task, budget_envelope, context_reference: "frameId_xyz"}
 
-Determines delegation is needed
+    Agent B executes task using its own RCM context
 
-Agent A → A2A Delegation Request → Agent B (external or federated domain)
+    Agent B → A2A Result Response → Agent A
+      Result: {outcome, cost_consumed, provenance: "based on frameId_xyz"}
 
-Payload: {task, budget_envelope, context_reference: "frameId_xyz"}
-
-Agent B executes task using its own RCM context
-
-Agent B → A2A Result Response → Agent A
-
-Result: {outcome, cost_consumed, provenance: "based on frameId_xyz"}
-
-Agent A's RCM:
-
-Records result as new Source Signal
-
-Recomputes affected views
-
-New frames include lineage: "derived from user_context_v42 + Agent B delegation result"
+    Agent A's RCM:
+      Records result as new Source Signal
+      Recomputes affected views
+      New frames include lineage: "derived from user_context_v42 + Agent B delegation result"
 
 **Benefits:**
 
@@ -3097,59 +2949,33 @@ New frames include lineage: "derived from user_context_v42 + Agent B delegation 
 
 **Architectural principle:**
 
-┌─────────────────────────────────────────┐
-
-│ External Systems │
-
-│ (LLM Apps, Partner Agents, etc.) │
-
-└──────────────┬──────────────────────────┘
-
-│ MCP / A2A / REST / GraphQL
-
-│
-
-┌────────▼────────┐
-
-│ Edge Gateways │
-
-│ - Policy enforcement
-
-│ - Budget tracking
-
-│ - Redaction
-
-│ - Rate limiting
-
-│ - Protocol translation
-
-└────────┬────────┘
-
-│
-
-┌──────────▼───────────┐
-
-│ Internal RCM Core │
-
-│ - Views
-
-│ - Frames
-
-│ - Subscriptions
-
-│ - Extension points
-
-└──────────┬───────────┘
-
-│
-
-┌──────▼──────┐
-
-│ Sources │
-
-│ (Events, DBs, APIs, Graphs)
-
-└─────────────┘
+    ┌─────────────────────────────────────────┐
+    │   External Systems                      │
+    │   (LLM Apps, Partner Agents, etc.)      │
+    └──────────────┬──────────────────────────┘
+                   │ MCP / A2A / REST / GraphQL
+                   │
+          ┌────────▼────────┐
+          │  Edge Gateways  │
+          │  - Policy enforcement
+          │  - Budget tracking
+          │  - Redaction
+          │  - Rate limiting
+          │  - Protocol translation
+          └────────┬────────┘
+                   │
+        ┌──────────▼───────────┐
+        │   Internal RCM Core  │
+        │   - Views
+        │   - Frames
+        │   - Subscriptions
+        │   - Extension points
+        └──────────┬───────────┘
+                   │
+            ┌──────▼──────┐
+            │   Sources   │
+            │   (Events, DBs, APIs, Graphs)
+            └─────────────┘
 
 **Design maxim:** "Keep RCM semantics inside; speak edge protocols at boundaries; enforce governance at gateways."
 
@@ -3173,21 +2999,14 @@ New frames include lineage: "derived from user_context_v42 + Agent B delegation 
 
 External LLM requests context via MCP:
 
-1\. Gateway receives MCP context request
-
-2\. Gateway authenticates and authorizes requester
-
-3\. Gateway translates MCP query to RCM frame lookup (contextId, key, version?)
-
-4\. Gateway fetches relevant frames from internal RCM
-
-5\. Gateway applies redaction per classification policy
-
-6\. Gateway records budget charge (egress bytes, frame count)
-
-7\. Gateway constructs MCP response with curated frame content + frame IDs
-
-8\. Gateway returns to external LLM
+    1. Gateway receives MCP context request
+    2. Gateway authenticates and authorizes requester
+    3. Gateway translates MCP query to RCM frame lookup (contextId, key, version?)
+    4. Gateway fetches relevant frames from internal RCM
+    5. Gateway applies redaction per classification policy
+    6. Gateway records budget charge (egress bytes, frame count)
+    7. Gateway constructs MCP response with curated frame content + frame IDs
+    8. Gateway returns to external LLM
 
 External LLM can later reference frame IDs in its responses for provenance
 
@@ -3372,45 +3191,29 @@ RCM does not replace adjacent patterns; it **complements and composes** with the
 
 **Common adoption path:**
 
-Phase 1: Core RCM (Weeks 1-8)
+    Phase 1: Core RCM (Weeks 1-8)
+      - Implement 2-3 critical views
+      - Emit frames with envelopes
+      - Switch 1-2 consumers to subscriptions
+      - Measure freshness, cost, adoption
 
-\- Implement 2-3 critical views
+    Phase 2: Governance (Weeks 8-16)
+      - Add extension points (policy, budgets)
+      - Implement coalescing and brownout
+      - Establish freshness SLOs
+      - Add compaction and TTL policies
 
-\- Emit frames with envelopes
+    Phase 3: Ecosystem (Weeks 16-24)
+      - Feed search indices from frames
+      - Integrate with rule engines
+      - Expose via MCP/A2A at edges
+      - Dual-run plan changes with confidence
 
-\- Switch 1-2 consumers to subscriptions
-
-\- Measure freshness, cost, adoption
-
-Phase 2: Governance (Weeks 8-16)
-
-\- Add extension points (policy, budgets)
-
-\- Implement coalescing and brownout
-
-\- Establish freshness SLOs
-
-\- Add compaction and TTL policies
-
-Phase 3: Ecosystem (Weeks 16-24)
-
-\- Feed search indices from frames
-
-\- Integrate with rule engines
-
-\- Expose via MCP/A2A at edges
-
-\- Dual-run plan changes with confidence
-
-Phase 4: Optimization (Ongoing)
-
-\- Tune coalescing windows
-
-\- Optimize keys and partitioning
-
-\- Implement adaptive TTLs
-
-\- Extend to additional contexts
+    Phase 4: Optimization (Ongoing)
+      - Tune coalescing windows
+      - Optimize keys and partitioning
+      - Implement adaptive TTLs
+      - Extend to additional contexts
 
 ### **Final Positioning**
 
@@ -5348,167 +5151,99 @@ Implementations MUST produce a conformance report in **JSON format** with the st
 
 **Top-level schema:**
 
-{
-
-"rcmVersion": "string (e.g., '1.0')",
-
-"reportVersion": "string (e.g., '1.0')",
-
-"generatedAt": "RFC 3339 timestamp",
-
-"implementation": {
-
-"name": "string",
-
-"version": "semver",
-
-"vendor": "string",
-
-"contactEmail": "email",
-
-"websiteUrl": "url",
-
-"repositoryUrl": "url (optional)",
-
-"conformanceClass": "RCM"
-
-},
-
-"environment": {
-
-"region": "string (e.g., 'us-west-2', 'on-premises')",
-
-"nodeCount": "integer",
-
-"nodeSpec": "string (e.g., '4 vCPU, 16GB RAM')",
-
-"storageType": "string (e.g., 'SSD', 'S3')",
-
-"networkTopology": "string (e.g., 'single-AZ', 'multi-AZ')",
-
-"notes": "string (optional)"
-
-},
-
-"declaredSLOs": {
-
-"windowMinutes": "integer (e.g., 60)",
-
-"stepMinutes": "integer (e.g., 1)",
-
-"freshnessMsP95": "integer",
-
-"freshnessMsP99": "integer",
-
-"deliveryMsP95": "integer",
-
-"dlqRatePer10k": "float",
-
-"fairnessDeviation": "float (optional, if fairness implemented)",
-
-"profilesClaimed": \["array of strings (e.g., \['R1'\])"\]
-
-},
-
-"testResults": {
-
-"executionDate": "RFC 3339 timestamp",
-
-"durationMinutes": "integer",
-
-"tests": \[
-
-{
-
-"id": "string (e.g., 'DV-1')",
-
-"name": "string (e.g., 'Deterministic View Evaluation')",
-
-"pass": "boolean",
-
-"notes": "string (optional details, error messages)"
-
-}
-
-\]
-
-},
-
-"sloResults": {
-
-"freshness": {
-
-"p95Ms": "integer (measured)",
-
-"p99Ms": "integer (measured)",
-
-"attainedWindowsP95": "float (0-1, e.g., 0.97)",
-
-"attainedWindowsP99": "float (0-1)"
-
-},
-
-"delivery": {
-
-"p95Ms": "integer",
-
-"attainedWindowsP95": "float"
-
-},
-
-"dlqRatePer10k": "float",
-
-"fairnessDeviation": "float (optional)"
-
-},
-
-"telemetry": {
-
-"eventsSchemaVersion": "string (e.g., '1.0')",
-
-"metricsSchemaVersion": "string (e.g., '1.0')",
-
-"mappings": {
-
-"eventNameMappings": {
-
-"frame.materialized": "implementation-specific-name (if different)"
-
-},
-
-"metricNameMappings": {
-
-"watermark_lag_ms": "implementation-specific-name (if different)"
-
-}
-
-},
-
-"exportFormat": "string (e.g., 'OpenTelemetry', 'Prometheus', 'CloudWatch')"
-
-},
-
-"extensionPoints": {
-
-"implemented": "boolean",
-
-"hooksProvided": \["array of strings (e.g., \['pre-materialize', 'pre-publish'\])"\],
-
-"policies": "string (description of governance policies)",
-
-"documentationUrl": "url (optional)"
-
-},
-
-"artifacts": {
-
-"rawDataUrl": "url (optional, link to detailed test data)",
-
-"dashboardUrl": "url (optional, link to telemetry dashboard)"
-
-}
-
-}
+    {
+      "rcmVersion": "string (e.g., '1.0')",
+      "reportVersion": "string (e.g., '1.0')",
+      "generatedAt": "RFC 3339 timestamp",
+      
+      "implementation": {
+        "name": "string",
+        "version": "semver",
+        "vendor": "string",
+        "contactEmail": "email",
+        "websiteUrl": "url",
+        "repositoryUrl": "url (optional)",
+        "conformanceClass": "RCM"
+      },
+      
+      "environment": {
+        "region": "string (e.g., 'us-west-2', 'on-premises')",
+        "nodeCount": "integer",
+        "nodeSpec": "string (e.g., '4 vCPU, 16GB RAM')",
+        "storageType": "string (e.g., 'SSD', 'S3')",
+        "networkTopology": "string (e.g., 'single-AZ', 'multi-AZ')",
+        "notes": "string (optional)"
+      },
+      
+
+
+      "declaredSLOs": {
+        "windowMinutes": "integer (e.g., 60)",
+        "stepMinutes": "integer (e.g., 1)",
+        "freshnessMsP95": "integer",
+        "freshnessMsP99": "integer",
+        "deliveryMsP95": "integer",
+        "dlqRatePer10k": "float",
+        "fairnessDeviation": "float (optional, if fairness implemented)",
+        "profilesClaimed": ["array of strings (e.g., ['R1'])"]
+      },
+      
+      "testResults": {
+        "executionDate": "RFC 3339 timestamp",
+        "durationMinutes": "integer",
+        "tests": [
+          {
+            "id": "string (e.g., 'DV-1')",
+            "name": "string (e.g., 'Deterministic View Evaluation')",
+            "pass": "boolean",
+            "notes": "string (optional details, error messages)"
+          }
+        ]
+      },
+      
+      "sloResults": {
+        "freshness": {
+          "p95Ms": "integer (measured)",
+          "p99Ms": "integer (measured)",
+          "attainedWindowsP95": "float (0-1, e.g., 0.97)",
+          "attainedWindowsP99": "float (0-1)"
+        },
+        "delivery": {
+          "p95Ms": "integer",
+          "attainedWindowsP95": "float"
+        },
+        "dlqRatePer10k": "float",
+        "fairnessDeviation": "float (optional)"
+      },
+      
+
+
+      "telemetry": {
+        "eventsSchemaVersion": "string (e.g., '1.0')",
+        "metricsSchemaVersion": "string (e.g., '1.0')",
+        "mappings": {
+          "eventNameMappings": {
+            "frame.materialized": "implementation-specific-name (if different)"
+          },
+          "metricNameMappings": {
+            "watermark_lag_ms": "implementation-specific-name (if different)"
+          }
+        },
+        "exportFormat": "string (e.g., 'OpenTelemetry', 'Prometheus', 'CloudWatch')"
+      },
+      
+      "extensionPoints": {
+        "implemented": "boolean",
+        "hooksProvided": ["array of strings (e.g., ['pre-materialize', 'pre-publish'])"],
+        "policies": "string (description of governance policies)",
+        "documentationUrl": "url (optional)"
+      },
+      
+      "artifacts": {
+        "rawDataUrl": "url (optional, link to detailed test data)",
+        "dashboardUrl": "url (optional, link to telemetry dashboard)"
+      }
+    }
 
 ### **A.6.2 Required Fields**
 
@@ -5670,13 +5405,10 @@ Implementations MAY use different names for events and metrics if:
 
 **Example mapping:**
 
-"eventNameMappings": {
-
-"frame.materialized": "frame_emitted",
-
-"delivery.attempt": "subscriber.receive_attempt"
-
-}
+    "eventNameMappings": {
+      "frame.materialized": "frame_emitted",
+      "delivery.attempt": "subscriber.receive_attempt"
+    }
 
 ### **A.8.2 Environment Variability**
 
@@ -5706,31 +5438,19 @@ Implementations SHOULD contribute golden test vectors (inputs, expected outputs)
 
 **Test vector format:**
 
-{
-
-"vectorId": "DV-1-basic-join",
-
-"testCase": "DV-1",
-
-"description": "Basic deterministic join over two sources",
-
-"inputs": {
-
-"source1": \[ /\* array of events \*/ \],
-
-"source2": \[ /\* array of events \*/ \]
-
-},
-
-"viewSpec": { /\* declarative view definition \*/ },
-
-"window": {"start": "...", "end": "..."},
-
-"expectedIdempotencyKey": "sha256:abc123...",
-
-"expectedBodyHash": "sha256:def456..."
-
-}
+    {
+      "vectorId": "DV-1-basic-join",
+      "testCase": "DV-1",
+      "description": "Basic deterministic join over two sources",
+      "inputs": {
+        "source1": [ /* array of events */ ],
+        "source2": [ /* array of events */ ]
+      },
+      "viewSpec": { /* declarative view definition */ },
+      "window": {"start": "...", "end": "..."},
+      "expectedIdempotencyKey": "sha256:abc123...",
+      "expectedBodyHash": "sha256:def456..."
+    }
 
 **Contributing vectors:**
 
@@ -6392,27 +6112,19 @@ Admission control decides whether to accept, reject, or defer a unit of work bef
 
 **Configuration:**
 
-admission:
-
-type: token_bucket
-
-capacity: 100
-
-refillRatePerSecond: 10
-
-scope: per_tenant \# or per_context, global
+    admission:
+      type: token_bucket
+      capacity: 100
+      refillRatePerSecond: 10
+      scope: per_tenant  # or per_context, global
 
 **Telemetry:**
 
-admission.decision:
-
-hook: pre-materialize
-
-stage: gate
-
-verdict: deny
-
-reasonCode: rate_limit_exceeded
+    admission.decision:
+      hook: pre-materialize
+      stage: gate
+      verdict: deny
+      reasonCode: rate_limit_exceeded
 
 **When to use:** Protect downstream systems from traffic spikes; enforce fair use quotas.
 
@@ -6430,39 +6142,28 @@ reasonCode: rate_limit_exceeded
 
 **Example policy (OPA Rego):**
 
-allow {
+    allow {
+      input.classification == "public"
+    }
 
-input.classification == "public"
+    allow {
+      input.classification == "internal"
+      input.requestor.role == "employee"
+    }
 
-}
-
-allow {
-
-input.classification == "internal"
-
-input.requestor.role == "employee"
-
-}
-
-deny_reason = "insufficient_clearance" {
-
-not allow
-
-}
+    deny_reason = "insufficient_clearance" {
+      not allow
+    }
 
 **\**
 
 **Telemetry:**
 
-admission.decision:
-
-hook: delivery
-
-stage: policy
-
-verdict: deny
-
-reasonCode: insufficient_clearance
+    admission.decision:
+      hook: delivery
+      stage: policy
+      verdict: deny
+      reasonCode: insufficient_clearance
 
 **When to use:** Complex, organization-wide policies; compliance requirements; need for audit trails on policy decisions.
 
@@ -6488,23 +6189,17 @@ reasonCode: insufficient_clearance
 
 **Configuration:**
 
-concurrency:
-
-max_materializations: 50
-
-max_deliveries: 200
+    concurrency:
+      max_materializations: 50
+      max_deliveries: 200
 
 **Telemetry:**
 
-admission.decision:
-
-hook: pre-materialize
-
-stage: concurrency
-
-verdict: defer
-
-reasonCode: concurrency_limit_reached
+    admission.decision:
+      hook: pre-materialize
+      stage: concurrency
+      verdict: defer
+      reasonCode: concurrency_limit_reached
 
 concurrency_utilization: 1.0 \# gauge metric (extension metric, Annex A.2.5)
 
@@ -6532,37 +6227,25 @@ Resource management tracks and bounds consumption of compute, memory, network, t
 
 **Configuration:**
 
-budgets:
-
-tenants:
-
-acme:
-
-monthly:
-
-timeMs: 3600000 \# 1 hour
-
-moneyCents: 10000 \# \$100
-
-tokens: 1000000 \# 1M tokens
-
-netBytes: 10737418240 \# 10GB
+    budgets:
+      tenants:
+        acme:
+          monthly:
+            timeMs: 3600000      # 1 hour
+            moneyCents: 10000    # $100
+            tokens: 1000000      # 1M tokens
+            netBytes: 10737418240  # 10GB
 
 **Telemetry:**
 
-budget.lease:
+    budget.lease:
+      leaseId: uuid
+      units: {timeMs: 100, tokens: 500}
+      ttlMs: 30000
 
-leaseId: uuid
-
-units: {timeMs: 100, tokens: 500}
-
-ttlMs: 30000
-
-budget.commit:
-
-leaseId: uuid
-
-actual: {timeMs: 85, tokens: 450}
+    budget.commit:
+      leaseId: uuid
+      actual: {timeMs: 85, tokens: 450}
 
 **When to use:** Multi-tenant SaaS with chargeback; cost control for LLM inference; prevent runaway spend.
 
@@ -6580,25 +6263,18 @@ actual: {timeMs: 85, tokens: 450}
 
 **Example logic:**
 
-def adjustBudget(tenant, basebudget):
-
-priority = tenant.priority \# 1-5
-
-hour = currentHour() \# 0-23
-
-carbon = getCarbonIntensity() \# gCO2/kWh
-
-multiplier = 1.0
-
-if priority \>= 4 and 9 \<= hour \<= 17:
-
-multiplier \*= 1.5 \# boost high-priority during business hours
-
-if carbon \> 400:
-
-multiplier \*= 0.7 \# reduce during high-carbon periods
-
-return baseBudget \* multiplier
+    def adjustBudget(tenant, basebudget):
+      priority = tenant.priority  # 1-5
+      hour = currentHour()  # 0-23
+      carbon = getCarbonIntensity()  # gCO2/kWh
+      
+      multiplier = 1.0
+      if priority >= 4 and 9 <= hour <= 17:
+        multiplier *= 1.5  # boost high-priority during business hours
+      if carbon > 400:
+        multiplier *= 0.7  # reduce during high-carbon periods
+      
+      return baseBudget * multiplier
 
 **When to use:** Dynamic workload management; sustainability goals; priority-based fairness.
 
@@ -6658,19 +6334,13 @@ Security extensions enforce classification, redaction, and access control.
 
 **Configuration:**
 
-classification:
-
-rules:
-
-\- pattern: "SSN:\\d{3}-\\d{2}-\\d{4}"
-
-label: restricted
-
-\- pattern: "INTERNAL ONLY"
-
-label: internal
-
-default: public
+    classification:
+      rules:
+        - pattern: "SSN:\\d{3}-\\d{2}-\\d{4}"
+          label: restricted
+        - pattern: "INTERNAL ONLY"
+          label: internal
+      default: public
 
 **When to use:** Compliance (GDPR, HIPAA, SOC 2); multi-tenant SaaS; government/defense.
 
@@ -6690,37 +6360,23 @@ default: public
 
 **Example:**
 
-// Before redaction:
+    // Before redaction:
+    {
+      "user": {
+        "name": "Alice",
+        "email": "alice@example.com",
+        "ssn": "123-45-6789"
+      }
+    }
 
-{
-
-"user": {
-
-"name": "Alice",
-
-"email": "alice@example.com",
-
-"ssn": "123-45-6789"
-
-}
-
-}
-
-// After redaction (classification=restricted):
-
-{
-
-"user": {
-
-"name": "Alice",
-
-"email": "\[REDACTED\]",
-
-"ssn": "\[REDACTED\]"
-
-}
-
-}
+    // After redaction (classification=restricted):
+    {
+      "user": {
+        "name": "Alice",
+        "email": "[REDACTED]",
+        "ssn": "[REDACTED]"
+      }
+    }
 
 **When to use:** PII protection; GDPR Article 5(1)(c) data minimization; export controls.
 
@@ -6740,19 +6396,13 @@ default: public
 
 **Workflow:**
 
-1\. Frame materialized, classified as "restricted"
-
-2\. Hook: requestApproval(frameId, ttl=15m)
-
-3\. Notify approver (Slack, email, dashboard)
-
-4\. Approver reviews frame metadata (not full body for privacy)
-
-5\. Approver grants or denies
-
-6\. System emits human.approval.granted or human.approval.denied
-
-7\. Frame published or blocked
+    1. Frame materialized, classified as "restricted"
+    2. Hook: requestApproval(frameId, ttl=15m)
+    3. Notify approver (Slack, email, dashboard)
+    4. Approver reviews frame metadata (not full body for privacy)
+    5. Approver grants or denies
+    6. System emits human.approval.granted or human.approval.denied
+    7. Frame published or blocked
 
 **When to use:** High-stakes decisions (financial trades, medical diagnoses); regulatory requirements; trust-building.
 
@@ -6778,17 +6428,13 @@ Observability extensions emit telemetry for lineage tracking, cost attribution, 
 
 **OpenTelemetry example:**
 
-with tracer.start_as_current_span("materialize_frame") as span:
-
-span.set_attribute("rcm.contextId", contextId)
-
-span.set_attribute("rcm.key", key)
-
-span.set_attribute("rcm.version", version)
-
-frame = evaluatePlan(inputs, plan)
-
-publishFrame(frame)
+    with tracer.start_as_current_span("materialize_frame") as span:
+      span.set_attribute("rcm.contextId", contextId)
+      span.set_attribute("rcm.key", key)
+      span.set_attribute("rcm.version", version)
+      
+      frame = evaluatePlan(inputs, plan)
+      publishFrame(frame)
 
 **When to use:** Debugging latency issues; understanding causal chains; compliance audits.
 
@@ -6810,9 +6456,8 @@ publishFrame(frame)
 
 **Metrics:**
 
-budget_moneyCents_committed (counter, labels: tenantId, contextId)
-
-cost_per_frame_avg (gauge, calculated: total_cost / total_frames)
+    budget_moneyCents_committed (counter, labels: tenantId, contextId)
+    cost_per_frame_avg (gauge, calculated: total_cost / total_frames)
 
 **When to use:** Multi-tenant SaaS; internal IT chargeback; FinOps initiatives.
 
@@ -6832,11 +6477,9 @@ cost_per_frame_avg (gauge, calculated: total_cost / total_frames)
 
 **Graph schema:**
 
-Nodes: Frame, Source, View
-
-Edges: DERIVED_FROM (Frame -\> Source/Frame), SUPERSEDES (Frame -\> Frame), DEFINED_BY (Frame -\> View)
-
-Properties: frameId, contextId, key, version, timestamp, planHash
+    Nodes: Frame, Source, View
+    Edges: DERIVED_FROM (Frame -> Source/Frame), SUPERSEDES (Frame -> Frame), DEFINED_BY (Frame -> View)
+    Properties: frameId, contextId, key, version, timestamp, planHash
 
 **When to use:** Regulatory compliance (GDPR Article 15); trust and explainability; debugging data quality issues.
 
@@ -6848,213 +6491,118 @@ This example combines multiple extension patterns into a coordinated governance 
 
 ### **D.6.1 Flow**
 
-1\. Materialization request arrives
+    1. Materialization request arrives
+    2. Stage: Policy
+       - Check: Is this contextId allowed for this tenant?
+       - Check: Is classification permitted?
+       - Verdict: admit | deny (reasonCode="policy_denied")
+    3. Stage: Gate (if admitted)
+       - Check: Token bucket has tokens?
+       - Verdict: admit | deny (reasonCode="rate_limit_exceeded")
+    4. Stage: Concurrency (if admitted)
+       - Check: active_materializations < max?
+       - If yes: admit, increment counter
+       - If no: defer, add to queue (with priority)
+    5. Stage: Priority (if queued)
+       - Assign priority: 1 (low) to 5 (high) based on tenant tier, context type
+       - Apply aging: priority increases over time queued
+       - Schedule: WFQ with aging ensures fairness
 
-2\. Stage: Policy
 
-\- Check: Is this contextId allowed for this tenant?
-
-\- Check: Is classification permitted?
-
-\- Verdict: admit \| deny (reasonCode="policy_denied")
-
-3\. Stage: Gate (if admitted)
-
-\- Check: Token bucket has tokens?
-
-\- Verdict: admit \| deny (reasonCode="rate_limit_exceeded")
-
-4\. Stage: Concurrency (if admitted)
-
-\- Check: active_materializations \< max?
-
-\- If yes: admit, increment counter
-
-\- If no: defer, add to queue (with priority)
-
-5\. Stage: Priority (if queued)
-
-\- Assign priority: 1 (low) to 5 (high) based on tenant tier, context type
-
-\- Apply aging: priority increases over time queued
-
-\- Schedule: WFQ with aging ensures fairness
-
-6\. Stage: Budget (when scheduled)
-
-\- tryLease(required_units, ttlMs)
-
-\- If granted: proceed to materialize
-
-\- If denied: deny (reasonCode="budget_exhausted")
-
-7\. Materialize
-
-\- Evaluate plan, produce frame
-
-\- Measure actual usage
-
-8\. Post-Materialize
-
-\- commit(lease, actual_units)
-
-\- decrement concurrency counter
-
-\- emit frame.materialized
+    6. Stage: Budget (when scheduled)
+       - tryLease(required_units, ttlMs)
+       - If granted: proceed to materialize
+       - If denied: deny (reasonCode="budget_exhausted")
+    7. Materialize
+       - Evaluate plan, produce frame
+       - Measure actual usage
+    8. Post-Materialize
+       - commit(lease, actual_units)
+       - decrement concurrency counter
+       - emit frame.materialized
 
 ### **D.6.2 Configuration**
 
-governance:
-
-policy:
-
-engine: opa
-
-policyUrl: https://policy-server/v1/data/rcm/allow
-
-gate:
-
-type: token_bucket
-
-capacity: 100
-
-refillRate: 10
-
-scope: per_tenant
-
-concurrency:
-
-max_materializations: 50
-
-queue_discipline: wfq_with_aging
-
-aging_halflife_seconds: 60
-
-priority:
-
-default: 3
-
-rules:
-
-\- condition: tenant.tier == "premium"
-
-priority: 5
-
-\- condition: contextId.startsWith("incident\_")
-
-priority: 4
-
-budgets:
-
-dimensions: \[timeMs, moneyCents, tokens\]
-
-lease_ttl_ms: 30000
-
-tracking: per_tenant_monthly
+    governance:
+      policy:
+        engine: opa
+        policyUrl: https://policy-server/v1/data/rcm/allow
+      gate:
+        type: token_bucket
+        capacity: 100
+        refillRate: 10
+        scope: per_tenant
+      
+      concurrency:
+        max_materializations: 50
+        queue_discipline: wfq_with_aging
+        aging_halflife_seconds: 60
+      priority:
+        default: 3
+        rules:
+          - condition: tenant.tier == "premium"
+            priority: 5
+          - condition: contextId.startsWith("incident_")
+            priority: 4
+      budgets:
+        dimensions: [timeMs, moneyCents, tokens]
+        lease_ttl_ms: 30000
+        tracking: per_tenant_monthly
 
 ### **D.6.3 Telemetry Example**
 
 For a single materialization attempt (tenant=acme, contextId=support_context, key=user_123):
 
-\[
-
-{
-
-"event": "admission.decision",
-
-"stage": "policy",
-
-"hook": "pre-materialize",
-
-"verdict": "admit",
-
-"reasonCode": null
-
-},
-
-{
-
-"event": "admission.decision",
-
-"stage": "gate",
-
-"hook": "pre-materialize",
-
-"verdict": "admit",
-
-"reasonCode": null
-
-},
-
-{
-
-"event": "admission.decision",
-
-"stage": "concurrency",
-
-"hook": "pre-materialize",
-
-"verdict": "defer",
-
-"reasonCode": "concurrency_limit_reached"
-
-},
-
-{
-
-"event": "queue.enqueued",
-
-"priority": 3,
-
-"queueDepth": 12
-
-},
-
-// ... time passes, aging increases effective priority ...
-
-{
-
-"event": "queue.dequeued",
-
-"effectivePriority": 3.8,
-
-"waitMs": 1200
-
-},
-
-{
-
-"event": "budget.lease",
-
-"leaseId": "lease_xyz",
-
-"units": {"timeMs": 100, "moneyCents": 5, "tokens": 500}
-
-},
-
-{
-
-"event": "frame.materialized",
-
-"frameId": "frame_abc",
-
-"version": 42,
-
-"durationMs": 85
-
-},
-
-{
-
-"event": "budget.commit",
-
-"leaseId": "lease_xyz",
-
-"actual": {"timeMs": 85, "moneyCents": 4, "tokens": 450}
-
-}
-
-\]
+    [
+      {
+        "event": "admission.decision",
+        "stage": "policy",
+        "hook": "pre-materialize",
+        "verdict": "admit",
+        "reasonCode": null
+      },
+      {
+        "event": "admission.decision",
+        "stage": "gate",
+        "hook": "pre-materialize",
+        "verdict": "admit",
+        "reasonCode": null
+      },
+      {
+        "event": "admission.decision",
+        "stage": "concurrency",
+        "hook": "pre-materialize",
+        "verdict": "defer",
+        "reasonCode": "concurrency_limit_reached"
+      },
+      {
+        "event": "queue.enqueued",
+        "priority": 3,
+        "queueDepth": 12
+      },
+      // ... time passes, aging increases effective priority ...
+      {
+        "event": "queue.dequeued",
+        "effectivePriority": 3.8,
+        "waitMs": 1200
+      },
+      {
+        "event": "budget.lease",
+        "leaseId": "lease_xyz",
+        "units": {"timeMs": 100, "moneyCents": 5, "tokens": 500}
+      },
+      {
+        "event": "frame.materialized",
+        "frameId": "frame_abc",
+        "version": 42,
+        "durationMs": 85
+      },
+      {
+        "event": "budget.commit",
+        "leaseId": "lease_xyz",
+        "actual": {"timeMs": 85, "moneyCents": 4, "tokens": 450}
+      }
+    ]
 
 ## **D.7 Example: Simple Rate Limiting**
 
@@ -7062,25 +6610,17 @@ For teams that need only basic rate limiting without full governance:
 
 **Implementation:**
 
-class SimpleRateLimiter:
-
-def \_\_init\_\_(self, capacity, refillRate):
-
-self.bucket = TokenBucket(capacity, refillRate)
-
-def onBeforeMaterialize(self, contextId, key):
-
-if self.bucket.tryConsume(1):
-
-emit("admission.decision", hook="pre-materialize", stage="gate", verdict="admit")
-
-return {"admit": True}
-
-else:
-
-emit("admission.decision", hook="pre-materialize", stage="gate", verdict="deny", reasonCode="rate_limit_exceeded")
-
-return {"admit": False, "reason": "rate_limit_exceeded"}
+    class SimpleRateLimiter:
+      def __init__(self, capacity, refillRate):
+        self.bucket = TokenBucket(capacity, refillRate)
+      
+      def onBeforeMaterialize(self, contextId, key):
+        if self.bucket.tryConsume(1):
+          emit("admission.decision", hook="pre-materialize", stage="gate", verdict="admit")
+          return {"admit": True}
+        else:
+          emit("admission.decision", hook="pre-materialize", stage="gate", verdict="deny", reasonCode="rate_limit_exceeded")
+          return {"admit": False, "reason": "rate_limit_exceeded"}
 
 **Usage:**
 
@@ -7096,97 +6636,63 @@ return {"admit": False, "reason": "rate_limit_exceeded"}
 
 **Policy file (Rego):**
 
-package rcm
+    package rcm
 
-import future.keywords.if
+    import future.keywords.if
+    import future.keywords.in
 
-import future.keywords.in
+    default allow = false
 
-default allow = false
+    # Allow public data for anyone
+    allow if {
+      input.classification == "public"
+    }
 
-\# Allow public data for anyone
+    # Allow internal data for employees
+    allow if {
+      input.classification == "internal"
+      input.requestor.role in ["employee", "contractor"]
+    }
 
-allow if {
+    # Allow restricted data for authorized roles
+    allow if {
+      input.classification == "restricted"
+      input.requestor.clearance >= 3
+    }
 
-input.classification == "public"
+    # Deny reason
+    deny_reason = reason if {
+      not allow
+      reason := sprintf("insufficient_clearance: needs clearance %d, has %d", 
+                        [required_clearance(input.classification), 
+                         input.requestor.clearance])
+    }
 
-}
-
-\# Allow internal data for employees
-
-allow if {
-
-input.classification == "internal"
-
-input.requestor.role in \["employee", "contractor"\]
-
-}
-
-\# Allow restricted data for authorized roles
-
-allow if {
-
-input.classification == "restricted"
-
-input.requestor.clearance \>= 3
-
-}
-
-\# Deny reason
-
-deny_reason = reason if {
-
-not allow
-
-reason := sprintf("insufficient_clearance: needs clearance %d, has %d",
-
-\[required_clearance(input.classification),
-
-input.requestor.clearance\])
-
-}
-
-required_clearance(c) = 1 if c == "public"
-
-required_clearance(c) = 2 if c == "internal"
-
-required_clearance(c) = 3 if c == "restricted"
+    required_clearance(c) = 1 if c == "public"
+    required_clearance(c) = 2 if c == "internal"
+    required_clearance(c) = 3 if c == "restricted"
 
 **Integration:**
 
-def onBeforePublish(frameHeaders, frameBody):
-
-classification = frameHeaders.extensions.get("classification", "public")
-
-requestor = getCurrentRequestor()
-
-decision = opaClient.evaluate("rcm/allow", {
-
-"classification": classification,
-
-"requestor": {
-
-"role": requestor.role,
-
-"clearance": requestor.clearance
-
-}
-
-})
-
-if decision\["allow"\]:
-
-emit("admission.decision", hook="pre-publish", stage="policy", verdict="admit")
-
-return {"admit": True}
-
-else:
-
-reason = decision.get("deny_reason", "policy_denied")
-
-emit("admission.decision", hook="pre-publish", stage="policy", verdict="deny", reasonCode=reason)
-
-return {"admit": False, "reason": reason}
+    def onBeforePublish(frameHeaders, frameBody):
+      classification = frameHeaders.extensions.get("classification", "public")
+      requestor = getCurrentRequestor()
+      
+      decision = opaClient.evaluate("rcm/allow", {
+        "classification": classification,
+        "requestor": {
+          "role": requestor.role,
+          "clearance": requestor.clearance
+        }
+      })
+      
+      if decision["allow"]:
+        emit("admission.decision", hook="pre-publish", stage="policy", verdict="admit")
+        return {"admit": True}
+      else:
+        reason = decision.get("deny_reason", "policy_denied")
+        emit("admission.decision", hook="pre-publish", stage="policy", verdict="deny", reasonCode=reason)
+        return {"admit": False, "reason": reason}
 
 **When to use:** Organization-wide policies; separation of policy from code; need for policy versioning and audit.
 
